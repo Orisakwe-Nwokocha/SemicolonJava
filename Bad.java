@@ -5,7 +5,8 @@ public class Bad {
 	Scanner input = new Scanner(System.in);
 	
 	int even = 0; 
-	int odd = 0;
+	made changes int odd = 1;
+	made changes;
 	
 System.out.print("How many numbers (nElements) do you want to enter? ");
 	int num = input.nextInt();
