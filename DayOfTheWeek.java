@@ -27,8 +27,8 @@ public class DayOfTheWeek {
 
         int q = day;
         int m = month;
-	int k = year % 7;
-        int j = year / 100; 
+	int j = year / 100; 
+	int k = year % 100;
 		
         int h = (q + ((26 * (m + 1)) / 10) + k +  (k / 4) + (j / 4) + (5 * j)) % 7;
 
