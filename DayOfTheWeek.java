@@ -6,13 +6,13 @@ public class DayOfTheWeek {
 
 	Scanner input = new Scanner(System.in);
 
-	System.out.println("Enter year: (e.g., 2012): ");
+	System.out.printf("Enter year: (e.g., 2012): %n");
 	int year = input.nextInt();
 
-	System.out.println("Enter month: 1-12: ");
+	System.out.printf("Enter month: 1-12: %n");
 	int month = input.nextInt();
 
-	System.out.println("Enter the day of the month: 1-31: ");
+	System.out.printf("Enter the day of the month: 1-31: %n");
 	int day = input.nextInt();
 	
 	if (month == 1) {
@@ -25,9 +25,12 @@ public class DayOfTheWeek {
 		year--;
 	}
 
-        int h = (day + ((26* (month + 1)) / 10) + year + (year / 4) - (year / 100) + (year / 400)) % 7;
-
+        int q = day;
+        int m = month;
+	int k = year % 7;
+        int j = year / 100; 
 		
+        int h = (q + ((26 * (m + 1)) / 10.0) + k +  (k / 4) + (j / 4) + (5 * j)) % 7;
 
 	if (h == 0) 
 		System.out.printf("Day of the week is Saturday");
