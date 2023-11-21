@@ -30,7 +30,6 @@ public class SumAllDigits {
 		System.out.println(num7);
 	}
 
-        // System.out.println("");
 
 
 	}
