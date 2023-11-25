@@ -10,16 +10,16 @@ public class Factorial {
 	int factorialize = 1;
 	int i;
 
-	if (fac < 2) System.out.println("1");
+	if (fac < 2) 
+		System.out.println("1");
 	
 	else {
-	for (i = 2; i <= fac; i++) { 
-	factorialize = factorialize * 1;
+		for (i = 2; i <= fac; i++) { 
+			factorialize = factorialize * i;
+		}
+	}
+
  System.out.println(factorialize);
-	}
-	}
-
-
  
  	
  } 
