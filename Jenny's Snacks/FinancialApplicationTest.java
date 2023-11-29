@@ -30,9 +30,9 @@ public static void main(String[] args) {
 	System.out.printf("%n%nPayment#\t\tInterest\t\tPrincipal\t\tBalance");
 
 	for (int i = 1; i <= loanApp.getYears() * 12; i++) {
-		double interest = interestRate1 * balance;
+		double interest = balance * interestRate1;
 		double principal = monthlyPayment - interest;
-		balance = balance - principalAmount;
+		balance = balance - principal;
 
 	System.out.printf("%n%d\t\t\t%.2f\t\t\t%.2f\t\t\t%.2f", i, interest, principal, balance);
 
