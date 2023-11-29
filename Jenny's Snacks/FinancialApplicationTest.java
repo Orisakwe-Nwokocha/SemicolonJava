@@ -18,23 +18,19 @@ public static void main(String[] args) {
 	System.out.print("Enter interest rate: ");
 	int interestRate = input.nextInt();
 	loanApp.setInterestRate(interestRate);
-	
-	double interestRate1 = loanApp.getMonthlyInterestRate();
+
 	double balance = loanApp.getLoanAmount();
-	double monthlyPayment = loanApp.getMonthlyPayment();
-	double principalAmount = loanApp.getPrincipalAmount();
-	double monthlyInterest = loanApp.getMonthlyInterest();
 
 	System.out.printf("%nThe monthly payment: %.2f", loanApp.getMonthlyPayment());
 	System.out.printf("%nThe total payment: %.2f", loanApp.getMonthlyPayment() * loanApp.getYears() * 12);
 	System.out.printf("%n%nPayment#\t\tInterest\t\tPrincipal\t\tBalance");
 
 	for (int i = 1; i <= loanApp.getYears() * 12; i++) {
-		double interest = balance * interestRate1;
-		double principal = monthlyPayment - interest;
+		double interest = balance * loanApp.getMonthlyInterestRate();
+		double principal = loanApp.getMonthlyPayment() - interest;
 		balance = balance - principal;
 
-	System.out.printf("%n%d\t\t\t%.2f\t\t\t%.2f\t\t\t%.2f", i, interest, principal, balance);
+	System.out.printf("%n%d\t\t\t %.2f\t\t\t %.2f\t\t\t%.2f", i, interest, principal, balance);
 
 	}
 

@@ -41,11 +41,6 @@ public class FinancialApplication {
 		return interestRate;
 	}
 	
-	public int getBalance() {
-		int balance = getLoanAmount();
-		return balance;
-	}
-	
 	public double getMonthlyInterestRate() {
 		double monthlyInterestRate = interestRate / 1200;
 		return monthlyInterestRate;
@@ -61,10 +56,6 @@ public class FinancialApplication {
 		return monthlyPayment;
 	}
 	
-	public double getPrincipalAmount() {
-		double principalAmount = getMonthlyPayment() - getMonthlyInterest();
-		return principalAmount;
-	}
-	
+
 
 }
