@@ -42,18 +42,15 @@ public class FinancialApplication {
 	}
 	
 	public double getMonthlyInterestRate() {
-		double monthlyInterestRate = interestRate / 1200;
-		return monthlyInterestRate;
+        return interestRate / 1200;
 	}
 
 	public double getMonthlyInterest() {
-		double monthlyInterest = getMonthlyInterestRate() * loanAmount;
-		return monthlyInterest;
+        return getMonthlyInterestRate() * loanAmount;
 	}
 
 	public double getMonthlyPayment() {
-		double monthlyPayment = (getMonthlyInterest() * (Math.pow((1 + getMonthlyInterestRate()), (years * 12)))) / (Math.pow((1 + getMonthlyInterestRate()), (years * 12)) - 1);
-		return monthlyPayment;
+        return (getMonthlyInterest() * (Math.pow((1 + getMonthlyInterestRate()), (years * 12)))) / (Math.pow((1 + getMonthlyInterestRate()), (years * 12)) - 1);
 	}
 	
 
