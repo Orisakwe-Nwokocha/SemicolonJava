@@ -14,13 +14,13 @@ public class Nokia3310 {
 	System.out.printf("Welcome!!!%n%n");
 	System.out.printf("%" + (spacesOnLeft + text.length()) + "s", text);
 
-	System.out.printf("%n%n1. Phone book%n2. Messages%n3. Chat%n4. Call Register%n5. Tones%n6. Settings%n7. Call Divert%n8. Games%n9. Speed dials%n10. Reminders%n11. Clock%n12. Profiles%n13. SIM services%n%nEnter option: ");
+	System.out.printf("%n%n1. Phone book%n2. Messages%n3. Chat%n4. Call Register%n5. Tones%n6. Settings%n7. Call Divert%n8. Games%n9. Speed dials%n10. Reminders%n11. Clock%n12. Profiles%n13. SIM services%n%nSelect an option: ");
 
 	int menu = input.nextInt();
 
 	switch (menu) {
 		case 1:
-			System.out.printf("%n1. Search%n2. Service Nos%n3. Add name%n4. Erase%n5. Edit%n6. Assign tone%n7. Send b’card%n8. Options%n9. Speed dials%n10. Voice tags%n%nEnter option: ");
+			System.out.printf("%n1. Search%n2. Service Nos%n3. Add name%n4. Erase%n5. Edit%n6. Assign tone%n7. Send b’card%n8. Options%n9. Speed dials%n10. Voice tags%n%nSelect an option: ");
 			int phonebookMenu = input.nextInt();
 
 				switch (phonebookMenu) {
@@ -53,7 +53,7 @@ public class Nokia3310 {
 						break;
 
 					case 8:
-						System.out.printf("%n1. Type of view%n2. Memory status%n%nEnter option: ");
+						System.out.printf("%n1. Type of view%n2. Memory status%n%nSelect an option: ");
 						int optionsPhonebookMenu = input.nextInt();
 						
 						if (optionsPhonebookMenu == 1){
@@ -77,7 +77,7 @@ public class Nokia3310 {
 			break;
 
 		case 2:
-			System.out.printf("%n1. Write messages%n2. Inbox%n3. Outbox%n4. Picture messages%n5. Templates%n6. Smileys%n7. Message settings%n8. Info service%n9. Voice mailbox number%n10. Service command editor%n%nEnter option: ");
+			System.out.printf("%n1. Write messages%n2. Inbox%n3. Outbox%n4. Picture messages%n5. Templates%n6. Smileys%n7. Message settings%n8. Info service%n9. Voice mailbox number%n10. Service command editor%n%nSelect an option: ");
 			int messagesMenu = input.nextInt();
 
 				switch (messagesMenu) {
@@ -106,11 +106,11 @@ public class Nokia3310 {
 						break;
 
 					case 7:
-						System.out.printf("%n1. Set 1%n2. Common%n%nEnter option: ");
+						System.out.printf("%n1. Set 1%n2. Common%n%nSelect an option: ");
 						int optionsMessagesMenu = input.nextInt();
 						
 						if (optionsMessagesMenu == 1){
-							System.out.printf("%n1. Message centre number%n2. Messages sent as%n3. Message validity%nEnter option: ");
+							System.out.printf("%n1. Message centre number%n2. Messages sent as%n3. Message validity%nSelect an option: ");
 							int moreOptions = input.nextInt();
 
 							if (moreOptions == 1) {
@@ -128,7 +128,7 @@ public class Nokia3310 {
 						}
 
 						if (optionsMessagesMenu == 2){
-							System.out.printf("%n1. Delivery reports%n2. Reply via same centre%n3. Character support%n%nEnter option: ");
+							System.out.printf("%n1. Delivery reports%n2. Reply via same centre%n3. Character support%n%nSelect an option: ");
 							int moreOptions2 = input.nextInt();
 
 							if (moreOptions2 == 1) {
@@ -166,7 +166,7 @@ public class Nokia3310 {
 			break;
 
 		case 4:
-			System.out.printf("%n1. Missed calls%n2. Received calls%n3. Dialled numbers%n4. Erase recent call lists%n5. Show call duration%n6. Show call costs%n7. Call cost settings%n8. Prepaid credit%n%nEnter option: ");
+			System.out.printf("%n1. Missed calls%n2. Received calls%n3. Dialled numbers%n4. Erase recent call lists%n5. Show call duration%n6. Show call costs%n7. Call cost settings%n8. Prepaid credit%n%nSelect an option: ");
 			int callRegisterMenu = input.nextInt();
 
 				switch (callRegisterMenu) {
@@ -187,7 +187,7 @@ public class Nokia3310 {
 						break;
 
 					case 5:
-						System.out.printf("%n1. Last call duration%n2. All calls' duration%n3. Received calls' duration%n4. Dialled calls' duration%n5. Clear timers%n%nEnter option: ");
+						System.out.printf("%n1. Last call duration%n2. All calls' duration%n3. Received calls' duration%n4. Dialled calls' duration%n5. Clear timers%n%nSelect an option: ");
 						int showCallDuration = input.nextInt();
 						
 						
@@ -214,7 +214,7 @@ public class Nokia3310 {
 						break;
 
 					case 6:
-						System.out.printf("%n1. Last call cost%n2. All calls' cost%n3. Clear counters%n%nEnter option: ");
+						System.out.printf("%n1. Last call cost%n2. All calls' cost%n3. Clear counters%n%nSelect an option: ");
 						int showCallCosts = input.nextInt();
 						
 						
@@ -233,7 +233,7 @@ public class Nokia3310 {
 						break;
 
 					case 7:
-						System.out.printf("%n1. Call cost limit%n2. Show costs in%n%nEnter option: ");
+						System.out.printf("%n1. Call cost limit%n2. Show costs in%n%nSelect an option: ");
 						int callCostSettings = input.nextInt();
 						
 						
@@ -254,7 +254,7 @@ public class Nokia3310 {
 			break;
 
 		case 5:
-			System.out.printf("%n1. Ringing tone%n2. Ringing volume%n3. Incoming call alert%n4. Composer%n5. Message alert tone%n6. Keypad tones%n7. Warning and game tones%n8. Vibrating alert%n9. Screen saver%n%nEnter option: ");
+			System.out.printf("%n1. Ringing tone%n2. Ringing volume%n3. Incoming call alert%n4. Composer%n5. Message alert tone%n6. Keypad tones%n7. Warning and game tones%n8. Vibrating alert%n9. Screen saver%n%nSelect an option: ");
 			int tonesMenu = input.nextInt();
 
 				switch (tonesMenu) {
@@ -289,12 +289,12 @@ public class Nokia3310 {
 			break;
 
 		case 6:
-			System.out.printf("%n1. Call settings%n2. Phone settings%n3. Security settings%n4. Restore factory settings%n%nEnter option: ");
+			System.out.printf("%n1. Call settings%n2. Phone settings%n3. Security settings%n4. Restore factory settings%n%nSelect an option: ");
 			int settingsMenu = input.nextInt();
 
 				switch (settingsMenu) {
 					case 1:
-						System.out.printf("%n1. Automatic redial%n2. Speed dialling%n3. Call waiting options%n4. Own number sending%n5. Phone line in use%n6. Automatic answer%n%nEnter option: ");
+						System.out.printf("%n1. Automatic redial%n2. Speed dialling%n3. Call waiting options%n4. Own number sending%n5. Phone line in use%n6. Automatic answer%n%nSelect an option: ");
 						int callSettings = input.nextInt();
 						
 						if (callSettings == 1) {
@@ -324,7 +324,7 @@ public class Nokia3310 {
 						break;
 
 					case 2:
-						System.out.printf("%n1. Language%n2. Cell info display%n3. Welcome note%n4. Network selection%n5. Lights%n6. Confirm SIM service actions%n%nEnter option: ");
+						System.out.printf("%n1. Language%n2. Cell info display%n3. Welcome note%n4. Network selection%n5. Lights%n6. Confirm SIM service actions%n%nSelect an option: ");
 						int phoneSettings = input.nextInt();
 						
 						if (phoneSettings == 1) {
@@ -354,7 +354,7 @@ public class Nokia3310 {
 						break;	
 				
 					case 3:
-						System.out.printf("%n1. PIN code request%n2. Call barring service%n3. Fixed dialling%n4. Closed user group%n5. Phone security%n6. Change access codes%n%nEnter option: ");
+						System.out.printf("%n1. PIN code request%n2. Call barring service%n3. Fixed dialling%n4. Closed user group%n5. Phone security%n6. Change access codes%n%nSelect an option: ");
 						int securitySettings = input.nextInt();
 						
 						if (securitySettings == 1) {
@@ -406,7 +406,7 @@ public class Nokia3310 {
 			break;
 
 		case 11:
-			System.out.printf("%n1. Alarm clock%n2. Clock settings%n3. Date setting%n4. Stopwatch%n5. Countdown timer%n6. Auto update of date and time%n%nEnter option: ");
+			System.out.printf("%n1. Alarm clock%n2. Clock settings%n3. Date setting%n4. Stopwatch%n5. Countdown timer%n6. Auto update of date and time%n%nSelect an option: ");
 			int clockMenu = input.nextInt();
 
 				switch (clockMenu) {
