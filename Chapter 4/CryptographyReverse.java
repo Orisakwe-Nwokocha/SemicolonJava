@@ -1,5 +1,5 @@
 import java.util.Scanner;
-public class Cryptography {
+public class CryptographyReverse {
 	public static void main(String[] args) {
 	Scanner input = new Scanner(System.in);
 	
@@ -13,31 +13,25 @@ public class Cryptography {
 		cast = input.nextLine();
 		length = cast.length();		
 	}
-	
+
 	char a = cast.charAt(0);
 	char b = cast.charAt(1); 
 	char c = cast.charAt(2); 
-	char d = cast.charAt(3);
-
-System.out.printf("%n%c %c %c %c", a, b, c, d);
+	char d = cast.charAt(3); 
 	
 	int num1 = Integer.parseInt(String.valueOf(a));
 	int num2 = Integer.parseInt(String.valueOf(b));
 	int num3 = Integer.parseInt(String.valueOf(c));
-	int num4 = Integer.parseInt(String.valueOf(d));	
+	int num4 = Integer.parseInt(String.valueOf(d));
 		
-	num1 = (num1 + 7) % 10;
-	num2 = (num2  + 7) % 10;
-	num3 = (num3 + 7) % 10;
-	num4 = (num4 + 7) % 10;
+	num1 = ((num1 + 10) - 7) % 10;
+	num2 = ((num2 + 10) - 7) % 10;
+	num3 = ((num3 + 10) - 7) % 10;
+	num4 = ((num4 + 10) - 7) % 10;	
 	
 	String append = num3 + "" + num4 + "" + num1 + "" + num2;
-		
-	System.out.printf("%nThe encrypted value of %s is %s", cast, append);
-		
-
 	
-			
+	System.out.printf("%nThe decrypted value of %s is %s", cast, append);		
 
 		
 
