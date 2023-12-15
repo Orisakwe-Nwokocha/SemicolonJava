@@ -20,6 +20,14 @@ public class PalindromeArrayTest {
     }
 
     @Test
+    public void testPalindromeCheckerSentence() {
+        String[] word = {"Was it a car or a cat I saw"};
+        boolean isTrue = palindromeArray.palindromeChecker(word);
+
+        assertEquals(true, isTrue);
+    }
+
+    @Test
     public void testPalindromeCheckerFalse() {
         String[] word = {"Orisha"};
         boolean isFalse = palindromeArray.palindromeChecker(word);

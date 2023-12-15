@@ -3,7 +3,7 @@ import java.util.Arrays;
 public class PalindromeArray {
 
     public static void main(String[] args) {
-        String[] stringToCheck = {"hannah"};
+        String[] stringToCheck = {"Hannah"};
 
         boolean isPalindrome = palindromeChecker(stringToCheck);
 
@@ -15,6 +15,8 @@ public class PalindromeArray {
 
     }
    public static boolean palindromeChecker(String[] string){
+        string[0] = string[0].toLowerCase().replaceAll("[^a-zA-Z0-9]", "");
+
         String word = string[0];
         char[] charArray = new char[word.length()];
         int count = word.length() - 1;
