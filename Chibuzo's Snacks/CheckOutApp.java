@@ -101,7 +101,7 @@ public class CheckOutApp {
         ArrayList<Double> priceOfItem = new ArrayList<>();
 
         while (true) {
-            System.out.println("What the user buy?");
+            System.out.println("What did the user buy?");
             String itemInfo = input.nextLine();
             itemBought.add(itemInfo);
 
