@@ -20,7 +20,15 @@ public class PalindromeArrayTest {
     }
 
     @Test
-    public void testPalindromeCheckerSentence() {
+    public void testPalindromeCheckerFalse() {
+        String[] word = {"Orisha"};
+        boolean isFalse = palindromeArray.palindromeChecker(word);
+
+        assertEquals(false, isFalse);
+    }
+
+    @Test
+    public void testPalindromeCheckerSentenceTrue() {
         String[] word = {"Was it a car or a cat I saw"};
         boolean isTrue = palindromeArray.palindromeChecker(word);
 
@@ -28,10 +36,10 @@ public class PalindromeArrayTest {
     }
 
     @Test
-    public void testPalindromeCheckerFalse() {
-        String[] word = {"Orisha"};
-        boolean isFalse = palindromeArray.palindromeChecker(word);
+    public void testPalindromeCheckerSentenceFalse() {
+        String[] word = {"Naomi, did I moan, today?"};
+        boolean isTrue = palindromeArray.palindromeChecker(word);
 
-        assertEquals(false, isFalse);
+        assertEquals(false, isTrue);
     }
 }
