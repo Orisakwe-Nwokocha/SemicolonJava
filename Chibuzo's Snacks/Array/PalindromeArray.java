@@ -14,28 +14,25 @@ public class PalindromeArray {
         }
 
     }
-   public static boolean palindromeChecker(String[] string){
-        string[0] = string[0].toLowerCase().replaceAll("[^a-zA-Z0-9]", "");
+   public static boolean palindromeChecker(String[] word){
+       word[0] = word[0].toLowerCase().replaceAll("[^a-zA-Z0-9]", "");
 
-        String word = string[0];
-        char[] charArray = new char[word.length()];
-        int count = word.length() - 1;
+        String text = word[0];
+        char[] charArray = new char[text.length()];
+        int count = text.length() - 1;
 
-        for (int index = 0; index < word.length(); index++){
-            charArray[count] = word.charAt(index);
+        for (int index = 0; index < text.length(); index++){
+            charArray[count] = text.charAt(index);
             count--;
         }
 
-        String[] reversedString = new String[string.length];
         String reversedWord = new String(charArray);
-        reversedString[0] = reversedWord;
 
-        for (int index = 0; index < string.length; index++){
-            if (string[index].equals(reversedString[index])){
-                return true;
-            }
+        if (text.equals(reversedWord)) {
+            return true;
         }
-
-        return false;
+        else {
+            return false;
+        }
     }
 }
