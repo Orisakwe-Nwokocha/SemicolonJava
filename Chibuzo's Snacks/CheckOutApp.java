@@ -121,7 +121,7 @@ public class CheckOutApp {
 
             while (!sentinelValue.equalsIgnoreCase("YES") &&
                     !sentinelValue.equalsIgnoreCase("NO")) {
-                System.out.println("Invalid input\nAdd more items (yes/no) ?");
+                System.out.println("Invalid input\nAdd more items (yes/no)?");
                 sentinelValue = input.next();
                 input.nextLine();
                 System.out.println();
