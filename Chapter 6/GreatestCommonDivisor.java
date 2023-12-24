@@ -2,16 +2,17 @@ import java.util.Arrays;
 
 public class GreatestCommonDivisor {
     public static void main(String[] args) {
-        int x = 21;
-        int y = 252;
+        int x = 1386;
+        int y = 3213;
 
         System.out.println("This is Euclidean algorithm using recursion: " + gcd(x, y));
-        System.out.println("This is Euclidean algorithm using a normal loop: " + gcd(x, y));
+        System.out.println("This is Euclidean algorithm using a normal loop: " + findGCD(x, y));
         System.out.println("This is my own logic, applying brute force principles: " + gcdBruteForce(x, y));
+        System.out.println("This is my own logic, applying brute force principles part II: " + gcdFound(x, y));
 
     }
     public static int gcd(int firstNumber, int secondNumber) {
-        //GCD(a,b)=GCD(b,amodb)
+        //GCD(a,b)=GCD(b,a mod b)
         if (secondNumber == 0) {
             return firstNumber;
         }
@@ -86,5 +87,29 @@ public class GreatestCommonDivisor {
             }
         }
         return gcdFoundBruteForce;
+    }
+
+    public static int gcdFound(int a, int b) {
+        if (a == 0) {
+            return b;
+        }
+        else if (b == 0) {
+            return a;
+        }
+
+        int i = 0;
+        for (i = a; i >= 1; i--) {
+            if (a % i == 0) {
+                for (int j = 1; j <= b; j++) {
+                    if (b % j == 0) {
+                        if (i == j) {
+                            return i;
+                        }
+                    }
+                }
+            }
+        }
+
+        return i;
     }
 }
