@@ -228,8 +228,8 @@ public class StudentGrade {
         for (int student = 0; student < grades.length; student++) {
             for (int subject = 0; subject < grades[student].length; subject++) {
                 if (grades[student][subject] < overallLowestScore) {
-                    overallLowestScoringStudent = student + 1;
-                    subjectScoredIn = subject + 1;
+                    overallLowestScoringStudent = student;
+                    subjectScoredIn = subject;
                     overallLowestScore = grades[student][subject];
                 }
             }
@@ -237,7 +237,7 @@ public class StudentGrade {
 
         if (overallLowestScore > 0) {
             System.out.printf("The overall Lowest score is scored by Student %d in subject %d scoring %d%n",
-                    overallLowestScoringStudent, subjectScoredIn, overallLowestScore);
+                    (overallLowestScoringStudent + 1), (subjectScoredIn + 1), overallLowestScore);
         } else {
             System.out.println("All scores were 0, so there is no overall Lowest score");
         }
@@ -357,7 +357,6 @@ public class StudentGrade {
     }
 
     public static void main(String[] args) {
-
         System.out.println("How many students do you have?");
         int studentsRow = input.nextInt();
         while (studentsRow <= 0) {
@@ -395,11 +394,7 @@ public class StudentGrade {
 
         setGrades(newArray);
 
-        System.out.println(Arrays.deepToString(grades));
-        System.out.println();
-
         processGrades();
-
     }
 
 }
