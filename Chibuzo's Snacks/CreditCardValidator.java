@@ -5,8 +5,6 @@ public class CreditCardValidator {
     private static final Scanner input = new Scanner(System.in);
     private String cardNumber;
     private String cardType;
-    private int cardDigitLength;
-    private String cardValidityStatus;
 
     public static void main(String[] args) {
         CreditCardValidator creditCardValidator = new CreditCardValidator();
@@ -37,8 +35,7 @@ public class CreditCardValidator {
         return cardNumber;
     }
     public int getCardDigitLength() {
-        cardDigitLength = cardNumber.length();
-        return cardDigitLength;
+        return cardNumber.length();
     }
     public void setCardType(String creditCardNumber) {
         if (creditCardNumber.charAt(0) == '4') {
@@ -98,6 +95,7 @@ public class CreditCardValidator {
     }
     public String getCardValidityStatus() {
         int result = getEvenPositionsSum() + getOddPositionsSum();
+        String cardValidityStatus;
 
         if (cardType.equals("Invalid card")) {
             cardValidityStatus = "Invalid";

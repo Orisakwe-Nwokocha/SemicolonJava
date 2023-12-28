@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CheckOutApp {
-    private static final Scanner input = new Scanner(System.in);
+
     private static String customerName;
     private static String cashierName;
     private static double subTotal;
@@ -90,7 +90,8 @@ public class CheckOutApp {
     }
 
     public static void main(String[] args) {
-        CheckOutApp checkOutApp = new CheckOutApp();
+
+        Scanner input = new Scanner(System.in);
 
         System.out.println("What is the customer's Name?");
         String customerInfo = input.nextLine();
@@ -101,16 +102,24 @@ public class CheckOutApp {
         ArrayList<Double> priceOfItem = new ArrayList<>();
 
         while (true) {
-            System.out.println("What did the user buy?");
+            System.out.println("What the user buy?");
             String itemInfo = input.nextLine();
             itemBought.add(itemInfo);
 
             System.out.println("How many pieces?");
             int quantityInfo = input.nextInt();
+            while (quantityInfo <= 0) {
+                System.out.println("Invalid input\nHow many pieces?");
+                quantityInfo = input.nextInt();
+            }
             quantityOfItem.add(quantityInfo);
 
             System.out.println("How much per unit?");
             double priceInfo = input.nextDouble();
+            while (priceInfo <= 0.0) {
+                System.out.println("Invalid input\nHow much per unit?");
+                priceInfo = input.nextDouble();
+            }
             priceOfItem.add(priceInfo);
 
             System.out.println();
@@ -218,9 +227,5 @@ public class CheckOutApp {
 
 
     }
-
-
-
-
 
 }
