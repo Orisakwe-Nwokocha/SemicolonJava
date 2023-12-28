@@ -3,7 +3,6 @@ import java.util.Scanner;
 
 public class StudentGrade {
 
-    private static final Scanner input = new Scanner(System.in);
     private static int[][] grades;
 
     public static void setGrades(int[][] grades) {
@@ -357,6 +356,8 @@ public class StudentGrade {
     }
 
     public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        
         System.out.println("How many students do you have?");
         int studentsRow = input.nextInt();
         while (studentsRow <= 0) {
@@ -396,5 +397,4 @@ public class StudentGrade {
 
         processGrades();
     }
-
 }
