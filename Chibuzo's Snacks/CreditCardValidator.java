@@ -19,24 +19,22 @@ public class CreditCardValidator {
     }
 
     public void setCardNumber(String cardNumber) {
-        while (true) {
-            if (cardNumber.length() < 13 || cardNumber.length() > 16) {
-                System.out.print("Invalid Card Number!\nPlease enter a valid number: ");
-                cardNumber = input.nextLine();
-            }
-            else {
-                this.cardNumber = cardNumber;
-                break;
-            }
+        while (cardNumber.length() < 13 || cardNumber.length() > 16) {
+            System.out.println("Invalid Card Number!\nPlease enter a valid number: ");
+            cardNumber = input.nextLine();
         }
-
+        
+        this.cardNumber = cardNumber;
     }
+    
     public String getCardNumber() {
         return cardNumber;
     }
+    
     public int getCardDigitLength() {
         return cardNumber.length();
     }
+    
     public void setCardType(String creditCardNumber) {
         if (creditCardNumber.charAt(0) == '4') {
             cardType = "Visa Cards";
@@ -54,9 +52,11 @@ public class CreditCardValidator {
             cardType = "Invalid card";
         }
     }
+    
     public String getCardType() {
         return cardType;
     }
+    
     public int[] getCreditCardDigitsArray(){
         long creditCardNumber = Long.parseLong(cardNumber);
         int[] newArray = new int[getCardDigitLength()];
@@ -67,6 +67,7 @@ public class CreditCardValidator {
         }
         return newArray;
     }
+    
     public int getEvenPositionsSum() {
         int sum = 0;
         int doubleEverySecondDigit = 0;
@@ -84,6 +85,7 @@ public class CreditCardValidator {
 
         return sum;
     }
+    
     public int getOddPositionsSum() {
         int sum = 0;
 
@@ -93,6 +95,7 @@ public class CreditCardValidator {
 
         return sum;
     }
+    
     public String getCardValidityStatus() {
         int result = getEvenPositionsSum() + getOddPositionsSum();
         String cardValidityStatus;
