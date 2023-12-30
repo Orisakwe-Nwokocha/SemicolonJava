@@ -5,32 +5,14 @@ public class ParkingCharges {
     public static void main(String[] args) {
         int customer1, customer2, customer3;
 
-        while (true) {
-            System.out.print("Enter hour(s) parked for customer 1: ");
-            customer1 = input.nextInt();
-            while (customer1 <= 0) {
-                System.out.println("Invalid input");
-                System.out.print("Enter valid hour(s) parked: ");
-                customer1 = input.nextInt();
-            }
+        System.out.print("Enter hour(s) parked for customer 1: ");
+        customer1 = input.nextInt();
 
-            System.out.print("Enter hour(s) parked for customer 2: ");
-            customer2 = input.nextInt();
-            while (customer2 <= 0) {
-                System.out.println("Invalid input");
-                System.out.print("Enter valid hour(s) parked: ");
-                customer2 = input.nextInt();
-            }
+        System.out.print("Enter hour(s) parked for customer 2: ");
+        customer2 = input.nextInt();
 
-            System.out.print("Enter hour(s) parked for customer 3: ");
-            customer3 = input.nextInt();
-            while (customer3 <= 0) {
-                System.out.println("Invalid input");
-                System.out.print("Enter valid hour(s) parked: ");
-                customer3 = input.nextInt();
-            }
-            break;
-        }
+        System.out.print("Enter hour(s) parked for customer 3: ");
+        customer3 = input.nextInt();
 
         double totalChargesOfTheDay =  calculateCharges(customer1) +  calculateCharges(customer2) +  calculateCharges(customer3);
 
@@ -42,10 +24,12 @@ public class ParkingCharges {
 
     public static double calculateCharges(int hours){
         double charges = 0.0;
-        if (hours >= 1 && hours <= 3){charges = 2.00;}
-        else if (hours >= 24) {charges = 10.00;}
-        else if (hours > 3 && hours < 24){charges = ((hours - 3) * 0.50) + 2.00;}
+        if (hours <= 0) {return charges;}
+        else if (hours <= 3){charges = 2.00;}
+        else if (hours < 24){charges = ((hours - 3) * 0.50) + 2.00;}
+        else {charges = 10.00;}
 
         return charges;
     }
+
 }

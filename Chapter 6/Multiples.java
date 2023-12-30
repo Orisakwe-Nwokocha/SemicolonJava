@@ -11,9 +11,6 @@ public class Multiples {
         }
     }
     public static boolean isMultiple(int num1, int num2) {
-        if (num2 % num1 == 0) {
-            return true;
-        }
-        return false;
+        return num2 % num1 == 0;
     }
 }

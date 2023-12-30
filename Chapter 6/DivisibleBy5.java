@@ -25,9 +25,6 @@ public class DivisibleBy5 {
         
     }
     public static boolean isDivisible(int number) {
-        if (number % 5 == 0) {
-            return true;
-        }
-        return false;
+        return number % 5 == 0;
     }
 }

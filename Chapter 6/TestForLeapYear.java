@@ -14,10 +14,6 @@ public class TestForLeapYear {
         }
     }
     public static boolean isLeapYear(int leapYear) {
-        if ((leapYear % 4 == 0) && (leapYear % 100 != 0 || leapYear % 400 == 0)) {
-            return true;
-        } else {
-            return false;
-        }
+        return (leapYear % 4 == 0) && (leapYear % 100 != 0 || leapYear % 400 == 0);
     }
 }

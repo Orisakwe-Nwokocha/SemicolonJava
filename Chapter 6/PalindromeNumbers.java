@@ -25,10 +25,6 @@ public class PalindromeNumbers {
         StringBuilder reverseStr = new StringBuilder(palindromeNumber);
         String reversedStr = reverseStr.reverse().toString();
 
-        if (palindromeNumber.equals(reversedStr)) {
-            return true;
-        } else {
-            return false;
-        }
+        return palindromeNumber.equals(reversedStr);
     }
 }

@@ -19,7 +19,7 @@ public class BeautifyingStrings {
         }
     }
     public static String capitaliseFirstLetter(String strTitleCase) {
-        if (strTitleCase == null || strTitleCase.length() == 0 || Character.isUpperCase(strTitleCase.charAt(0))) {
+        if (strTitleCase == null || strTitleCase.isEmpty() || Character.isUpperCase(strTitleCase.charAt(0))) {
             return strTitleCase;
         } else {
             return Character.toUpperCase(strTitleCase.charAt(0)) + strTitleCase.substring(1);
@@ -27,9 +27,8 @@ public class BeautifyingStrings {
     }
 
     public static void beautifyString(String str) {
-        String beautify = addFullStop(str);
-        String beautified = capitaliseFirstLetter(beautify);
+        System.out.println(capitaliseFirstLetter(addFullStop(str)));
 
-        System.out.println(beautified);
     }
+
 }

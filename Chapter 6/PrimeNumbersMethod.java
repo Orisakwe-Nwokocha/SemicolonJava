@@ -23,12 +23,7 @@ public class PrimeNumbersMethod {
             }
         }
 
-        if (counter == 2) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return counter == 2;
 
     }
 }

@@ -1,11 +1,23 @@
-import java.util.Scanner;
-
 public class PerfectNumbers {
     public static void main(String[] args) {
-        int num = 6;
 
-        for (int loop = 1; loop <= 10000; loop++) {
-            isPerfect(loop);
+        for (int num = 1; num <= 10000; num++) {
+            if (isPerfect(num)) {
+                int sum = 0;
+                System.out.print("\nThe factors of " + num + " is ");
+
+                for (int count = 1; count < num; count++) {
+                    if (num % count == 0) {
+                        sum += count;
+                        System.out.print(count + " ");
+                    }
+                }
+                System.out.println("\nThe sum of the factors is " + sum);
+                System.out.println(num + " is a perfect number\n");
+            }
+            else {
+                System.out.println(num + " is not a perfect number");
+            }
         }
 
     }
@@ -16,19 +28,6 @@ public class PerfectNumbers {
                 sum += loop;
             }
         }
-        if (sum == number) {
-            System.out.print("The factors of " + number + " is ");
-            for (int loop = 1; loop < number; loop++) {
-                if (number % loop == 0) {
-                    System.out.print(loop + " ");
-                }
-            }
-            System.out.println();
-            System.out.println(number + " is a perfect number");
-            return true;
-        } else {
-            System.out.println(number + " is not a perfect number");
-            return false;
-        }
+        return sum == number;
     }
 }
