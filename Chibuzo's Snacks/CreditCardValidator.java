@@ -20,7 +20,7 @@ public class CreditCardValidator {
     public void setCardNumber(String cardNumber) {
         while (cardNumber.length() < 13 || cardNumber.length() > 16) {
             System.out.println("Invalid Card Number!\nPlease enter a valid number: ");
-            cardNumber = input.nextLine();
+            cardNumber = input.nextLine.replaceAll("[^a-zA-Z0-9]", "")();
         }
         
         this.cardNumber = cardNumber;
