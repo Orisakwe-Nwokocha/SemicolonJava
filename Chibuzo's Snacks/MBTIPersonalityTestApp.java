@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.Arrays;
 
 public class MBTIPersonalityTestApp {
     public static void main(String[] args) {
@@ -17,8 +16,7 @@ public class MBTIPersonalityTestApp {
         MBTIPersonalityTest.thinkingVsFeeling();
         MBTIPersonalityTest.judgingVsPerceptive();
 
-        MBTIPersonalityTest.getMyAnswer();
-
+        MBTIPersonalityTest.getMBTI();
 
 
     }
