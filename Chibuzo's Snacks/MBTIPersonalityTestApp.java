@@ -11,13 +11,7 @@ public class MBTIPersonalityTestApp {
 
         System.out.printf("%nHello %s, you selected%n", name);
 
-        MBTIPersonalityTest.extrovertedVsIntroverted();
-        MBTIPersonalityTest.sensingVsIntuitive();
-        MBTIPersonalityTest.thinkingVsFeeling();
-        MBTIPersonalityTest.judgingVsPerceptive();
-
         MBTIPersonalityTest.getMBTI();
-
 
     }
 
