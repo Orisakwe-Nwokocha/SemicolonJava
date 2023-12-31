@@ -9,7 +9,7 @@ public class CreditCardValidator {
         CreditCardValidator creditCardValidator = new CreditCardValidator();
 
         System.out.println("Hello, Kindly Enter Card details to verify");
-        String cardDetails = input.nextLine();
+        String cardDetails = input.nextLine().replaceAll("[^a-zA-Z0-9]", "");
 
         creditCardValidator.setCardNumber(cardDetails);
         creditCardValidator.setCardType(creditCardValidator.getCardNumber());
