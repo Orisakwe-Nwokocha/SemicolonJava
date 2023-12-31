@@ -211,6 +211,11 @@ public class MBTIPersonalityTest {
     }
 
     public static void getMBTI() {
+        extrovertedVsIntroverted();
+        sensingVsIntuitive();
+        thinkingVsFeeling();
+        judgingVsPerceptive();
+
         String mbtiType = new String(mbti);
 
         switch (mbtiType) {
