@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class MBTIPersonalityTest {
@@ -9,7 +8,6 @@ public class MBTIPersonalityTest {
     private static final ArrayList<String> thinkingFeeling = new ArrayList<>();
     private static final ArrayList<String> judgingPerceptive = new ArrayList<>();
     private static final char[] mbti = new char[4];
-    private static final ArrayList<String> myAnswer = new ArrayList<>();
 
     public static String getMBTIQuestions(int question) {
         String[] mbtiQuestions = new String[20];
@@ -53,8 +51,6 @@ public class MBTIPersonalityTest {
                 answer = input.next().toUpperCase();
 
             }
-
-            myAnswer.add(answer);
 
             if ((index + 1) == 1 || (index + 1) == 5 || (index + 1) == 9 || (index + 1) == 13 || (index + 1) == 17) {
                 extrovertedIntroverted.add(answer);
@@ -200,6 +196,7 @@ public class MBTIPersonalityTest {
                 System.out.println(newText);
                 noOfB++;
             }
+            count += 4;
 
         }
         System.out.println("Number of A selected: " + noOfA);
@@ -249,7 +246,8 @@ public class MBTIPersonalityTest {
                         on feelings and values (Feeling), and prefer to be spontaneous and flexible
                         rather than planned and organized (Perceiving).
                        
-                       For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
+                    
+                    For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
                        """);
             case "INTJ" -> System.out.println("""
                     INTJ
@@ -283,7 +281,8 @@ public class MBTIPersonalityTest {
                         logic and reason (Thinking) and prefer to be planned and organized rather than
                         spontaneous and flexible (Judging).
                        
-                       For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
+                    
+                    For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
                        """);
             case "INFJ" -> System.out.println("""
                     INFJ
@@ -317,7 +316,8 @@ public class MBTIPersonalityTest {
                             * Feeling: INFJs make decisions based on feelings and values
                             * Judging: INFJs prefer to be planned and organized rather than spontaneous and flexible
                        
-                       For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
+                    
+                    For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
                        """);
             case "INTP" -> System.out.println("""
                     INTP
@@ -349,7 +349,8 @@ public class MBTIPersonalityTest {
                         who makes decisions based on logic and reason (Thinking) and who prefers to be
                         spontaneous and flexible rather than planned and organized (Perceiving).
                        
-                       For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
+                    
+                    For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
                        """);
             case "ENFP" -> System.out.println("""
                     ENFP
@@ -381,7 +382,8 @@ public class MBTIPersonalityTest {
                         based on feelings and values (Feeling), and prefer to be spontaneous and flexible
                         rather than planned and organized (Perceiving).
                        
-                       For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
+                    
+                    For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
                        """);
             case "ENTJ" -> System.out.println("""
                     ENTJ
@@ -410,7 +412,8 @@ public class MBTIPersonalityTest {
                         (iNtuitive), who makes decisions based on logic and reason (Thinking) and who prefers
                         to be planned and organized rather than spontaneous and flexible (Judging).
                        
-                       For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
+                    
+                    For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
                        """);
             case "ENTP" -> System.out.println("""
                     ENTP
@@ -440,7 +443,8 @@ public class MBTIPersonalityTest {
                         who prefers to be spontaneous and flexible rather than planned and organized
                         (Perceiving).
                        
-                       For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
+                    
+                    For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
                        """);
             case "ENFJ" -> System.out.println("""
                     ENFJ
@@ -470,7 +474,8 @@ public class MBTIPersonalityTest {
                         (iNtuitive), who makes decisions based on feelings and values (Feeling) and who
                         prefers to be planned and organized rather than spontaneous and flexible (Judging).
                        
-                       For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
+                    
+                    For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
                        """);
             case "ISFJ" -> System.out.println("""
                     ISFJ
@@ -498,7 +503,8 @@ public class MBTIPersonalityTest {
                         on feelings and values (Feeling) and who prefers to be planned and organized rather than
                         spontaneous and flexible (Judging).
                        
-                       For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
+                    
+                    For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
                        """);
             case "ISFP" -> System.out.println("""
                     ISFP
@@ -526,7 +532,8 @@ public class MBTIPersonalityTest {
                         (Sensing), who makes decisions based on feelings and values (Feeling) and who prefers
                         to be spontaneous and flexible rather than planned and organized (Perceiving).
                        
-                       For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
+                    
+                    For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
                        """);
             case "ISTJ" -> System.out.println("""
                     ISTJ
@@ -554,7 +561,8 @@ public class MBTIPersonalityTest {
                         decisions based on logic and reason (Thinking) and who prefers to be planned and
                         organized rather than spontaneous and flexible (Judging).
                        
-                       For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
+                    
+                    For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
                        """);
             case "ISTP" -> System.out.println("""
                     ISTP
@@ -582,24 +590,125 @@ public class MBTIPersonalityTest {
                         decisions based on logic and reason (Thinking) and who prefers to be spontaneous and
                         flexible rather than planned and organized (Perceiving).
                        
-                       For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
+                    
+                    For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
+                       """);
+            case "ESFJ" -> System.out.println("""
+                    ESFJ
+                          Provider
+                          The Consul (16Personalities)
+                          
+                          
+                    The ESFJ Personality Type
+                        ESFJs are conscientious helpers, sensitive to the needs of others and energetically
+                        dedicated to their responsibilities. They are highly attuned to their emotional
+                        environment and attentive to both the feelings of others and the perception others
+                        have of them. ESFJs like a sense of harmony and cooperation around them, and are
+                        eager to please and provide.
+                                                            
+                        ESFJs value loyalty and tradition, and usually make their family and friends their
+                        top priority. They are generous with their time, effort, and emotions. They often
+                        take on the concerns of others as if they were their own, and will attempt to put
+                        their significant organizational talents to use to bring order to other people's
+                        lives.
+                                    
+                    What does ESFJ stand for?
+                        ESFJ is an acronym used to describe one of the sixteen personality types created by
+                        Katharine Briggs and Isabel Myers. It stands for Extraverted, Sensing, Feeling,
+                        Judging. ESFJ indicates a person who is energized by time spent with others
+                        (Extraverted), who focuses on facts and details rather than ideas and concepts
+                        (Sensing), who makes decisions based on feelings and values (Feeling) and who prefers
+                        to be planned and organized rather than spontaneous and flexible (Judging).
+                       
+                    
+                    For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
+                       """);
+            case "ESFP" -> System.out.println("""
+                    ESFP
+                          Performer
+                          The Entertainer (16Personalities)
+                          
+                          
+                    The ESFP Personality Type
+                        ESFPs are vivacious entertainers who charm and engage those around them. They are
+                        spontaneous, energetic, and fun-loving, and take pleasure in the things around
+                        them: food, clothes, nature, animals, and especially people.
+                              
+                        ESFPs are typically warm and talkative and have a contagious enthusiasm for life.
+                        They like to be in the middle of the action and the center of attention. They have
+                        a playful, open sense of humor, and like to draw out other people and help them
+                        have a good time.
+                                    
+                    What does ESFP stand for?
+                        ESFP is an acronym used to describe one of the sixteen personality types created by
+                        Katharine Briggs and Isabel Myers. It stands for Extraverted, Sensing, Feeling,
+                        Perceiving. ESFP indicates a person who is energized by time spent with others
+                        (Extraverted), who focuses on facts and details rather than ideas and concepts
+                        (Sensing), who makes decisions based on feelings and values (Feeling) and who prefers
+                        to be spontaneous and flexible rather than planned and organized (Perceiving).
+                       
+                    
+                    For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
+                       """);
+            case "ESTJ" -> System.out.println("""
+                    ESTJ
+                          Supervisor
+                          The Executive (16Personalities)
+                          
+                          
+                    The ESTJ Personality Type
+                        ESTJs are hardworking traditionalists, eager to take charge in organizing projects
+                        and people. Orderly, rule-abiding, and conscientious, ESTJs like to get things done,
+                        and tend to go about projects in a systematic, methodical way.
+                                        
+                        ESTJs are the consummate organizers, and want to bring structure to their surroundings.
+                        They value predictability and prefer things to proceed in a logical order. When they
+                        see a lack of organization, the ESTJ often takes the initiative to establish processes
+                        and guidelines, so that everyone knows what's expected.
+                                    
+                    What does ESTJ stand for?
+                        ESTJ is an acronym used to describe one of the sixteen personality types created by
+                        Katharine Briggs and Isabel Myers. It stands for Extraverted, Sensing, Thinking,
+                        Judging. ESTJ indicates a person who is energized by time spent with others
+                        (Extraverted), who focuses on facts and details rather than ideas and concepts
+                        (Sensing), who makes decisions based on logic and reason (Thinking) and who prefers
+                        to be planned and organized rather than spontaneous and flexible (Judging).
+                       
+                    
+                    For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
+                       """);
+            case "ESTP" -> System.out.println("""
+                    ESTP
+                          Dynamo
+                          The Entrepreneur (16Personalities)
+                          
+                          
+                    The ESTP Personality Type
+                        ESTPs are energetic thrill-seekers who are at their best when putting out fires,
+                        whether literal or metaphorical. They bring a sense of dynamic energy to their
+                        interactions with others and the world around them. They assess situations quickly
+                        and move adeptly to respond to immediate problems with practical solutions.
+                                                                               
+                        Active and playful, ESTPs are often the life of the party and have a good sense
+                        of humor. They use their keen powers of observation to assess their audience and
+                        adapt quickly to keep interactions exciting. Although they typically appear very
+                        social, they are rarely sensitive; the ESTP prefers to keep things fast-paced and
+                        silly rather than emotional or serious.
+                                    
+                    What does ESTP stand for?
+                        ESTP is an acronym used to describe one of the sixteen personality types created by
+                        Katharine Briggs and Isabel Myers. It stands for Extraverted, Sensing, Thinking,
+                        Perceiving. ESTP indicates a person who is energized by time spent with others
+                        (Extraverted), who focuses on facts and details rather than ideas and concepts
+                        (Sensing), who makes decisions based on logic and reason (Thinking) and who prefers
+                        to be spontaneous and flexible rather than planned and organized (Perceiving).
+                       
+                    
+                    For more information, visit https://www.truity.com/blog/page/16-personality-types-myers-briggs
                        """);
 
         }
+
     }
-
-    public static void getMyAnswer() {
-        int count = 1;
-        for (String s : myAnswer) {
-            System.out.printf("%n%d. %s%n", count, s);
-            count++;
-        }
-    }
-
-
-
-
-
-
 
 }
