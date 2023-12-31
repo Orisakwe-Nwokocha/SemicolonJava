@@ -89,8 +89,7 @@ public class CheckOutApp {
         }
     }
 
-    public static void main(String[] args) {
-
+    public static void startApp() {
         Scanner input = new Scanner(System.in);
 
         System.out.println("What is the customer's Name?");
@@ -177,12 +176,12 @@ public class CheckOutApp {
         }
 
         System.out.printf("%n%n" +
-                "-------------------------------------------------------%n" +
-                "\t\t\t%13s\t  %10.2f%n\t\t\t%13s\t  %10.2f%n" +
-                "\t\t\t%13s\t  %10.2f%n" +
-                "=======================================================%n" +
-                "\t\t\t%13s\t  %10.2f%n=======================================================%n" +
-                "   THIS IS NOT A RECEIPT, KINDLY PAY %.2f%n=======================================================%n",
+                        "-------------------------------------------------------%n" +
+                        "\t\t\t%13s\t  %10.2f%n\t\t\t%13s\t  %10.2f%n" +
+                        "\t\t\t%13s\t  %10.2f%n" +
+                        "=======================================================%n" +
+                        "\t\t\t%13s\t  %10.2f%n=======================================================%n" +
+                        "   THIS IS NOT A RECEIPT, KINDLY PAY %.2f%n=======================================================%n",
                 "Sub Total:", getSubTotal(), "Discount:", getDiscountedTotal(), "VAT @ 7.50%:", getVAT(),
                 "Bill Total:", getBillTotal(), getBillTotal());
 
@@ -221,11 +220,10 @@ public class CheckOutApp {
                         "=======================================================%n" +
                         "\t  THANK YOU FOR YOUR PATRONAGE%n" +
                         "=======================================================%n",
-                        "Sub Total:",getSubTotal(), "Discount:", getDiscountedTotal(),
-                        "VAT @ 7.50%:", getVAT(), "Bill Total:", getBillTotal(),
-                        "Amount Paid:", getAmountPaid(), "Balance:", getBalance());
-
-
+                "Sub Total:",getSubTotal(), "Discount:", getDiscountedTotal(),
+                "VAT @ 7.50%:", getVAT(), "Bill Total:", getBillTotal(),
+                "Amount Paid:", getAmountPaid(), "Balance:", getBalance());
     }
+
 
 }
