@@ -42,6 +42,7 @@ public class MBTIPersonalityTest {
         for (int index = 0; index < 20; index++) {
             System.out.println(MBTIPersonalityTest.getMBTIQuestions(index));
             String answer = input.next().toUpperCase();
+            System.out.println();
             while (!answer.equals("A") && !answer.equals("B")) {
                 System.out.println("""
                             Expected A or B as Response
@@ -49,6 +50,7 @@ public class MBTIPersonalityTest {
                             """);
                 System.out.println(MBTIPersonalityTest.getMBTIQuestions(index));
                 answer = input.next().toUpperCase();
+                System.out.println();
 
             }
 
