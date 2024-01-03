@@ -25,7 +25,7 @@ public class StudentPoll {
 
         System.out.println(Arrays.toString(frequency));
 
-        System.out.println("The occurences of answer 1 is " + count1);
-        System.out.println("The occurences of answer 3 is " + count3);
+        System.out.println("The occurrences of answer 1 is " + count1);
+        System.out.println("The occurrences of answer 3 is " + count3);
     }
 }
