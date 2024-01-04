@@ -281,9 +281,9 @@ public class StudentGrade {
     }
 
     public static void subjectSummary() {
+        System.out.println("SUBJECT SUMMARY");
+        
         for (int subject = 0; subject < grades[0].length; subject++) {
-
-            System.out.println("SUBJECT SUMMARY");
             System.out.printf("Subject %d", subject + 1);
 
             int highestScore = getHighestScore(subject);
