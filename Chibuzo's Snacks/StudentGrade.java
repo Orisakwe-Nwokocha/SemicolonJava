@@ -79,26 +79,20 @@ public class StudentGrade {
         int highestGrade = 0;
 
         for (int student = 0; student < grades.length; student++) {
-
-            for (int index = 0; index < grades[student].length; index++) {
-                if (grades[student][subject] > highestGrade) {
-                    highestGrade = grades[student][subject];
-                }
+            if (grades[student][subject] > highestGrade) {
+                highestGrade = grades[student][subject];
             }
-
         }
+        
         return highestGrade;
     }
 
     public static int getLowestScore(int subject) {
         int lowestGrade = getHighestScore(subject);
-
-        for (int[] student : grades) {
-
-            for (int index = 0; index < student.length; index++) {
-                if (student[subject] < lowestGrade) {
-                    lowestGrade = student[subject];
-                }
+        
+       for (int[] student : grades) {
+            if (student[subject] < lowestGrade) {
+                lowestGrade = student[subject];
             }
         }
 
