@@ -376,7 +376,8 @@ public class StudentGrade {
                 int score = input.nextInt();
 
                 while (score < 0 || score > 100) {
-                    System.out.println("Invalid score\nEnter score for subject " + (subject + 1));
+                    System.out.println("Invalid score\n\nEntering score for student " + (student + 1));
+                    System.out.println("Enter score for subject " + (subject + 1));
                     score = input.nextInt();
                 }
 
