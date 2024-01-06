@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Scanner;
 	
@@ -9,8 +8,8 @@ public class TicTacToe {
     private static Status gameStatus;
     
     private static String[][] TIC_TAC_TOE = {{"-", "-", "-"},
-				 				  {"-", "-", "-"},
-				  				  {"-", "-", "-"}};
+				 	     {"-", "-", "-"},
+				  	     {"-", "-", "-"}};
 				  				  
     private static final ArrayList<String> playersMarkedSpaces = new ArrayList<>();			  				  			  				  
 
