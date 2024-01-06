@@ -24,8 +24,8 @@ public class TicTacToe {
 			   A sample of the labelled spaces:
 			   """);
 	  String sampleOutput[][] = {{"a1", "a2", "a3"},
-				   {"b1", "b2", "b3"},
-				   {"c1", "c2", "c3"}};
+				     {"b1", "b2", "b3"},
+				     {"c1", "c2", "c3"}};
 	   for (String[] row : sampleOutput) {
 	      for (String column : row) {
 	    	  System.out.print(column + "  ");
@@ -159,7 +159,6 @@ public class TicTacToe {
 		System.out.printf("%nThe game ends in a draw!!!%n");
 	 }
 	 
-	
    }
    
    public static Status gameResult() {
