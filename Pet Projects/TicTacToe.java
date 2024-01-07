@@ -13,7 +13,7 @@ public class TicTacToe {
 				  				  
     private static final ArrayList<String> playersMarkedSpaces = new ArrayList<>();			  				  			  				  
 
-    private enum Status {PLAYER1WINS, PLAYER2WINS};	
+    private enum Status {PLAYER1WINS, PLAYER2WINS, DRAW};	
     						  
     public static void displayRules() {
 	  System.out.println("Welcome!\nHere is a rundown of the rules:");
@@ -26,11 +26,12 @@ public class TicTacToe {
 	  String sampleOutput[][] = {{"a1", "a2", "a3"},
 				     {"b1", "b2", "b3"},
 				     {"c1", "c2", "c3"}};
-	   for (String[] row : sampleOutput) {
-	      for (String column : row) {
-	    	  System.out.print(column + "  ");
-		
-	      }
+
+	   for (int index = 0; index < sampleOutput.length; index++) {	
+	      for (int elements = 0; elements < sampleOutput[index].length; elements++) {		
+	      	 for (int bar = 0; bar < elements; bar += 2) {System.out.print(" | ");}
+		    System.out.print(sampleOutput[index][elements]);   	
+	      } 
 	      System.out.println("\n");
 	   }
 	 
@@ -78,23 +79,21 @@ public class TicTacToe {
    		}
    		
    		System.out.println();
-		for (String[] row : TIC_TAC_TOE) {
-	    		for (String column : row) {
-	    			System.out.print(column + "  ");
-	    		}
-    			System.out.println("\n");
-		}
+
+	   	for (int index = 0; index < TIC_TAC_TOE.length; index++) {	
+	      		for (int elements = 0; elements < TIC_TAC_TOE[index].length; elements++) {		
+	      	 		for (int bar = 0; bar < elements; bar += 2) {System.out.print(" | ");}
+		    		System.out.print(TIC_TAC_TOE[index][elements]);   	
+	      		} 
+	      		System.out.println("\n");
+	   	}
 		
 		gameResult();	
 		if (gameStatus == Status.PLAYER1WINS) {
 			System.out.printf("%nPlayer 1 wins!!!%n");
 			break;
 		} 
-		if (gameStatus == Status.PLAYER2WINS) {
-			System.out.printf("%nPlayer 2 wins!!!%n");
-			break;
-		} 
-		
+				
 		if (count == 5) {break;}  				 			
    			
    		System.out.println("Player 2, mark a space (a1-c3)"); 
@@ -136,18 +135,16 @@ public class TicTacToe {
    		}
    		
    		System.out.println();
-		for (String[] row : TIC_TAC_TOE) {
-	    		for (String column : row) {
-	    			System.out.print(column + "  ");
-	    		}
-    			System.out.println("\n");
-		}
+
+		for (int index = 0; index < TIC_TAC_TOE.length; index++) {	
+	      		for (int elements = 0; elements < TIC_TAC_TOE[index].length; elements++) {		
+	      	 		for (int bar = 0; bar < elements; bar += 2) {System.out.print(" | ");}
+		    		System.out.print(TIC_TAC_TOE[index][elements]);   	
+	      		} 
+	     		System.out.println("\n");
+	   	}
 		
-		gameResult();	
-		if (gameStatus == Status.PLAYER1WINS) {
-			System.out.printf("%nPlayer 1 wins!!!%n");
-			break;
-		} 
+		gameResult();			
 		if (gameStatus == Status.PLAYER2WINS) {
 			System.out.printf("%nPlayer 2 wins!!!%n");
 			break;
@@ -155,10 +152,11 @@ public class TicTacToe {
 	 }
 	
 	 gameResult();	
-	 if (gameStatus != Status.PLAYER1WINS && gameStatus != Status.PLAYER2WINS) {
+	 if (gameStatus == Status.DRAW) {
 		System.out.printf("%nThe game ends in a draw!!!%n");
 	 }
 	 
+	
    }
    
    public static Status gameResult() {
@@ -194,6 +192,8 @@ public class TicTacToe {
    	          || isMarkedVerticalORow2 || isMarkedVerticalORow3 || isMarkedDiagonalOLeft || isMarkedDiagonalORight) {
    	     gameStatus = Status.PLAYER2WINS;	   	    
    	 }
+	 
+	 else {gameStatus = Status.DRAW;}
    	 
    	 return gameStatus;
    	
@@ -207,8 +207,6 @@ public class TicTacToe {
 	System.out.println("Player 1, you are X\nPlayer 2, you are O\n");
 	
 	tictactoe();
-
     }
-    
  
 }
