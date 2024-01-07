@@ -196,11 +196,8 @@ public class TicTacToe {
 	 else {gameStatus = Status.DRAW;}
    	 
    	 return gameStatus;
-   	
-   	 
     }
-
-   	
+	
    public static void startGame() {
 	displayRules();
 
@@ -208,5 +205,5 @@ public class TicTacToe {
 	
 	tictactoe();
     }
- 
+	
 }
