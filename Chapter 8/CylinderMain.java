@@ -4,7 +4,7 @@ public class CylinderMain {
     public static void main(String... args) {
         Scanner input = new Scanner(System.in);
         
-        CylinderClass cylinder = new CylinderClass();
+        Cylinder cylinder = new Cylinder();
         
         System.out.println("Enter radius:");
         int radius = input.nextInt();
@@ -14,23 +14,15 @@ public class CylinderMain {
         
         try {
             cylinder.setRadius(radius);
+            cylinder.setHeight(height);
         }
         catch (IllegalArgumentException e){
             System.out.printf("Exception while initialising radius: %s%n", e.getMessage());
         }
-        
-        try {
-            cylinder.setHeight(height);
-        }
-        catch (IllegalArgumentException e){
-            System.out.printf("Exception while initialising height: %s%n", e.getMessage());
-        }
-        
+                
         System.out.printf("%nVolume: %.2f", cylinder.cylinderVolume());
         
         input.close();
     }
-
-
 
 }
