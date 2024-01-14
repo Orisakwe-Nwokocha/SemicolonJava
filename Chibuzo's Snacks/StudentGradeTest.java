@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class StudentGradeTest {
-    private final int[][] grades = new int[4][3];
 
     @BeforeEach
     public void testSetUp() {
