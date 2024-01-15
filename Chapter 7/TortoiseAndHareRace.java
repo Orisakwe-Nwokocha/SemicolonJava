@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.security.SecureRandom;
 
 public class TortoiseAndHareRace {
