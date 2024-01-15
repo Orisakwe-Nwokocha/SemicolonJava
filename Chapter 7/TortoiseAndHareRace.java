@@ -14,9 +14,7 @@ public class TortoiseAndHareRace {
         String[] raceTrack = new String[71];
 
         System.out.println("BANG !!!!!\nAND THEY'RE OFF !!!!!");
-        System.out.println(TORTOISE_POSITION);
-        System.out.println(HARE_POSITION);
-                    
+        
         for (int race = 1; race < raceTrack.length; race++) {
             racePositionsTortoise();
             racePositionsHare();
@@ -32,8 +30,7 @@ public class TortoiseAndHareRace {
 
             
             for (int index = 1; index < raceTrack.length; index++) {
-                raceTrack[index] = "-";
-                
+                raceTrack[index] = "-";                
                 raceStatus(TORTOISE_POSITION, HARE_POSITION);
                 
                 if (gameStatus == Status.TIE) {
@@ -48,25 +45,21 @@ public class TortoiseAndHareRace {
             
             System.out.println();
             
-            ++noOfGames;       
-                 
+            ++noOfGames;  
             raceStatus(TORTOISE_POSITION, HARE_POSITION);
             
             if (gameStatus == Status.TORTOISE) {
                 System.out.println("\nTORTOISE WINS!!! YAY!!!");
                 break;
-            }
-            
+            }            
             if (gameStatus == Status.HARE) {
                 System.out.println("\nHare wins. Yuch");
                 break;
-            }
-            
+            }            
             if (gameStatus == Status.DRAW) {
-                System.out.println("\nIt's a tie\nThe tortoise as the underdog is rewarded with a carrot and lettuce!!!");
+                System.out.println("\nIt's a tie\nThe tortoise as the underdog is rewarded with a carrot and a lettuce!!!");
                 break;
-            }
-                        
+            }                        
         }
         
         raceStatus(TORTOISE_POSITION, HARE_POSITION);
@@ -75,8 +68,7 @@ public class TortoiseAndHareRace {
             System.out.println("\nNeither animal won");
         }
         
-        System.out.println("Number of games: " + noOfGames);
-        
+        System.out.println("Number of laps: " + noOfGames);
     }
     
      public static int racePositionsTortoise() {
