@@ -18,7 +18,7 @@ public class MBTIPersonalityTest {
         mbtiQuestions[3] = "A. organized, orderly\t\t\tB. flexible, adaptable ";
         mbtiQuestions[4] = "A. more outgoing, think out loud\t\t\tB. more reserved, think to yourself";
         mbtiQuestions[5] = "A. practical, realistic, experimental\t\t\tB. imaginative, innovative, theoretical ";
-        mbtiQuestions[6] = "A. candid, straight forward, frank\t\t\tB. tacuserAnswersul, kind encouraging";
+        mbtiQuestions[6] = "A. candid, straight forward, frank\t\t\tB. tactful, kind encouraging";
         mbtiQuestions[7] = "A. plan, scheduled\t\t\tB. unplanned, spontaneous ";
         mbtiQuestions[8] = "A. seek many tasks, public activities, interaction with others\t\t\tB. seek private, solitary activities with quiet to concentrate";
         mbtiQuestions[9] = "A. standard, usual, conventional\t\t\tB. different, novel, unique ";
