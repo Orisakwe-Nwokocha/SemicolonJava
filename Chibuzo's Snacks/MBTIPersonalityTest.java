@@ -2,12 +2,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MBTIPersonalityTest {
-    private static Scanner input = new Scanner(System.in);
-    private static ArrayList<String> extrovertedIntroverted = new ArrayList<>();
-    private static ArrayList<String> sensingIntuitive = new ArrayList<>();
-    private static ArrayList<String> thinkingFeeling = new ArrayList<>();
-    private static ArrayList<String> judgingPerceptive = new ArrayList<>();
-    private static char[] mbti = new char[4];
+    private static final Scanner input = new Scanner(System.in);
+    private static final ArrayList<String> extrovertedIntroverted = new ArrayList<>();
+    private static final ArrayList<String> sensingIntuitive = new ArrayList<>();
+    private static final ArrayList<String> thinkingFeeling = new ArrayList<>();
+    private static final ArrayList<String> judgingPerceptive = new ArrayList<>();
+    private static final char[] mbti = new char[4];
 
     public static String getMBTIQuestions(int question) {
         String[] mbtiQuestions = new String[20];
@@ -211,8 +211,8 @@ public class MBTIPersonalityTest {
         }
 
     }
-
- public static void getMBTI() {
+    
+    public static void getMBTI() {
         extrovertedVsIntroverted();
         sensingVsIntuitive();
         thinkingVsFeeling();
