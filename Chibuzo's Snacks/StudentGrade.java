@@ -8,6 +8,50 @@ public class StudentGrade {
         StudentGrade.grades = grades;
     }
 
+    public static void inputGrades() {
+        Scanner input = new Scanner(System.in);
+        
+        System.out.println("How many students do you have?");
+        int studentsRow = input.nextInt();
+        while (studentsRow <= 0) {
+            System.out.println("Invalid input\nHow many students do you have?");
+            studentsRow = input.nextInt();
+        }
+
+        System.out.println("How many subjects do they offer?");
+        int subjectsColumn = input.nextInt();
+        while (subjectsColumn <= 0) {
+            System.out.println("Invalid input\nHow many subjects do they offer?");
+            subjectsColumn = input.nextInt();
+        }
+
+        int[][] newArray = new int[studentsRow][subjectsColumn];
+        System.out.println("Saving >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\nSaved successfully\n");
+
+        for (int student = 0; student < studentsRow; student++) {
+
+            for (int subject = 0; subject < subjectsColumn; subject++) {
+                System.out.println("Entering score for student " + (student + 1));
+                System.out.println("Enter score for subject " + (subject + 1));
+                int score = input.nextInt();
+
+                while (score < 0 || score > 100) {
+                    System.out.println("Invalid score\n\nEntering score for student " + (student + 1));
+                    System.out.println("Enter score for subject " + (subject + 1));
+                    score = input.nextInt();
+                }
+
+                newArray[student][subject] = score;
+                System.out.println("Saving >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\nSaved successfully");
+                System.out.println();
+            }
+        }
+
+        setGrades(newArray);
+
+        input.close();        
+    }
+
     public static int getTotal(int[] setOfGrades) {
         int sum = 0;
 
@@ -347,48 +391,5 @@ public class StudentGrade {
         outputGrades();
         subjectSummary();
     }
-
-    public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        
-        System.out.println("How many students do you have?");
-        int studentsRow = input.nextInt();
-        while (studentsRow <= 0) {
-            System.out.println("Invalid input\nHow many students do you have?");
-            studentsRow = input.nextInt();
-        }
-
-        System.out.println("How many subjects do they offer?");
-        int subjectsColumn = input.nextInt();
-        while (subjectsColumn <= 0) {
-            System.out.println("Invalid input\nHow many subjects do they offer?");
-            subjectsColumn = input.nextInt();
-        }
-
-        int[][] newArray = new int[studentsRow][subjectsColumn];
-        System.out.println("Saving >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\nSaved successfully\n");
-
-        for (int student = 0; student < studentsRow; student++) {
-
-            for (int subject = 0; subject < subjectsColumn; subject++) {
-                System.out.println("Entering score for student " + (student + 1));
-                System.out.println("Enter score for subject " + (subject + 1));
-                int score = input.nextInt();
-
-                while (score < 0 || score > 100) {
-                    System.out.println("Invalid score\n\nEntering score for student " + (student + 1));
-                    System.out.println("Enter score for subject " + (subject + 1));
-                    score = input.nextInt();
-                }
-
-                newArray[student][subject] = score;
-                System.out.println("Saving >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\nSaved successfully");
-                System.out.println();
-            }
-        }
-
-        setGrades(newArray);
-
-        processGrades();
-    }
+    
 }
