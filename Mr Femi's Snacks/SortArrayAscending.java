@@ -13,7 +13,7 @@ public class SortArrayAscending {
 			}
 		}
 	}
-
 	System.out.println(Arrays.toString(numbers));
+	    
     }
 }
