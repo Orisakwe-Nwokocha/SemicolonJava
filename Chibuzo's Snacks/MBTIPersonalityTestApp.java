@@ -9,7 +9,7 @@ public class MBTIPersonalityTestApp {
 
         MBTIPersonalityTest.displayQuestions();
 
-        System.out.printf("%nHello %s, you selected%n", name);
+        System.out.printf("Hello %s, you selected%n", name);
 
         MBTIPersonalityTest.getMBTI();
 
