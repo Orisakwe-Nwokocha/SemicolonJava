@@ -3,7 +3,13 @@ public class AirlineBooking {
         AirlineReservationsSystem bookTicket = new AirlineReservationsSystem();
 
         for (int loop = 1; loop <= 11; loop++) {
-            bookTicket.airlineReservationsSystem();
+
+            try {
+                bookTicket.airlineReservationsSystem();
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage() + "\n");
+            }
+
         }
     }
 }
