@@ -68,7 +68,6 @@ public class MBTIPersonalityTest {
             }
 
         }
-
     }
 
     public static void extrovertedVsIntroverted() {
