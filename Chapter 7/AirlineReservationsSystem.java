@@ -14,24 +14,19 @@ public class AirlineReservationsSystem {
         return seatValidation[index];
     }
     public void airlineReservationsSystem() {
-        int seatSection = userInputValidation(collectUserInput());
+        int seatSection = collectUserInput();
         int seatNo = getSeatNo(seatSection);
         System.out.println(checkSeatAvailability(seatSection, seatNo));
     }
 
-    public String collectUserInput() {
+    public int collectUserInput() {
         System.out.println("Please type 1 for First Class and Please type 2 for Economy:");
         String userInput = input.next();
 
         if (!userInput.equals("1") && !userInput.equals("2")) {
-            System.out.println("Invalid input");
-            return collectUserInput();
+            throw new IllegalArgumentException("Seat section provided is not valid");
         }
-        else return userInput;
-    }
-
-    public static int userInputValidation(String userInput) {
-        return Integer.parseInt(userInput);
+        else return Integer.parseInt(userInput);
     }
 
     public int getSeatNo(int seatSection) {
@@ -42,7 +37,7 @@ public class AirlineReservationsSystem {
         };
     }
 
-    public String checkSeatAvailability(int seatSection, int seatNo) {
+    private String checkSeatAvailability(int seatSection, int seatNo) {
         if (seatingChart[1] && seatingChart[2] && seatingChart[3] && seatingChart[4] && seatingChart[5]
             && seatingChart[6] && seatingChart[7] && seatingChart[8] && seatingChart[9] && seatingChart[10]) {
 
