@@ -7,12 +7,10 @@ public class AirlineReservationsSystem {
     private final boolean[] seatingChart = new boolean[11];
     private static final int[] seatValidation = new int[11];
 
-    private boolean getSeatingChart(int index) {
-        return seatingChart[index];
-    }
-    private static int getSeatValidation(int index) {
-        return seatValidation[index];
-    }
+    private boolean getSeatingChart(int index) {return seatingChart[index];}
+    
+    private static int getSeatValidation(int index) {return seatValidation[index];}
+    
     public void airlineReservationsSystem() {
         int seatSection = collectUserInput();
         int seatNo = getSeatNo(seatSection);
