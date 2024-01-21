@@ -74,28 +74,22 @@ public class MBTIPersonalityTest {
     public static void extrovertedVsIntroverted() {
         int noOfA = 0;
         int noOfB = 0;
-
         int count = 0;
-        int characterIndex;
-        String newString;
 
-        for (String userAnswers : extrovertedIntroverted) {
-            if (userAnswers.equals("A")) {
-                characterIndex = getMBTIQuestions(count).indexOf("\t");
-                newString = getMBTIQuestions(count).substring(0, characterIndex);
-                System.out.println(newString);
+        for (String userChoice : extrovertedIntroverted) {
+            String[] userAnswer = getMBTIQuestions(count).split("\t");
+            if (userChoice.equals("A")) {
+                System.out.println(userAnswer[0]);
                 noOfA++;
             }
             else {
-                characterIndex = getMBTIQuestions(count).lastIndexOf("B");
-                newString = getMBTIQuestions(count).substring(characterIndex);
-                System.out.println(newString);
+                System.out.println(userAnswer[userAnswer.length - 1]);
                 noOfB++;
             }
 
             count += 4;
-
         }
+        
         System.out.println("Number of A selected: " + noOfA);
         System.out.println("Number of B selected: " + noOfB + "\n");
 
@@ -104,33 +98,27 @@ public class MBTIPersonalityTest {
         } else {
             mbti[0] = 'I';
         }
-
     }
 
     public static void sensingVsIntuitive() {
         int noOfA = 0;
         int noOfB = 0;
-
         int count = 1;
-        int characterIndex;
-        String newString;
-
-        for (String userAnswers : sensingIntuitive) {
-            if (userAnswers.equals("A")) {
-                characterIndex = getMBTIQuestions(count).indexOf("\t");
-                newString = getMBTIQuestions(count).substring(0, characterIndex);
-                System.out.println(newString);
+        
+        for (String userChoice : sensingIntuitive) {
+            String[] userAnswer = getMBTIQuestions(count).split("\t");
+            if (userChoice.equals("A")) {
+                System.out.println(userAnswer[0]);
                 noOfA++;
             }
             else {
-                characterIndex = getMBTIQuestions(count).lastIndexOf("B");
-                newString = getMBTIQuestions(count).substring(characterIndex);
-                System.out.println(newString);
+                System.out.println(userAnswer[userAnswer.length - 1]);
                 noOfB++;
             }
+            
             count += 4;
-
         }
+        
         System.out.println("Number of A selected: " + noOfA);
         System.out.println("Number of B selected: " + noOfB + "\n");
 
@@ -139,34 +127,27 @@ public class MBTIPersonalityTest {
         } else {
             mbti[1] = 'N';
         }
-
     }
 
     public static void thinkingVsFeeling() {
         int noOfA = 0;
         int noOfB = 0;
-
         int count = 2;
-        int characterIndex;
-        String newString;
-
-
-        for (String userAnswers : thinkingFeeling) {
-            if (userAnswers.equals("A")) {
-                characterIndex = getMBTIQuestions(count).indexOf("\t");
-                newString = getMBTIQuestions(count).substring(0, characterIndex);
-                System.out.println(newString);
+        
+        for (String userChoice : thinkingFeeling) {
+            String[] userAnswer = getMBTIQuestions(count).split("\t");
+            if (userChoice.equals("A")) {
+                System.out.println(userAnswer[0]);
                 noOfA++;
             }
             else {
-                characterIndex = getMBTIQuestions(count).lastIndexOf("B");
-                newString = getMBTIQuestions(count).substring(characterIndex);
-                System.out.println(newString);
+                System.out.println(userAnswer[userAnswer.length - 1]);
                 noOfB++;
             }
-            count += 4;
 
+            count += 4;
         }
+        
         System.out.println("Number of A selected: " + noOfA);
         System.out.println("Number of B selected: " + noOfB + "\n");
 
@@ -175,32 +156,28 @@ public class MBTIPersonalityTest {
         } else {
             mbti[2] = 'F';
         }
-
     }
 
     public static void judgingVsPerceptive() {
         int noOfA = 0;
         int noOfB = 0;
-
         int count = 3;
-        int characterIndex;
-        String newString;
-
-        for (String userAnswers : judgingPerceptive) {
-            if (userAnswers.equals("A")) {
-                characterIndex = getMBTIQuestions(count).indexOf("\t");
-                newString = getMBTIQuestions(count).substring(0, characterIndex);
-                System.out.println(newString);
+        
+        for (String userChoice : judgingPerceptive) {
+            String[] userAnswer = getMBTIQuestions(count).split("\t");
+            if (userChoice.equals("A")) {
+                System.out.println(userAnswer[0]);
                 noOfA++;
-            } else {
-                characterIndex = getMBTIQuestions(count).lastIndexOf("B");
-                newString = getMBTIQuestions(count).substring(characterIndex);
-                System.out.println(newString);
+            }
+            else {
+                System.out.println(userAnswer[userAnswer.length - 1]);
                 noOfB++;
             }
+
             count += 4;
 
         }
+        
         System.out.println("Number of A selected: " + noOfA);
         System.out.println("Number of B selected: " + noOfB + "\n");
 
@@ -209,7 +186,6 @@ public class MBTIPersonalityTest {
         } else {
             mbti[3] = 'P';
         }
-
     }
     
     public static void getMBTI() {
