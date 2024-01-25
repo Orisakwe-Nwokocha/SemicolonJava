@@ -6,7 +6,15 @@ public class CheckOutAppTest {
 
     @Test
     public void getCurrentDateAndTime() {
-        assertEquals(CheckOutApp.getCurrentDateAndTime(), CheckOutApp.getCurrentDateAndTime());
+        String currentDateAndTime =  CheckOutApp.getCurrentDateAndTime();
+        boolean isValidDateAndTimeRange = isDateInRange(currentDateAndTime, "25-Jan-24 08:12:00", "25-Jan-24 08:13:00");
+        
+        assertTrue(isValidDateAndTimeRange);
+    }
+
+    private boolean isDateInRange(String currentDateAndTime, String startRange, String endRange) {
+        
+        return currentDateAndTime.compareTo(startRange) >= 0 && currentDateAndTime.compareTo(endRange) <= 0;
     }
 
     @Test
