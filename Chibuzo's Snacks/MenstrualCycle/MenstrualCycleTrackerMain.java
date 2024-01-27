@@ -24,6 +24,8 @@ public class MenstrualCycleTrackerMain {
                 User user = cycleTracker.getUser();
                 user.calculateMenstrualCycle(cycleTracker);
 
+                System.out.println();
+
                 Date ovulationDay = cycleTracker.getOvulationDay();
                 displayDate("Your next ovulation date: ", ovulationDay);
 
@@ -33,10 +35,10 @@ public class MenstrualCycleTrackerMain {
                 System.out.printf("""
                     
                     Fertile window:
-                        Your next most fertile time is 5 days before ovulation and a day after ovulation
-                        Your next least fertile time (safe period) is 2 days before your next period start date
-                        and during your %d days of menstruation
-                    """, cycleTracker.getMensesPhaseLength());
+                        Your next most fertile time is 5 days before ovulation %s and a day after ovulation %s
+                        Your next least fertile time (safe period) is 2 days before your next period start date %s
+                        and during the %d days of menstruation
+                    """, ovulationDay, ovulationDay, nextPeriodStartDate, cycleTracker.getMensesPhaseLength());
 
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
@@ -46,10 +48,9 @@ public class MenstrualCycleTrackerMain {
             System.out.println(e.getMessage());
         }
 
-
     }
 
     private static void displayDate(String header, Date date) {
-        System.out.printf("%n%s%s%n", header, date);
+        System.out.printf("%s%s%n", header, date);
     }
 }

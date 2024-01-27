@@ -26,7 +26,6 @@ public class MenstrualCycleTracker {
     }
 
     public Date getPreviousPeriodStartDate() {
-
         return previousPeriodStartDate;
     }
 
@@ -43,9 +42,10 @@ public class MenstrualCycleTracker {
     }
 
     public void setMensesPhaseLength(int userMensesPhaseLength) {
-        if (userMensesPhaseLength < 3 || userMensesPhaseLength > 5) {
+        if (userMensesPhaseLength < 3 || userMensesPhaseLength > 7) {
             throw new IllegalArgumentException("Irregular menstrual cycle detected ===> Please consult a physician.");
         }
+
         mensesPhaseLength = userMensesPhaseLength;
     }
 
@@ -57,13 +57,12 @@ public class MenstrualCycleTracker {
         if (userAverageCycleLength < 21 || userAverageCycleLength > 35) {
             throw new IllegalArgumentException("Irregular menstrual cycle detected ===> Please consult a physician.");
         }
+
         averageCycleLength = userAverageCycleLength;
     }
 
     public void calculateNextOvulationDay() {
-        for (int count = 1; count <= averageCycleLength - 14; count++) {
-            ovulationDay.nextDay();
-        }
+        for (int count = 1; count <= averageCycleLength - 14; count++) ovulationDay.nextDay();
     }
 
     public Date getOvulationDay() {
@@ -71,9 +70,7 @@ public class MenstrualCycleTracker {
     }
 
     public void calculateNextPeriodDay() {
-        for (int count = 1; count <= averageCycleLength; count++) {
-            nextPeriodStartDate.nextDay();
-        }
+        for (int count = 1; count <= averageCycleLength; count++) nextPeriodStartDate.nextDay();
     }
 
     public Date getNextPeriodStartDate() {
