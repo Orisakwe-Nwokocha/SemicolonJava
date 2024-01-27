@@ -6,7 +6,7 @@ public class MenstrualCycleTracker {
     private int previousPeriodMonth;
     private int previousPeriodYear;
     private Date previousPeriodStartDate;
-    private Date ovulationDay;
+    private Date ovulationDate;
     private Date nextPeriodStartDate;
     private int mensesPhaseLength;
     private int averageCycleLength;
@@ -17,16 +17,12 @@ public class MenstrualCycleTracker {
         setPeriodStartDate(user.getLastPeriodDate());
         previousPeriodStartDate = new Date(previousPeriodDay,previousPeriodMonth, previousPeriodYear);
 
-        ovulationDay = new Date(previousPeriodDay, previousPeriodMonth, previousPeriodYear);
+        ovulationDate = new Date(previousPeriodDay,previousPeriodMonth, previousPeriodYear);
         nextPeriodStartDate = new Date(previousPeriodDay, previousPeriodMonth, previousPeriodYear);
     }
 
     public User getUser() {
         return user;
-    }
-
-    public Date getPreviousPeriodStartDate() {
-        return previousPeriodStartDate;
     }
 
     private void setPeriodStartDate(String lastPeriodDate) {
@@ -61,16 +57,23 @@ public class MenstrualCycleTracker {
         averageCycleLength = userAverageCycleLength;
     }
 
-    public void calculateNextOvulationDay() {
-        for (int count = 1; count <= averageCycleLength - 14; count++) ovulationDay.nextDay();
+    public void calculateNextOvulationDate() {
+        setPeriodStartDate(previousPeriodStartDate.toString());
+        ovulationDate.setDate(previousPeriodDay, previousPeriodMonth, previousPeriodYear);
+
+        for (int count = 1; count <= averageCycleLength - 14; count++) ovulationDate.nextDay();
+
     }
 
-    public Date getOvulationDay() {
-        return ovulationDay;
+    public Date getOvulationDate() {
+        return ovulationDate;
     }
 
-    public void calculateNextPeriodDay() {
+    public void calculateNextPeriodDate() {
         for (int count = 1; count <= averageCycleLength; count++) nextPeriodStartDate.nextDay();
+
+        previousPeriodStartDate = nextPeriodStartDate;
+        
     }
 
     public Date getNextPeriodStartDate() {

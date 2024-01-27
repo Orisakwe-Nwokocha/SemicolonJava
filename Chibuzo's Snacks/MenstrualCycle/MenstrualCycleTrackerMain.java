@@ -22,23 +22,44 @@ public class MenstrualCycleTrackerMain {
                 cycleTracker.setAverageCycleLength(averageCycleLength);
 
                 User user = cycleTracker.getUser();
-                user.calculateMenstrualCycle(cycleTracker);
 
-                System.out.println();
+                System.out.println("\nHow many months cycle do you want to see?");
+                input.nextLine();
+                String userChoice = input.nextLine();
+                int cycleMonths = 0;
 
-                Date ovulationDay = cycleTracker.getOvulationDay();
-                displayDate("Your next ovulation date: ", ovulationDay);
+                if (!isValidData(userChoice)) {
+                    System.out.println("Invalid input. Here is your menstrual cycle info for the next month");
+                    cycleMonths = 1;
 
-                Date nextPeriodStartDate = cycleTracker.getNextPeriodStartDate();
-                displayDate("Your next period start date: ", nextPeriodStartDate);
+                } else cycleMonths = Integer.parseInt(userChoice);
 
-                System.out.printf("""
-                    
-                    Fertile window:
-                        Your next most fertile time is 5 days before ovulation %s and a day after ovulation %s
-                        Your next least fertile time (safe period) is 2 days before your next period start date %s
-                        and during the %d days of menstruation
-                    """, ovulationDay, ovulationDay, nextPeriodStartDate, cycleTracker.getMensesPhaseLength());
+                for (int count = 0; count < cycleMonths; count++) {
+                    user.calculateMenstrualCycle(cycleTracker);
+
+                    System.out.println();
+
+                    Date ovulationDay = cycleTracker.getOvulationDate();
+                    displayDate("Your next ovulation date: ", ovulationDay);
+
+                    Date nextPeriodStartDate = cycleTracker.getNextPeriodStartDate();
+                    displayDate("Your next period start date: ", nextPeriodStartDate);
+
+                    System.out.printf("""
+                                                
+                            Fertile window:
+                                Your next most fertile time is 5 days before ovulation %s and a day after ovulation %s
+                                Your next least fertile time (safe period) is 2 days before your next period start date %s
+                                and during the %d days of menstruation
+                            """, ovulationDay, ovulationDay, nextPeriodStartDate, cycleTracker.getMensesPhaseLength());
+
+                }
+
+                System.out.println("""
+                                                    
+                            Note: This period tracker is only an estimation. Your unique menstrual cycle
+                            may vary from these results.
+                            """);
 
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
@@ -52,5 +73,14 @@ public class MenstrualCycleTrackerMain {
 
     private static void displayDate(String header, Date date) {
         System.out.printf("%s%s%n", header, date);
+    }
+
+    private static boolean isValidData(String data){
+        for(int index = 0; index < data.length(); index++){
+            int digit = data.charAt(index) - '0';
+            if (digit < 0 || digit> 9) return false;
+        }
+
+        return true;
     }
 }

@@ -14,10 +14,10 @@ public class User {
     }
 
     private void getNextOvulationDay(MenstrualCycleTracker cycleTracker) {
-        cycleTracker.calculateNextOvulationDay();
+        cycleTracker.calculateNextOvulationDate();
     }
 
     private void getNextPeriodDay(MenstrualCycleTracker cycleTracker) {
-        cycleTracker.calculateNextPeriodDay();
+        cycleTracker.calculateNextPeriodDate();
     }
 }

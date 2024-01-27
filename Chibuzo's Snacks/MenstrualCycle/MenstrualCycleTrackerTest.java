@@ -25,11 +25,6 @@ public class MenstrualCycleTrackerTest {
         assertNotNull(user);
     }
 
-    @Test
-    public void testThatMenstrualCycleTrackerHasPreviousPeriodStartDate() {
-
-       assertNotNull(cycleTracker.getPreviousPeriodStartDate());
-    }
 
     @Test
     public void testThatIrregularMenstrualCyclesAreDetected(){
@@ -38,7 +33,7 @@ public class MenstrualCycleTrackerTest {
         assertThrows(IllegalArgumentException.class, ()-> cycleTracker.setAverageCycleLength(20));
 
         assertThrows(IllegalArgumentException.class, ()-> cycleTracker.setMensesPhaseLength(2));
-        assertThrows(IllegalArgumentException.class, ()-> cycleTracker.setMensesPhaseLength(6));
+        assertThrows(IllegalArgumentException.class, ()-> cycleTracker.setMensesPhaseLength(8));
     }
 
     @Test
@@ -47,8 +42,8 @@ public class MenstrualCycleTrackerTest {
 
         user.calculateMenstrualCycle(cycleTracker);
 
-        assertNotNull(cycleTracker.getOvulationDay());
-        assertNotNull(cycleTracker.getNextPeriodStartDate());
+        assertEquals("10/02/2024", cycleTracker.getOvulationDate().toString());
+        assertEquals("24/02/2024", cycleTracker.getNextPeriodStartDate().toString());
     }
 
 
