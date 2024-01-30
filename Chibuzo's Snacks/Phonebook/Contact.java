@@ -1,9 +1,11 @@
+import java.util.InputMismatchException;
+
 public class Contact {
     private String contactName;
     private String phoneNumber;
 
     public Contact(String contactName, String phoneNumber) {
-        if (phoneNumber.matches("\\D+")) throw new IllegalArgumentException("Phone number must consist of only digits");
+        if (!phoneNumber.matches("\\d+")) throw new InputMismatchException("Phone number must consist of only digits");
         this.contactName = contactName;
         this.phoneNumber = phoneNumber;
     }
@@ -13,7 +15,7 @@ public class Contact {
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        if (phoneNumber.matches("\\D+")) throw new IllegalArgumentException("Phone number must consist of only digits");
+        if (!phoneNumber.matches("\\d+")) throw new InputMismatchException("Phone number must consist of only digits");
         this.phoneNumber = phoneNumber;
     }
 
