@@ -12,6 +12,8 @@ public class PhonebookTest {
     @BeforeEach
     public void setUp() {
         nokiaPhonebook = new Phonebook();
+        nokiaPhonebook.addContact("Orisha", "2348035729982");
+        nokiaPhonebook.addContact("", "08023456789");
     }
 
     @Test
@@ -21,10 +23,6 @@ public class PhonebookTest {
 
     @Test
     public void testThatPhonebookCanContainMultipleContacts() {
-        nokiaPhonebook.addContact("Ajiri", "2348095327891");
-        nokiaPhonebook.addContact("Orisha", "2348035729982");
-        nokiaPhonebook.addContact("", "08023456789");
-
         ArrayList<Contact> contacts = nokiaPhonebook.getContacts();
 
         assertNotEquals(1,contacts.size());
@@ -32,9 +30,6 @@ public class PhonebookTest {
 
     @Test
     public void testThatPhonebookCanModifyContactName() {
-        nokiaPhonebook.addContact("Orisha", "2348035729982");
-        nokiaPhonebook.addContact("", "08023456789");
-
         ArrayList<Contact> contacts = nokiaPhonebook.getContacts();
 
         contacts.get(0).setContactName("Orisakwe Nwokocha");
@@ -46,8 +41,6 @@ public class PhonebookTest {
 
     @Test
     public void testThatPhonebookCanModifyContactPhoneNumber() {
-        nokiaPhonebook.addContact("Orisha", "2348035729982");
-
         ArrayList<Contact> contacts = nokiaPhonebook.getContacts();
 
         contacts.getFirst().setPhoneNumber("08125358910");
@@ -62,19 +55,37 @@ public class PhonebookTest {
         nokiaPhonebook.addContact("temp", "1234");
         ArrayList<Contact> contacts = nokiaPhonebook.getContacts();
 
-        assertThrows(InputMismatchException.class, () -> contacts.getFirst().setPhoneNumber("08035O29982"));
+        assertThrows(InputMismatchException.class, () -> contacts.get(2).setPhoneNumber("08035O29982"));
     }
 
     @Test
     public void testThatPhonebookCanEraseContact() {
-        nokiaPhonebook.addContact("Orisha", "2348035729982");
-        nokiaPhonebook.addContact("", "08023456789");
-
         ArrayList<Contact> contacts = nokiaPhonebook.getContacts();
 
         nokiaPhonebook.eraseContact("Orisha");
 
         assertNotEquals(2, contacts.size());
+    }
+
+    @Test
+    public void testThatPhonebookCanSearchContact() {
+        nokiaPhonebook.addContact("Orisha", "08125358910");
+
+        ArrayList<Contact> contacts = nokiaPhonebook.getContacts();
+
+        String contactInfo = nokiaPhonebook.searchContact("orisha");
+
+        String expected = """
+                Orisha:
+                2348035729982
+                Orisha:
+                08125358910
+                """;
+
+        assertEquals(expected, contactInfo);
+
+        String nonExistentContact = nokiaPhonebook.searchContact("Orishakwe");
+        assertEquals("No contact found", nonExistentContact);
     }
 
 

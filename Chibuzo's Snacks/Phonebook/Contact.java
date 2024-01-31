@@ -29,6 +29,6 @@ public class Contact {
 
     @Override
     public String toString() {
-        return String.format("%s: %s", getContactName(), getPhoneNumber());
+        return String.format("%s:\n%s", getContactName(), getPhoneNumber());
     }
 }

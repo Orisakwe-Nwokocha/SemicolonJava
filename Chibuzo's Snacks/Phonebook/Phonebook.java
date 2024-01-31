@@ -24,15 +24,15 @@ public class Phonebook {
         }
     }
 
-    public String displayPhonebookMenu() {
-        return """
-                1. Search
-                2. View contacts
-                3. Add name
-                4. Edit
-                5. Erase
-                """;
+    public String searchContact(String contactName) {
+        StringBuilder contactInfo = new StringBuilder();
+
+        for (Contact contact : contacts) {
+            if (contact.getContactName().equalsIgnoreCase(contactName)) contactInfo.append(contact).append("\n");
+        }
+
+        if (contactInfo.isEmpty()) return "Phonebook is empty";
+        return contactInfo.toString();
     }
 
-    public String
 }
