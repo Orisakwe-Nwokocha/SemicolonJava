@@ -31,8 +31,49 @@ public class Phonebook {
             if (contact.getContactName().equalsIgnoreCase(contactName)) contactInfo.append(contact).append("\n");
         }
 
-        if (contactInfo.isEmpty()) return "Phonebook is empty";
+        if (contactInfo.isEmpty()) return "No contact found";
         return contactInfo.toString();
+    }
+
+    public String viewContacts() {
+        StringBuilder allContacts = new StringBuilder();
+
+        System.out.println();
+
+        for (Contact contact : contacts) {
+            allContacts.append(contact).append("\n\n");
+        }
+
+        if (allContacts.isEmpty()) return "Phonebook is empty";
+        return allContacts.toString();
+    }
+
+    public void editContactName(String contactName, String newName) {
+        for (Contact contact : contacts) {
+            if (contact.getContactName().equals(contactName)) {
+                contact.setContactName(newName);
+                break;
+            }
+        }
+    }
+
+    public void editContactPhoneNumber(String contactName, String newNumber) {
+        for (Contact contact : contacts) {
+            if (contact.getContactName().equals(contactName)) {
+                contact.setPhoneNumber(newNumber);
+                break;
+            }
+        }
+    }
+
+    public void editContact(String contactName, String newName, String newNumber) {
+        for (Contact contact : contacts) {
+            if (contact.getContactName().equals(contactName)) {
+                contact.setContactName(newName);
+                contact.setPhoneNumber(newNumber);
+                break;
+            }
+        }
     }
 
 }

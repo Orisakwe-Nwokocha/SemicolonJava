@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PhonebookMain {
@@ -17,6 +16,8 @@ public class PhonebookMain {
 
     private static void displayPhonebookMenu() {
         System.out.print("""
+                Phonebook
+                
                 1. Search
                 2. View contacts
                 3. Add contact
@@ -32,7 +33,7 @@ public class PhonebookMain {
             case "1" -> search();
             case "2" -> viewContacts();
             case "3" -> addContact();
-//            case "4" -> search();
+            case "4" -> edit();
 //            case "5" -> search();
             default -> displayPhonebookMenu();
         }
@@ -51,20 +52,9 @@ public class PhonebookMain {
     }
 
     private static void viewContacts() {
-        ArrayList<Contact> contacts = nokiaPhonebook.getContacts();
-        StringBuilder allContacts = new StringBuilder();
-
         System.out.println();
 
-        for (Contact contact : contacts) {
-            allContacts.append(contact).append("\n\n");
-        }
-
-        if (allContacts.isEmpty()) System.out.println("No contact found");
-        else System.out.println(allContacts.toString());
-
-        System.out.println();
-        displayPhonebookMenu();
+        System.out.println(nokiaPhonebook.viewContacts());
     }
 
     private static void addContact() {
@@ -77,6 +67,53 @@ public class PhonebookMain {
 
         nokiaPhonebook.addContact(contactName, phoneNumber);
 
+        System.out.println();
+        displayPhonebookMenu();
+    }
+
+    private static void edit() {
+        String allContacts = nokiaPhonebook.viewContacts();
+
+        if (allContacts.equals("Phonebook is empty")) System.out.println("Phonebook is empty");
+
+        else {
+            System.out.println(allContacts);
+
+            System.out.println("Enter contact you want to edit:");
+            String contactName = input.nextLine();
+
+            System.out.println(nokiaPhonebook.searchContact(contactName));
+
+            System.out.println("Type 1 to edit contact name or Type 2 to edit contact number or Type 3 to edit both");
+            String userChoice = input.nextLine();
+            while (!userChoice.equals("1") && !userChoice.equals("2") && !userChoice.equals("3")) {
+                System.out.println("Invalid input\n" +
+                        "Type 1 to edit contact name or Type 2 to edit contact number or Type 3 to edit both");
+                userChoice = input.nextLine();
+            }
+
+
+            if (userChoice.equals("1")) {
+                System.out.printf("Enter new name for %s:%n", contactName);
+                String newName = input.nextLine();
+                nokiaPhonebook.editContactName(contactName, newName);
+            }
+
+            else if (userChoice.equals("2")) {
+                System.out.printf("Enter new phone number for %s:%n", contactName);
+                String newPhoneNumber = input.nextLine();
+                nokiaPhonebook.editContactPhoneNumber(contactName, newPhoneNumber);
+            }
+
+            else {
+                System.out.printf("Enter new name for %s:%n", contactName);
+                String newName = input.nextLine();
+                System.out.printf("Enter new phone number for %s:%n", contactName);
+                String newPhoneNumber = input.nextLine();
+
+                nokiaPhonebook.editContact(contactName, newName, newPhoneNumber);
+            }
+        }
         System.out.println();
         displayPhonebookMenu();
     }

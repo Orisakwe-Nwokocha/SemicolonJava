@@ -32,8 +32,8 @@ public class PhonebookTest {
     public void testThatPhonebookCanModifyContactName() {
         ArrayList<Contact> contacts = nokiaPhonebook.getContacts();
 
-        contacts.get(0).setContactName("Orisakwe Nwokocha");
-        contacts.get(1).setContactName("placeholder#");
+        nokiaPhonebook.editContactName("Orisha", "Orisakwe Nwokocha");
+        nokiaPhonebook.editContactName("", "placeholder#");
 
         assertEquals("Orisakwe Nwokocha", contacts.get(0).getContactName());
         assertEquals("placeholder#", contacts.get(1).getContactName());
@@ -43,8 +43,18 @@ public class PhonebookTest {
     public void testThatPhonebookCanModifyContactPhoneNumber() {
         ArrayList<Contact> contacts = nokiaPhonebook.getContacts();
 
-        contacts.getFirst().setPhoneNumber("08125358910");
+        nokiaPhonebook.editContactPhoneNumber("Orisha", "08125358910");
 
+        assertEquals("08125358910", contacts.getFirst().getPhoneNumber());
+    }
+
+    @Test
+    public void testThatPhonebookCanModifyBothContactInfo() {
+        ArrayList<Contact> contacts = nokiaPhonebook.getContacts();
+
+        nokiaPhonebook.editContact("Orisha", "Orisakwe Nwokocha", "08125358910");
+
+        assertEquals("Orisakwe Nwokocha", contacts.getFirst().getContactName());
         assertEquals("08125358910", contacts.getFirst().getPhoneNumber());
     }
 
@@ -70,8 +80,6 @@ public class PhonebookTest {
     @Test
     public void testThatPhonebookCanSearchContact() {
         nokiaPhonebook.addContact("Orisha", "08125358910");
-
-        ArrayList<Contact> contacts = nokiaPhonebook.getContacts();
 
         String contactInfo = nokiaPhonebook.searchContact("orisha");
 
