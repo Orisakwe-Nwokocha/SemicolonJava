@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Phonebook {
     private final ArrayList<Contact> contacts;
@@ -17,7 +18,7 @@ public class Phonebook {
 
     public void eraseContact(String contactName) {
         for (int index = 0; index < contacts.size(); index++) {
-            if (contacts.get(index).getContactName().equals(contactName)) {
+            if (contacts.get(index).getContactName().equalsIgnoreCase(contactName)) {
                 contacts.remove(index);
                 break;
             }
@@ -38,7 +39,7 @@ public class Phonebook {
     public String viewContacts() {
         StringBuilder allContacts = new StringBuilder();
 
-        System.out.println();
+        contacts.sort(Comparator.comparing(Contact::toString));
 
         for (Contact contact : contacts) {
             allContacts.append(contact).append("\n\n");
