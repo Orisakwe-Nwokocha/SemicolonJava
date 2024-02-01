@@ -6,70 +6,74 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AirConditionerTest {
+    private AirConditioner samsungAC;
+
+    @BeforeEach
+    public void initializeAc() {
+        samsungAC = new AirConditioner();
+    }
 
     @Test
-    public void toggleOn_acIsTurnedOnTest() {
-        AirConditioner samsungAC = new AirConditioner();
+    public void turnOnAc_acIsOnTest() {
         assertFalse(samsungAC.isOn());
 
-        samsungAC.toggleOn();
+        samsungAC.toggle();
         assertTrue(samsungAC.isOn());
     }
 
     @Test
-    public void toggleOff_acIsTurnedOffTest() {
-        AirConditioner samsungAC = new AirConditioner();
-
-        samsungAC.toggleOn();
+    public void turnOffAc_acIsOffTest() {
+        assertFalse(samsungAC.isOn());
+        samsungAC.toggle();
         assertTrue(samsungAC.isOn());
 
-        samsungAC.toggleOff();
+        samsungAC.toggle();
         assertFalse(samsungAC.isOn());
     }
 
     @Test
-    public void increaseTemperature_temperatureIncreasesTest() {
-        AirConditioner samsungAC = new AirConditioner();
-        samsungAC.toggleOn();
+    public void increaseAcTemperatureFrom16To17_temperatureIncreasesTest() {
+        samsungAC.toggle();
         assertTrue(samsungAC.isOn());
-        assertEquals(25, samsungAC.getTemperature());
+        assertEquals(16, samsungAC.getTemperature());
 
         samsungAC.increaseTemperature();
-        assertEquals(26, samsungAC.getTemperature());
+        assertEquals(17, samsungAC.getTemperature());
     }
 
     @Test
-    public void decreaseTemperature_temperatureDecreasesTest() {
-        AirConditioner samsungAC = new AirConditioner();
-        samsungAC.toggleOn();
+    public void decreaseAcTemperatureFrom18To17_temperatureDecreasesTest() {
+        samsungAC.toggle();
         assertTrue(samsungAC.isOn());
-        assertEquals(25, samsungAC.getTemperature());
+        samsungAC.increaseTemperature();
+        samsungAC.increaseTemperature();
+        assertEquals(18, samsungAC.getTemperature());
+
 
         samsungAC.decreaseTemperature();
-        assertEquals(24, samsungAC.getTemperature());
+        assertEquals(17, samsungAC.getTemperature());
     }
 
     @Test
-    public void increaseTemperatureBeyond30_temperatureRemainsUnchangedTest() {
-        AirConditioner samsungAC = new AirConditioner();
-        samsungAC.toggleOn();
+    public void increaseAcTemperatureAt30_temperatureIs30Test() {
+        samsungAC.toggle();
         assertTrue(samsungAC.isOn());
-        assertEquals(25, samsungAC.getTemperature());
+        assertEquals(16, samsungAC.getTemperature());
 
-        samsungAC.increaseTemperature(30);
+        for (int count = 0; count < 14; count++) samsungAC.increaseTemperature();
         assertEquals(30, samsungAC.getTemperature());
+
         samsungAC.increaseTemperature();
         assertEquals(30, samsungAC.getTemperature());
     }
 
     @Test
-    public void decreaseTemperatureBelow16_temperatureRemainsUnchangedTest() {
-        AirConditioner samsungAC = new AirConditioner();
-        samsungAC.toggleOn();
+    public void decreaseAcTemperatureAt16_temperatureIs16Test() {
+        samsungAC.toggle();
         assertTrue(samsungAC.isOn());
-        assertEquals(25, samsungAC.getTemperature());
+        assertEquals(16, samsungAC.getTemperature());
 
         samsungAC.decreaseTemperature();
-        assertEquals(24, samsungAC.getTemperature());
+        assertEquals(16, samsungAC.getTemperature());
     }
 }

@@ -2,18 +2,14 @@ package airConditioner;
 
 public class AirConditioner {
     private boolean isOn;
-    private int temperature = 25;
+    private int temperature = 16;
 
     public boolean isOn() {
         return isOn;
     }
 
-    public void toggleOn() {
-        isOn = true;
-    }
-
-    public void toggleOff() {
-        isOn = false;
+    public void toggle() {
+        isOn = !isOn;
     }
 
     public int getTemperature() {
@@ -21,16 +17,13 @@ public class AirConditioner {
     }
 
     public void increaseTemperature() {
-        if (temperature < 16 || temperature > 30) temperature = temperature;
-        if (isOn()) temperature++;
+        boolean temperatureIsWithinRange = temperature >= 16 && temperature < 30;
+        if (isOn && temperatureIsWithinRange) temperature++;
     }
 
     public void decreaseTemperature() {
-        if (isOn()) temperature--;
+        boolean temperatureIsWithinRange = temperature > 16 && temperature <= 30;
+        if (isOn && temperatureIsWithinRange) temperature--;
     }
 
-    public void increaseTemperature(int temperature) {
-        if (temperature < 16 || temperature > 30) {}
-        else if (isOn()) this.temperature = temperature;
-    }
 }
