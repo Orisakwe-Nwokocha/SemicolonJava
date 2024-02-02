@@ -124,6 +124,8 @@ public class FireDrillThree {
     }
 
     public static int[] taskTwelve(int[] numbers) {
+        if (numbers.length % 2 != 0) throw new ArrayIndexOutOfBoundsException("Array must contain even number of elements");
+
         int[] swappedElements = new int[numbers.length];
 
         for (int index = 0; index < numbers.length; index+=2) {
@@ -135,6 +137,8 @@ public class FireDrillThree {
     }
 
     public static int[] taskThirteen(int[] numbers) {
+        if (numbers.length % 2 != 0) throw new ArrayIndexOutOfBoundsException("Array must contain even number of elements");
+
         int[] swappedElements = new int[numbers.length];
 
         for (int index = 0; index < numbers.length; index+=2) {
@@ -153,6 +157,8 @@ public class FireDrillThree {
     }
 
     public static int[] taskFourteen(int[] numbers) {
+        if (numbers.length % 2 != 0) throw new ArrayIndexOutOfBoundsException("Array must contain even number of elements");
+
         int[] swappedElements = new int[numbers.length];
 
         for (int index = 0; index < numbers.length; index+=2) {
@@ -171,6 +177,8 @@ public class FireDrillThree {
     }
 
     public static int[] taskFifteen(int[] numbers) {
+        if (numbers.length % 2 != 0) throw new ArrayIndexOutOfBoundsException("Array must contain even number of elements");
+
         int[] swappedElements = new int[numbers.length];
 
         for (int index = 0; index < numbers.length; index+=2) {
@@ -189,6 +197,8 @@ public class FireDrillThree {
     }
 
     public static int[] taskSixteen(int[] numbers) {
+        if (numbers.length % 2 != 0) throw new ArrayIndexOutOfBoundsException("Array must contain even number of elements");
+
         int[] swappedElements = new int[numbers.length];
 
         for (int index = 0; index < numbers.length; index+=2) {

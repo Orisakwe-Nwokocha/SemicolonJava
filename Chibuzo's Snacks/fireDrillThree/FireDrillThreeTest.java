@@ -144,4 +144,22 @@ public class FireDrillThreeTest {
 
         assertArrayEquals(expected, actual);
     }
+
+    @Test
+    public void passOddNumberOfElementsToTaskTwelveThroughTaskSixteen_tasksThrowAnException() {
+        int[] taskTwelve = {4, 7, 9, 2, 1, 85, 67, 35, 6};
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> FireDrillThree.taskTwelve(taskTwelve));
+
+        int[] taskThirteen = {4, 7, 9, 2, 1, 85, 67, 35, 23};
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> FireDrillThree.taskThirteen(taskThirteen));
+
+        int[] taskFourteen = {4, 7, 9, 2, 1, 85, 67, 35, 87};
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> FireDrillThree.taskFourteen(taskFourteen));
+
+        int[] taskFifteen = {4, 7, 9, 2, 1, 85, 67, 35, 3};
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> FireDrillThree.taskFifteen(taskFifteen));
+
+        int[] taskSixteen = {4, 7, 9, 2, 1, 85, 67, 35, 62};
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> FireDrillThree.taskSixteen(taskSixteen));
+    }
 }
