@@ -18,7 +18,7 @@ public class Phonebook {
 
     public void eraseContact(String contactName) {
         for (int index = 0; index < contacts.size(); index++) {
-            if (contacts.get(index).getContactName().equalsIgnoreCase(contactName)) {
+            if (contacts.get(index).getContactName().equals(contactName)) {
                 contacts.remove(index);
                 break;
             }

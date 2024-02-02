@@ -17,11 +17,6 @@ public class PhonebookTest {
     }
 
     @Test
-    public void testThatPhonebookExists() {
-        assertNotNull(nokiaPhonebook);
-    }
-
-    @Test
     public void testThatPhonebookCanContainMultipleContacts() {
         ArrayList<Contact> contacts = nokiaPhonebook.getContacts();
 
