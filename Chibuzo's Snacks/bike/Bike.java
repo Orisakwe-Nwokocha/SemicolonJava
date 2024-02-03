@@ -46,9 +46,16 @@ public class Bike {
     public void decelerate() {
         boolean isGearFour = gear == 4;
         boolean isGearThree = gear == 3;
+        boolean isGearTwo = gear == 2;
+        boolean isGearOne = gear == 1;
 
         if (isOn && isGearFour) speedometer -= 4;
         if (isOn && isGearThree) speedometer -= 3;
+        if (isOn && isGearTwo) speedometer -= 2;
+        if (isOn && isGearOne) {
+            speedometer--;
+            if (speedometer <= 0) speedometer = 0;
+        }
 
         changeGear();
     }

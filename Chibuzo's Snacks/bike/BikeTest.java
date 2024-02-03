@@ -32,7 +32,7 @@ public class BikeTest {
     }
 
     @Test
-    public void accelerateBikeAtGearOneBikeSpeedIs15_currentSpeedIs16GearIsOneTest() {
+    public void accelerateBikeAtGearOneAtSpeed15_currentSpeedIs16GearIsOneTest() {
         assertFalse(bike.isOn());
         bike.toggle();
         assertTrue(bike.isOn());
@@ -48,7 +48,7 @@ public class BikeTest {
     }
 
     @Test
-    public void accelerateBikeAtGearOneBikeSpeedIs20_currentSpeedIs21GearIsTwoTest() {
+    public void accelerateBikeAtGearOneAtSpeed20_currentSpeedIs21GearIsTwoTest() {
         assertFalse(bike.isOn());
         bike.toggle();
         assertTrue(bike.isOn());
@@ -64,7 +64,7 @@ public class BikeTest {
     }
 
     @Test
-    public void accelerateBikeAtGearTwoBikeSpeedIs27_currentSpeedIs29GearIsTwoTest() {
+    public void accelerateBikeAtGearTwoAtSpeed27_currentSpeedIs29GearIsTwoTest() {
         assertFalse(bike.isOn());
         bike.toggle();
         assertTrue(bike.isOn());
@@ -80,7 +80,7 @@ public class BikeTest {
     }
 
     @Test
-    public void accelerateBikeAtGearTwoBikeSpeedIs29_currentSpeedIs31GearIsThreeTest() {
+    public void accelerateBikeAtGearTwoAtSpeed29_currentSpeedIs31GearIsThreeTest() {
         assertFalse(bike.isOn());
         bike.toggle();
         assertTrue(bike.isOn());
@@ -96,7 +96,7 @@ public class BikeTest {
     }
 
     @Test
-    public void accelerateBikeAtGearThreeBikeSpeedIs37_currentSpeedIs40GearIsThreeTest() {
+    public void accelerateBikeAtGearThreeAtSpeed37_currentSpeedIs40GearIsThreeTest() {
         assertFalse(bike.isOn());
         bike.toggle();
         assertTrue(bike.isOn());
@@ -112,7 +112,7 @@ public class BikeTest {
     }
 
     @Test
-    public void accelerateBikeAtGearThreeBikeSpeedIs40_currentSpeedIs43GearIsFourTest() {
+    public void accelerateBikeAtGearThreeAtSpeed40_currentSpeedIs43GearIsFourTest() {
         assertFalse(bike.isOn());
         bike.toggle();
         assertTrue(bike.isOn());
@@ -128,7 +128,7 @@ public class BikeTest {
     }
 
     @Test
-    public void accelerateBikeAtGearFourBikeSpeedIs47_currentSpeedIs51GearIsFourTest() {
+    public void accelerateBikeAtGearFourAtSpeed47_currentSpeedIs51GearIsFourTest() {
         assertFalse(bike.isOn());
         bike.toggle();
         assertTrue(bike.isOn());
@@ -144,7 +144,7 @@ public class BikeTest {
     }
 
     @Test
-    public void decelerateBikeAtGearFourBikeSpeedIs59_currentSpeedIs55GearIsFourTest() {
+    public void decelerateBikeAtGearFourAtSpeed59_currentSpeedIs55GearIsFourTest() {
         assertFalse(bike.isOn());
         bike.toggle();
         assertTrue(bike.isOn());
@@ -160,7 +160,7 @@ public class BikeTest {
     }
 
     @Test
-    public void decelerateBikeAtGearFourBikeSpeedIs43_currentSpeedIs39GearIsThreeTest() {
+    public void decelerateBikeAtGearFourAtSpeed43_currentSpeedIs39GearIsThreeTest() {
         assertFalse(bike.isOn());
         bike.toggle();
         assertTrue(bike.isOn());
@@ -176,7 +176,7 @@ public class BikeTest {
     }
 
     @Test
-    public void decelerateBikeAtGearThreeBikeSpeedIs35_currentSpeedIs32GearIsThreeTest() {
+    public void decelerateBikeAtGearThreeAtSpeed35_currentSpeedIs32GearIsThreeTest() {
         assertFalse(bike.isOn());
         bike.toggle();
         assertTrue(bike.isOn());
@@ -192,7 +192,87 @@ public class BikeTest {
 
         bike.decelerate();
         assertEquals(32, bike.getCurrentSpeed());
+        assertEquals(3, bike.getCurrentGear());
     }
 
+    @Test
+    public void decelerateBikeAtGearThreeAtSpeed31_currentSpeedIs28GearIsTwoTest() {
+        assertFalse(bike.isOn());
+        bike.toggle();
+        assertTrue(bike.isOn());
+        assertEquals(1, bike.getCurrentGear());
 
+        for (int count = 1; count <= 26; count++) bike.accelerate();
+        assertEquals(31, bike.getCurrentSpeed());
+        assertEquals(3, bike.getCurrentGear());
+
+        bike.decelerate();
+        assertEquals(28, bike.getCurrentSpeed());
+        assertEquals(2, bike.getCurrentGear());
+    }
+
+    @Test
+    public void decelerateBikeAtGearTwoAtSpeed24_currentSpeedIs22GearIsTwoTest() {
+        assertFalse(bike.isOn());
+        bike.toggle();
+        assertTrue(bike.isOn());
+        assertEquals(1, bike.getCurrentGear());
+
+        for (int count = 1; count <= 26; count++) bike.accelerate();
+        assertEquals(31, bike.getCurrentSpeed());
+        assertEquals(3, bike.getCurrentGear());
+        for (int count = 1; count <= 3; count++) bike.decelerate();
+        assertEquals(24, bike.getCurrentSpeed());
+        assertEquals(2, bike.getCurrentGear());
+
+        bike.decelerate();
+        assertEquals(22, bike.getCurrentSpeed());
+        assertEquals(2, bike.getCurrentGear());
+    }
+
+    @Test
+    public void decelerateBikeAtGearTwoAtSpeed21_currentSpeedIs19GearIsOneTest() {
+        assertFalse(bike.isOn());
+        bike.toggle();
+        assertTrue(bike.isOn());
+        assertEquals(1, bike.getCurrentGear());
+
+        for (int count = 1; count <= 21; count++) bike.accelerate();
+        assertEquals(21, bike.getCurrentSpeed());
+        assertEquals(2, bike.getCurrentGear());
+
+        bike.decelerate();
+        assertEquals(19, bike.getCurrentSpeed());
+        assertEquals(1, bike.getCurrentGear());
+    }
+
+    @Test
+    public void decelerateBikeAtGearOneAtSpeed15_currentSpeedIs14GearIsOneTest() {
+        assertFalse(bike.isOn());
+        bike.toggle();
+        assertTrue(bike.isOn());
+        assertEquals(1, bike.getCurrentGear());
+
+        for (int count = 1; count <= 15; count++) bike.accelerate();
+        assertEquals(15, bike.getCurrentSpeed());
+        assertEquals(1, bike.getCurrentGear());
+
+        bike.decelerate();
+        assertEquals(14, bike.getCurrentSpeed());
+        assertEquals(1, bike.getCurrentGear());
+    }
+
+    @Test
+    public void decelerateBikeAtGearOneAtSpeed0_currentSpeedIs0GearIsOneTest() {
+        assertFalse(bike.isOn());
+        bike.toggle();
+        assertTrue(bike.isOn());
+        assertEquals(0, bike.getCurrentSpeed());
+        assertEquals(1, bike.getCurrentGear());
+
+        bike.decelerate();
+        assertEquals(0, bike.getCurrentSpeed());
+        assertEquals(1, bike.getCurrentGear());
+    }
+    
 }
