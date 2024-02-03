@@ -14,7 +14,7 @@ public class Bike {
         if (isOn) gear = 1;
     }
 
-    public int getGear() {
+    public int getCurrentGear() {
         return gear;
     }
 
@@ -41,5 +41,15 @@ public class Bike {
 
     public int getCurrentSpeed() {
         return speedometer;
+    }
+
+    public void decelerate() {
+        boolean isGearFour = gear == 4;
+        boolean isGearThree = gear == 3;
+
+        if (isOn && isGearFour) speedometer -= 4;
+        if (isOn && isGearThree) speedometer -= 3;
+
+        changeGear();
     }
 }
