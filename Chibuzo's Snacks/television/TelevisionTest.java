@@ -59,31 +59,89 @@ public class TelevisionTest {
     }
 
     @Test
-    public void changeChannelNumberForwardAt5_channelNumberIs6Test() {
-        assertFalse(toshiba.isOn());
-        toshiba.toggle();
-        assertTrue(toshiba.isOn());
-        for (int count = 0; count < 6; count++) toshiba.addChannel();
-        assertEquals(6, toshiba.getChannels().size());
-        assertEquals("Displaying Channel 5", toshiba.displayChannel(5));
-
-        toshiba.changeChannel(5, true);
-
-        assertEquals("Displaying Channel 6", toshiba.displayChannel(6));
-    }
-
-    @Test
-    public void changeChannelNumberBackwardAt4_channelNumberIs3Test() {
+    public void displayNonPositiveChannelNumber_exceptionIsThrownTest() {
         assertFalse(toshiba.isOn());
         toshiba.toggle();
         assertTrue(toshiba.isOn());
         for (int count = 0; count < 10; count++) toshiba.addChannel();
         assertEquals(10, toshiba.getChannels().size());
-        assertEquals("Displaying Channel 4", toshiba.displayChannel(4));
 
-        toshiba.changeChannel(4, false);
+        assertThrows(IllegalArgumentException.class, ()-> toshiba.displayChannel(0));
+        assertThrows(IllegalArgumentException.class, ()-> toshiba.displayChannel(-5));
+    }
 
+    @Test
+    public void displayChannelGreaterThanNoOfChannels_exceptionIsThrownTest() {
+        assertFalse(toshiba.isOn());
+        toshiba.toggle();
+        assertTrue(toshiba.isOn());
+        for (int count = 0; count < 10; count++) toshiba.addChannel();
+        assertEquals(10, toshiba.getChannels().size());
+
+        assertThrows(IllegalArgumentException.class, ()-> toshiba.displayChannel(11));
+        assertThrows(IllegalArgumentException.class, ()-> toshiba.displayChannel(25));
+    }
+
+    @Test
+    public void changeChannelForwardAt3_channelIs4Test() {
+        assertFalse(toshiba.isOn());
+        toshiba.toggle();
+        assertTrue(toshiba.isOn());
+        for (int count = 0; count < 6; count++) toshiba.addChannel();
+        assertEquals(6, toshiba.getChannels().size());
         assertEquals("Displaying Channel 3", toshiba.displayChannel(3));
+        assertEquals(3, toshiba.getCurrentChannel());
+
+        toshiba.changeChannel(true);
+
+        assertEquals(4, toshiba.getCurrentChannel());
+        assertEquals("Displaying Channel 4", toshiba.displayChannel());
+    }
+
+    @Test
+    public void changeChannelBackwardAt8_channelIs7Test() {
+        assertFalse(toshiba.isOn());
+        toshiba.toggle();
+        assertTrue(toshiba.isOn());
+        for (int count = 0; count < 10; count++) toshiba.addChannel();
+        assertEquals(10, toshiba.getChannels().size());
+        assertEquals("Displaying Channel 8", toshiba.displayChannel(8));
+        assertEquals(8, toshiba.getCurrentChannel());
+
+        toshiba.changeChannel( false);
+
+        assertEquals(7, toshiba.getCurrentChannel());
+        assertEquals("Displaying Channel 7", toshiba.displayChannel());
+    }
+    @Test
+    public void changeChannelForwardAt7_channelIs7Test() {
+        assertFalse(toshiba.isOn());
+        toshiba.toggle();
+        assertTrue(toshiba.isOn());
+        for (int count = 0; count < 7; count++) toshiba.addChannel();
+        assertEquals(7, toshiba.getChannels().size());
+        assertEquals("Displaying Channel 7", toshiba.displayChannel(7));
+        assertEquals(7, toshiba.getCurrentChannel());
+
+        toshiba.changeChannel(true);
+
+        assertNotEquals(8, toshiba.getCurrentChannel());
+        assertEquals("Displaying Channel 7", toshiba.displayChannel());
+    }
+
+    @Test
+    public void changeChannelBackwardAt1_channelIs1Test() {
+        assertFalse(toshiba.isOn());
+        toshiba.toggle();
+        assertTrue(toshiba.isOn());
+        for (int count = 0; count < 10; count++) toshiba.addChannel();
+        assertEquals(10, toshiba.getChannels().size());
+        assertEquals("Displaying Channel 1", toshiba.displayChannel(1));
+
+        toshiba.changeChannel( false);
+
+        assertEquals(1, toshiba.getCurrentChannel());
+        assertEquals("Displaying Channel 1", toshiba.displayChannel());
     }
 
     @Test
@@ -99,14 +157,43 @@ public class TelevisionTest {
     }
 
     @Test
-    public void decreaseVolumeAt25_tvVolumeIs24Test() {
+    public void decreaseVolumeAt87_tvVolumeIs86Test() {
         assertFalse(toshiba.isOn());
         toshiba.toggle();
         assertTrue(toshiba.isOn());
         assertEquals(25, toshiba.getTvVolume());
+        for (int count = 0; count < 62; count++) toshiba.increaseVolume();
+        assertEquals(87, toshiba.getTvVolume());
+
+        toshiba.decreaseVolume();
+
+        assertEquals(86, toshiba.getTvVolume());
+    }
+    @Test
+    public void increaseVolumeAt100_tvVolumeIs100Test() {
+        assertFalse(toshiba.isOn());
+        toshiba.toggle();
+        assertTrue(toshiba.isOn());
+        assertEquals(25, toshiba.getTvVolume());
+        for (int count = 0; count < 75; count++) toshiba.increaseVolume();
+        assertEquals(100, toshiba.getTvVolume());
 
         toshiba.increaseVolume();
 
-        assertEquals(26, toshiba.getTvVolume());
+        assertNotEquals(101, toshiba.getTvVolume());
+    }
+
+    @Test
+    public void decreaseVolumeAt0_tvVolumeIs0Test() {
+        assertFalse(toshiba.isOn());
+        toshiba.toggle();
+        assertTrue(toshiba.isOn());
+        assertEquals(25, toshiba.getTvVolume());
+        for (int count = 25; count > 0; count--) toshiba.decreaseVolume();
+        assertEquals(0, toshiba.getTvVolume());
+
+        toshiba.decreaseVolume();
+
+        assertNotEquals(-1, toshiba.getTvVolume());
     }
 }
