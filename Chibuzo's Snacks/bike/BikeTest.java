@@ -274,5 +274,83 @@ public class BikeTest {
         assertEquals(0, bike.getCurrentSpeed());
         assertEquals(1, bike.getCurrentGear());
     }
-    
+
+    @Test
+    public void accelerateBikeAtGearFourAtSpeed155_currentSpeedIs155GearIsFourTest() {
+        assertFalse(bike.isOn());
+        bike.toggle();
+        assertTrue(bike.isOn());
+        for (int count = 1; count <= 58; count++) bike.accelerate();
+        assertEquals(155, bike.getCurrentSpeed());
+        assertEquals(4, bike.getCurrentGear());
+
+        bike.accelerate();
+        assertEquals(155, bike.getCurrentSpeed());
+        assertEquals(4, bike.getCurrentGear());
+    }
+
+    @Test
+    public void accelerateOnCruiseControlAtSpeed103_currentSpeedIs103Test() {
+        assertFalse(bike.isOn());
+        bike.toggle();
+        assertTrue(bike.isOn());
+        for (int count = 1; count <= 45; count++) bike.accelerate();
+        assertEquals(103, bike.getCurrentSpeed());
+        assertEquals(4, bike.getCurrentGear());
+
+        assertFalse(bike.isCruiseControl());
+        bike.activateCruiseControl();
+        assertTrue(bike.isCruiseControl());
+
+        bike.accelerate();
+        assertEquals(103, bike.getCurrentSpeed());
+        assertEquals(4, bike.getCurrentGear());
+    }
+
+    @Test
+    public void decelerateOnCruiseControlAtSpeed37_currentSpeedIs34Test() {
+        assertFalse(bike.isOn());
+        bike.toggle();
+        assertTrue(bike.isOn());
+        for (int count = 1; count <= 28; count++) bike.accelerate();
+        assertEquals(37, bike.getCurrentSpeed());
+        assertEquals(3, bike.getCurrentGear());
+
+        assertFalse(bike.isCruiseControl());
+        bike.activateCruiseControl();
+        assertTrue(bike.isCruiseControl());
+
+        bike.decelerate();
+        assertFalse(bike.isCruiseControl());
+        assertEquals(34, bike.getCurrentSpeed());
+        assertEquals(3, bike.getCurrentGear());
+    }
+
+    @Test
+    public void turnOnCruiseControlAtSpeed37_cruiseControlIsOnTest() {
+        assertFalse(bike.isOn());
+        bike.toggle();
+        assertTrue(bike.isOn());
+        for (int count = 1; count <= 28; count++) bike.accelerate();
+        assertEquals(37, bike.getCurrentSpeed());
+        assertEquals(3, bike.getCurrentGear());
+
+        assertFalse(bike.isCruiseControl());
+        bike.activateCruiseControl();
+        assertTrue(bike.isCruiseControl());
+    }
+
+    @Test
+    public void turnOnCruiseControlBelowSpeed37_cruiseControlIsOffTest() {
+        assertFalse(bike.isOn());
+        bike.toggle();
+        assertTrue(bike.isOn());
+        for (int count = 1; count <= 27; count++) bike.accelerate();
+        assertEquals(34, bike.getCurrentSpeed());
+        assertEquals(3, bike.getCurrentGear());
+
+        assertFalse(bike.isCruiseControl());
+        bike.activateCruiseControl();
+        assertFalse(bike.isCruiseControl());
+    }
 }

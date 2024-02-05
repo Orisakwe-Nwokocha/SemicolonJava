@@ -3,7 +3,8 @@ package bike;
 public class Bike {
     private boolean isOn;
     private int gear;
-    private int speedometer;
+    private int speed;
+    private boolean isCruiseControl;
 
     public boolean isOn() {
         return isOn;
@@ -19,10 +20,10 @@ public class Bike {
     }
 
     private void changeGear() {
-        if (speedometer >= 0 && speedometer <= 20) gear = 1;
-        if (speedometer >= 21 && speedometer <= 30) gear = 2;
-        if (speedometer >= 31 && speedometer <= 40) gear = 3;
-        if (speedometer >= 41) gear = 4;
+        if (speed >= 0 && speed <= 20) gear = 1;
+        if (speed >= 21 && speed <= 30) gear = 2;
+        if (speed >= 31 && speed <= 40) gear = 3;
+        if (speed >= 41) gear = 4;
     }
 
     public void accelerate() {
@@ -31,16 +32,21 @@ public class Bike {
         boolean isGearThree = gear == 3;
         boolean isGearFour = gear == 4;
 
-        if (isOn && isGearOne) speedometer++;
-        if (isOn && isGearTwo) speedometer += 2;
-        if (isOn && isGearThree) speedometer += 3;
-        if (isOn && isGearFour) speedometer += 4;
+        if (isOn && !isCruiseControl) {
+            if (isGearOne) speed++;
+            else if (isGearTwo) speed += 2;
+            else if (isGearThree) speed += 3;
+            else if (isGearFour) {
+                speed += 4;
+                if (speed >= 155) speed = 155;
+            }
+        }
 
         changeGear();
     }
 
     public int getCurrentSpeed() {
-        return speedometer;
+        return speed;
     }
 
     public void decelerate() {
@@ -49,14 +55,27 @@ public class Bike {
         boolean isGearTwo = gear == 2;
         boolean isGearOne = gear == 1;
 
-        if (isOn && isGearFour) speedometer -= 4;
-        if (isOn && isGearThree) speedometer -= 3;
-        if (isOn && isGearTwo) speedometer -= 2;
-        if (isOn && isGearOne) {
-            speedometer--;
-            if (speedometer <= 0) speedometer = 0;
+        if (isOn) {
+            if (isCruiseControl) isCruiseControl = false;
+
+            if (isGearFour) speed -= 4;
+            else if (isGearThree) speed -= 3;
+            else if (isGearTwo) speed -= 2;
+            else if (isGearOne) {
+                speed--;
+                if (speed <= 0) speed = 0;
+            }
         }
 
         changeGear();
+    }
+
+    public boolean isCruiseControl() {
+        return isCruiseControl;
+    }
+
+    public void activateCruiseControl() {
+        if (isOn) isCruiseControl = !isCruiseControl;
+        if (speed < 37) isCruiseControl = false;
     }
 }
