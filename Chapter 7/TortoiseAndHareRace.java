@@ -9,7 +9,7 @@ public class TortoiseAndHareRace {
     
     private enum Status {TORTOISE, HARE, TIE, DRAW, UNFINISHED};
     
-    public void startTortoiseAndHareRace() {
+    public void startTortoiseAndHareRace() throws InterruptedException {
         String[] raceTrack = new String[71];
 
         System.out.println("BANG !!!!!\nAND THEY'RE OFF !!!!!");
@@ -58,7 +58,8 @@ public class TortoiseAndHareRace {
             if (gameStatus == Status.DRAW) {
                 System.out.println("\nIt's a tie\nThe tortoise as the underdog is rewarded with a carrot and a lettuce!!!");
                 break;
-            }                        
+            }
+            Thread.sleep(3_000);
         }
         
         raceStatus(TORTOISE_POSITION, HARE_POSITION);
@@ -70,42 +71,32 @@ public class TortoiseAndHareRace {
         System.out.println("Number of laps: " + noOfGames);
     }
     
-     public static int racePositionsTortoise() {
+     private static int racePositionsTortoise() {
          int i = randomNumbers.nextInt(1, 11);
-         
-         switch (i) {
-             case 1: case 2: case 3: case 4: case 5:                 
-                 return TORTOISE_POSITION += 3;
-             case 6: case 7:                 
-                 return TORTOISE_POSITION -= 6;
-             case 8: case 9: case 10:                 
-                 return TORTOISE_POSITION += 1;
-             default:
-                 return racePositionsTortoise();                                  
-         }
+
+         return switch (i) {
+             case 1, 2, 3, 4, 5 -> TORTOISE_POSITION += 3;
+             case 6, 7 -> TORTOISE_POSITION -= 6;
+             case 8, 9, 10 -> TORTOISE_POSITION += 1;
+             default -> racePositionsTortoise();
+         };
      }
      
-     public static int racePositionsHare() {
+     private static int racePositionsHare() {
          int i = randomNumbers.nextInt(1, 11);
-         
-         switch (i) {
-             case 1: case 2:                 
-                 return HARE_POSITION += 0;
-             case 3: case 4:                 
-                 return HARE_POSITION += 9;  
-             case 5:                 
-                 return HARE_POSITION -= 12;                                
-             case 6: case 7: case 8:                 
-                 return HARE_POSITION += 1;
-             case 9: case 10:                 
-                 return HARE_POSITION -= 2;
-             default:
-                 return racePositionsHare();                                  
-         }
+
+         return switch (i) {
+             case 1, 2 -> HARE_POSITION;
+             case 3, 4 -> HARE_POSITION += 9;
+             case 5 -> HARE_POSITION -= 12;
+             case 6, 7, 8 -> HARE_POSITION += 1;
+             case 9, 10 -> HARE_POSITION -= 2;
+             default -> racePositionsHare();
+         };
      }     
      
-     public static Status raceStatus(int tortoisePosition, int harePosition) {
-         if ((tortoisePosition == harePosition) && (tortoisePosition < 70 || harePosition < 70)) {
+     private static void raceStatus(int tortoisePosition, int harePosition) {
+         if (tortoisePosition == harePosition && tortoisePosition < 70) {
              gameStatus = Status.TIE;
          } 
          
@@ -123,12 +114,11 @@ public class TortoiseAndHareRace {
            
          else {
              gameStatus = Status.UNFINISHED;
-         }           
-                      
-         return gameStatus;
-     } 
+         }
+
+     }
     
-     public static void main(String... ori) {
+     public static void main(String... ori) throws InterruptedException {
          TortoiseAndHareRace race1 = new TortoiseAndHareRace();
          race1.startTortoiseAndHareRace();
      }
