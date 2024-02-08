@@ -158,4 +158,39 @@ public class MyArrayListTest {
         assertEquals(11, strings.size());
     }
 
+    @Test
+    public void addElementByIndex_shiftsThePreviousElementToTheNextIndexTest() {
+        strings.add("G-String");
+        strings.add("A-String");
+        strings.add("D-String");
+        strings.add("T-String");
+        assertEquals(4, strings.size());
+        assertEquals(3, strings.get("D-String"));
+
+        strings.add(3, "Y-String");
+
+        assertEquals(5, strings.size());
+        assertEquals(4, strings.get("D-String"));
+        assertEquals(3, strings.get("Y-String"));
+    }
+
+    @Test
+    public void testThatListCanStoreSixOrMoreElementsAfterAddingByIndex() {
+        strings.add("G-String");
+        strings.add("A-String");
+        strings.add("D-String");
+        assertEquals(3, strings.size());
+        assertEquals(3, strings.get("D-String"));
+
+        strings.add(3, "Y-String");
+        assertEquals(4, strings.size());
+        assertEquals(4, strings.get("D-String"));
+        assertEquals(3, strings.get("Y-String"));
+
+        strings.add("k-String");
+        assertEquals(5, strings.size());
+        strings.add("T-String");
+        assertEquals(6, strings.size());
+    }
+
 }
