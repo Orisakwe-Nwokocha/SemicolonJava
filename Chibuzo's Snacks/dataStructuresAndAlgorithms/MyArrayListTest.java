@@ -104,4 +104,58 @@ public class MyArrayListTest {
         assertEquals(1, strings.get("A-String"));
     }
 
+    @Test
+    public void removeNonExistentElementFromList_throwsExceptionTest() {
+        assertTrue(strings.isEmpty());
+        strings.add("G-String");
+        strings.add("A-String");
+        assertFalse(strings.isEmpty());
+
+        assertThrows(IllegalArgumentException.class, ()-> strings.remove("D-String"));
+    }
+
+    @Test
+    public void removingNonExistentElementFromList_returnsMinusOneTest() {
+        assertTrue(strings.isEmpty());
+        strings.add("G-String");
+        strings.add("A-String");
+        assertFalse(strings.isEmpty());
+
+        assertEquals(-1, strings.get("test"));
+    }
+
+    @Test
+    public void checkSizeOfListTest() {
+        assertTrue(strings.isEmpty());
+        strings.add("G-String");
+        strings.add("A-String");
+        assertFalse(strings.isEmpty());
+
+        assertEquals(2, strings.size());
+        assertThrows(IllegalArgumentException.class, ()-> strings.remove("D-String"));
+
+        assertEquals(2, strings.size());
+    }
+
+    @Test
+    public void testThatListCanStoreSixOrMoreElements() {
+        strings.add("G-String");
+        strings.add("A-String");
+        strings.add("D-String");
+        strings.add("T-String");
+        strings.add("W-String");
+        assertEquals(5, strings.size());
+
+        strings.add("E-String");
+        strings.add("Y-String");
+        assertEquals(7, strings.size());
+
+        strings.add("Q-String");
+        strings.add("R-String");
+        strings.add("U-String");
+        strings.add("I-String");
+
+        assertEquals(11, strings.size());
+    }
+
 }
