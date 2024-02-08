@@ -15,9 +15,15 @@ public class MyArrayList {
 
     public void remove(String element) {
         if (isEmpty()) throw new ArrayIndexOutOfBoundsException("List is empty");
+        if (!arrayContains(element)) throw new IllegalArgumentException(element + " is not in the list");
 
         elements = removeElementsBy(element);
         numberOfElements--;
+    }
+
+    private boolean arrayContains(String element) {
+        for (String string : elements) if (element.equals(string)) return true;
+        return false;
     }
 
     public void remove(int index) {
@@ -28,14 +34,18 @@ public class MyArrayList {
     }
 
     public String get(int index) {
+        if (isEmpty()) throw new ArrayIndexOutOfBoundsException("List is empty");
+
         return elements[index -1];
     }
 
     public int get(String element) {
+        if (!arrayContains(element)) throw new IllegalArgumentException(element + " is not in the list");
+
         for (int index = 0; index < elements.length; index++)
             if (elements[index].equals(element)) return index + 1;
 
-        return 0;
+return 0;
     }
 
     private String[] removeElementsBy(String element) {
