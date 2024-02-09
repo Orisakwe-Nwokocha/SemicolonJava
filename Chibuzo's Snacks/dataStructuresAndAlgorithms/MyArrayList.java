@@ -1,7 +1,5 @@
 package dataStructuresAndAlgorithms;
 
-import java.util.Arrays;
-
 public class MyArrayList {
     private int numberOfElements;
     private String[] elements = new String[5];
