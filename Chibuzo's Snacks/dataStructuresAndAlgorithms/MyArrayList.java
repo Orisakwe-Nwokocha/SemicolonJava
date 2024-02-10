@@ -16,37 +16,43 @@ public class MyArrayList {
     }
 
     public void add(int index, String element) {
+        boolean indexIsOutOfRange = index < 1 || index > numberOfElements;
+        if (indexIsOutOfRange) throw new ArrayIndexOutOfBoundsException("Index is out of range");
+
         if (size() == elements.length - 2) createNewArray();
 
         String[] shiftedArray = new String[elements.length];
 
-        for (int counter = 0; counter < size() + 1; counter++) {
-            if (counter == index - 1) continue;
-            if (counter > index - 1) {
-                shiftedArray[counter] = elements[counter - 1];
+        for (int listIndex = 0; listIndex < size() + 1; listIndex++) {
+            if (listIndex == index - 1) continue;
+            if (listIndex > index - 1) {
+                shiftedArray[listIndex] = elements[listIndex - 1];
                 continue;
             }
 
-            shiftedArray[counter] = elements[counter];
+            shiftedArray[listIndex] = elements[listIndex];
         }
-
         shiftedArray[index - 1] = element;
+
         elements = shiftedArray;
         numberOfElements++;
     }
 
     public void remove(String element) {
-        if (isEmpty()) throw new ArrayIndexOutOfBoundsException("List is empty");
+        if (isEmpty()) throw new IllegalStateException("List is empty");
         else if (!contains(element)) throw new IllegalArgumentException(element + " is not in the list");
 
-        elements = removeElementsBy(element);
+        removeElementsBy(element);
         numberOfElements--;
     }
 
     public void remove(int index) {
-        if (isEmpty()) throw new ArrayIndexOutOfBoundsException("List is empty");
+        if (isEmpty()) throw new IllegalStateException("List is empty");
 
-        elements = removeElementsBy(index);
+        boolean indexIsOutOfRange = index < 1 || index > numberOfElements;
+        if (indexIsOutOfRange) throw new ArrayIndexOutOfBoundsException("Index is out of range");
+
+        removeElementsBy(index);
         numberOfElements--;
     }
 
@@ -71,30 +77,26 @@ public class MyArrayList {
         return false;
     }
 
-    private String[] removeElementsBy(String element) {
-        String[] temp = new String[elements.length];
+    private void removeElementsBy(String element) {
         int counter = 0;
 
         for (int index = 0; index < numberOfElements; index++) {
             if (elements[index].equals(element)) continue;
 
-            temp[counter] = elements[index];
+            elements[counter] = elements[index];
             counter++;
         }
-        return temp;
     }
 
-    private String[] removeElementsBy(int index) {
-        String[] temp = new String[elements.length];
+    private void removeElementsBy(int index) {
         int counter = 0;
 
-        for (int row = 0; row < numberOfElements; row++) {
-            if (row == index -1) continue;
+        for (int listIndex = 0; listIndex < numberOfElements; listIndex++) {
+            if (listIndex == index - 1) continue;
 
-            temp[counter] = elements[row];
+            elements[counter] = elements[listIndex];
             counter++;
         }
-        return temp;
     }
 
     private void createNewArray() {
@@ -102,6 +104,20 @@ public class MyArrayList {
 
         if (size() >= 0) System.arraycopy(elements, 0, newArray, 0, size());
         elements = newArray;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder outputArray;
+        outputArray = new StringBuilder("[");
+
+        for (int index = 0; index < numberOfElements; index++) {
+            outputArray.append(elements[index]);
+            if (index != numberOfElements - 1) outputArray.append(", ");
+        }
+        outputArray.append("]");
+
+        return outputArray.toString();
     }
 
 }

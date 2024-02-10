@@ -102,19 +102,16 @@ public class MyStackTest {
         myStack.push(6);
         myStack.push(5);
         myStack.push(7);
-        assertEquals(3, myStack.size());
-        assertEquals(3, myStack.capacity());
 
-        assertEquals(7, myStack.peek());
         assertEquals(3, myStack.size());
         assertEquals(3, myStack.capacity());
+        assertEquals(7, myStack.peek());
 
         myStack.pop();
         myStack.push(15);
+        assertEquals(3, myStack.size());
+        assertEquals(3, myStack.capacity());
         assertEquals(15, myStack.peek());
         System.out.println(myStack);
     }
-
-
-
 }

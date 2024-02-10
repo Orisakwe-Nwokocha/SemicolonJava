@@ -21,9 +21,11 @@ public class MyStack {
     }
 
     public int pop() {
-       // if (isEmpty()) throw new ArrayIndexOutOfBoundsException("Stack is empty");
+        if (isEmpty()) throw new ArrayIndexOutOfBoundsException("Stack is empty");
+
         int poppedElement = peek();
         numberOfElements--;
+
         return poppedElement;
     }
 
@@ -41,6 +43,14 @@ public class MyStack {
 
     @Override
     public String toString() {
-        return Arrays.toString(elements);
+        StringBuilder outputArray = new StringBuilder("[");
+
+        for (int index = 0; index < numberOfElements; index++) {
+            outputArray.append(elements[index]);
+            if (index != numberOfElements - 1) outputArray.append(", ");
+        }
+        outputArray.append("]");
+
+        return outputArray.toString();
     }
 }

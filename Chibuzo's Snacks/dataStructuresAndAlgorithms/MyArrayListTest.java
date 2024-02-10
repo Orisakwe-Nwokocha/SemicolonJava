@@ -25,6 +25,7 @@ public class MyArrayListTest {
 
         strings.add("G-String");
         assertFalse(strings.isEmpty());
+        System.out.println(strings);
     }
 
     @Test
@@ -52,7 +53,7 @@ public class MyArrayListTest {
     public void removeElementFromEmptyList_throwOutOfBoundsExceptionTest() {
         assertTrue(strings.isEmpty());
 
-        assertThrows(ArrayIndexOutOfBoundsException.class, ()-> strings.remove("G-String"));
+        assertThrows(IllegalStateException.class, ()-> strings.remove("G-String"));
     }
 
     @Test
