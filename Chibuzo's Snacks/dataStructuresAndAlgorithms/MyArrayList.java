@@ -57,7 +57,10 @@ public class MyArrayList {
     }
 
     public String get(int index) {
-        if (isEmpty()) throw new ArrayIndexOutOfBoundsException("List is empty");
+        if (isEmpty()) throw new IllegalStateException("List is empty");
+
+        boolean indexIsOutOfRange = index < 1 || index > numberOfElements;
+        if (indexIsOutOfRange) throw new ArrayIndexOutOfBoundsException("Index is out of range");
 
         return elements[index -1];
     }
@@ -102,7 +105,7 @@ public class MyArrayList {
     private void createNewArray() {
         String[] newArray = new String[elements.length * 2];
 
-        if (size() >= 0) System.arraycopy(elements, 0, newArray, 0, size());
+        System.arraycopy(elements, 0, newArray, 0, size());
         elements = newArray;
     }
 
