@@ -122,5 +122,4 @@ public class MyArrayList {
 
         return outputArray.toString();
     }
-
 }
