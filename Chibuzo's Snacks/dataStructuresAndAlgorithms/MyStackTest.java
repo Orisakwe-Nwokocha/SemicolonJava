@@ -2,6 +2,8 @@ package dataStructuresAndAlgorithms;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.EmptyStackException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MyStackTest {
@@ -89,11 +91,11 @@ public class MyStackTest {
     }
 
     @Test
-    public void popFromAnEmptyList_throwsOutOfBoundsExceptionTest() {
+    public void popFromAnEmptyStack_throwsOutOfBoundsExceptionTest() {
         MyStack myStack = new MyStack(3);
         assertTrue(myStack.isEmpty());
 
-        assertThrows(ArrayIndexOutOfBoundsException.class, ()-> myStack.pop());
+        assertThrows(EmptyStackException.class, ()-> myStack.pop());
     }
 
     @Test
@@ -114,4 +116,45 @@ public class MyStackTest {
         assertEquals(15, myStack.peek());
         System.out.println(myStack);
     }
+
+    @Test
+    public void givenFourElements_whenSearched_firstElementPositionIsFourTest() {
+        MyStack myStack = new MyStack(4);
+        myStack.push(20);
+        myStack.push(10);
+        myStack.push(40);
+        myStack.push(30);
+
+        assertEquals(4, myStack.search(20));
+    }
+
+    @Test
+    public void givenFourElements_whenSearched_lastElementPositionIsOneTest() {
+        MyStack myStack = new MyStack(4);
+        myStack.push(20);
+        myStack.push(10);
+        myStack.push(40);
+        myStack.push(30);
+
+        assertEquals(1, myStack.search(30));
+    }
+
+    @Test
+    public void givenFourElements_whenSearched_secondElementPositionIsThreeTest() {
+        MyStack myStack = new MyStack(4);
+        myStack.push(20);
+        myStack.push(10);
+        myStack.push(40);
+        myStack.push(30);
+
+        assertEquals(3, myStack.search(10));
+    }
+
+    @Test
+    public void givenEmptyStack_whenSearching_returnsMinusOneTest() {
+        MyStack myStack = new MyStack(4);
+
+        assertEquals(-1, myStack.search(0));
+    }
+
 }

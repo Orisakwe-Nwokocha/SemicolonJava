@@ -1,6 +1,6 @@
 package dataStructuresAndAlgorithms;
 
-import java.util.Arrays;
+import java.util.EmptyStackException;
 
 public class MyStack {
     private int numberOfElements;
@@ -21,7 +21,7 @@ public class MyStack {
     }
 
     public int pop() {
-        if (isEmpty()) throw new ArrayIndexOutOfBoundsException("Stack is empty");
+        if (isEmpty()) throw new EmptyStackException();
 
         int poppedElement = peek();
         numberOfElements--;
@@ -38,7 +38,16 @@ public class MyStack {
     }
 
     public int peek() {
+        if (isEmpty()) throw new EmptyStackException();
+
         return elements[numberOfElements - 1];
+    }
+
+    public int search(int element) {
+        for (int index = 0; index < numberOfElements; index++) {
+            if (elements[index] == element) return numberOfElements - index;
+        }
+        return -1;
     }
 
     @Override
