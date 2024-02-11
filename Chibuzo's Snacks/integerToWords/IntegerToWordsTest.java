@@ -23,6 +23,7 @@ public class IntegerToWordsTest {
         assertEquals("Fourteen minutes to One", IntegerToWords.displayTimeInWords(12, 46));
         assertEquals("Eight minutes past Eleven", IntegerToWords.displayTimeInWords(23, 8));
         assertEquals("quarter to One", IntegerToWords.displayTimeInWords(0, 45));
+        assertEquals("Three minutes to Three", IntegerToWords.displayTimeInWords(14, 57));
     }
 
     @Test

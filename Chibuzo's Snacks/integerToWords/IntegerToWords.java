@@ -13,28 +13,30 @@ public class IntegerToWords {
         return getOutput(number);
     }
 
-    private static String getOutput(int number) {
-        String[] numbersInWords = {"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
+    private static String getOutput(int time) {
+        String[] timeInWords = {"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
                 "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen",
                 "Nineteen", "Twenty", "Thirty", "Forty", "Fifty"};
-        int[] numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 30, 40, 50};
+        int[] timeInNumbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 30, 40, 50};
 
-        String output = "";
+        StringBuilder output = new StringBuilder();
 
-        for (int index = numbers.length - 1; index >= 0; index--) {
-            boolean numberIsWithinRange = number > 19 && number % 10 != 0;
+        for (int index = timeInNumbers.length - 1; index >= 0; index--) {
+            boolean timeIsWithinRange = time >= timeInNumbers[index];
+            boolean condition = time > 19 && time % 10 != 0;
 
-            if (numberIsWithinRange && number >= numbers[index]) {
-                output += numbersInWords[index] + " ";
-                number -= numbers[index];
+            if (timeIsWithinRange && condition) {
+                output.append(timeInWords[index]).append(" ");
+                time -= timeInNumbers[index];
             }
-            else if (number == numbers[index]) {
-                output += numbersInWords[index];
-                number -= numbers[index];
+
+            if (time == timeInNumbers[index]) {
+                output.append(timeInWords[index]);
+                time -= timeInNumbers[index];
             }
         }
 
-        return output;
+        return output.toString();
     }
 
     public static String displayTimeInWords(int hour, int minute) {
