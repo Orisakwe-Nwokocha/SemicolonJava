@@ -1,4 +1,4 @@
-package account;
+package accountBigDecimal;
 
 import org.junit.jupiter.api.Test;
 
