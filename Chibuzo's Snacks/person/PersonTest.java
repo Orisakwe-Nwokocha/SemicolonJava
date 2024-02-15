@@ -3,6 +3,8 @@ package person;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PersonTest {
@@ -20,7 +22,7 @@ public class PersonTest {
 
         person.addProblem(problem);
 
-        assertEquals(1, person.recountProblem().length);
+        assertEquals(1, person.recountProblem().size());
     }
 
     @Test
@@ -33,7 +35,7 @@ public class PersonTest {
         person.addProblem(problem);
         person.addProblem(problem2);
 
-        assertEquals(2, person.recountProblem().length);
+        assertEquals(2, person.recountProblem().size());
     }
 
     @Test
@@ -48,13 +50,17 @@ public class PersonTest {
         person.addProblem(problem);
         person.addProblem(problem2);
         person.addProblem(problem3);
-        assertEquals(3, person.recountProblem().length);
+        assertEquals(3, person.recountProblem().size());
 
         person.solveProblem(problem3);
-        assertEquals(2, person.recountProblem().length);
-        String[] expected = {"education: EDUCATION", "financial: FINANCIAL"};
-        assertArrayEquals(expected, person.recountProblem());
+        assertEquals(2, person.recountProblem().size());
+
+        ArrayList<String> expected = new ArrayList<>();
+        expected.add("education: EDUCATION");
+        expected.add("financial: FINANCIAL");
+        assertEquals(expected, person.recountProblem());
     }
+
 
     @Test
     public void givenProblem_whenSameDescriptionAndType_throwsExceptionTest() {

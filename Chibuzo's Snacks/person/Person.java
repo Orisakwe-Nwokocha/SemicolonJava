@@ -15,18 +15,20 @@ public class Person {
         problems.add(problem);
     }
 
-    public String[] recountProblem() {
-        ArrayList<String> problemsArray = new ArrayList<>();
+    public ArrayList<String> recountProblem() {
+        ArrayList<String> unsolvedProblems = new ArrayList<>();
 
         for (Problem problem: problems) {
             if (problem.isSolved()) continue;
-            problemsArray.add(String.valueOf(problem));
+            unsolvedProblems.add(String.valueOf(problem));
         }
 
-        return problemsArray.toArray(new String[0]);
+        return unsolvedProblems;
     }
 
     public void solveProblem(Problem problem) {
+        if (!contains(problem)) throw new IllegalArgumentException("Problem does not exist");
+
         problem.changeStatus();
     }
 
