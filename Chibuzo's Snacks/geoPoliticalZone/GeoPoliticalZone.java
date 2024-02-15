@@ -1,7 +1,7 @@
 package geoPoliticalZone;
 
 public enum GeoPoliticalZone {
-    NORTH_WEST("kebbi", "kaduna", "atsina", "kano", "sokoto", "zamfara"),
+    NORTH_WEST("kebbi", "kaduna", "katsina", "kano", "sokoto", "zamfara"),
     NORTH_EAST("adamawa", "borno", "bauchi", "gombe", "jigawa", "taraba", "yobe"),
     NORTH_CENTRAL("plateau", "kwara", "kogi", "benue", "niger", "nassarawa", "fct"),
 
