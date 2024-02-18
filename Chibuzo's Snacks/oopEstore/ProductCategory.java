@@ -1,4 +1,4 @@
-package oop;
+package oopEstore;
 
 public enum ProductCategory {
     ELECTRONICS, GROCERIES, UTENSILS, CLOTHING;

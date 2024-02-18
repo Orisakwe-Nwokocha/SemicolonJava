@@ -1,6 +1,4 @@
-package oop;
-
-import java.util.List;
+package oopEstore;
 
 public class Customer extends User {
     private BillingInformation billingInformation;

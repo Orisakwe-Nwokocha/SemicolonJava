@@ -1,4 +1,4 @@
-package oop;
+package oopEstore;
 
 public class BillingInformation {
     private String phoneNumber;
