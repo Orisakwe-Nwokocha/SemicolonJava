@@ -12,7 +12,7 @@ public class Bank {
 
     public int checkBalance(int accountNo, String pin) {
         Account account = findAccount(accountNo);
-        return account.checkBalance();
+        return account.checkBalance("1234");
     }
 
     public void deposit(int accountNo, int amount) {
