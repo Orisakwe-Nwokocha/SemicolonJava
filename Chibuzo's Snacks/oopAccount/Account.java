@@ -6,10 +6,14 @@ public class Account {
     private String pin;
     private int number;
 
-    public Account(String pin) {
+    public Account(String name, int number, String pin) {
         validatePinFormatAndLength(pin);
+
+        this.name = name;
+        this.number = number;
         this.pin = pin;
     }
+
 
     private static void validatePinFormatAndLength(String pin) {
         validatePinFormat(pin);
@@ -64,5 +68,9 @@ public class Account {
     private static void validateAmount(int amount) {
         boolean amountIsValid = amount > 0;
         if (!amountIsValid) throw new InvalidAmountException("Amount must be greater than zero");
+    }
+
+    public int getAccountNumber() {
+        return number;
     }
 }
