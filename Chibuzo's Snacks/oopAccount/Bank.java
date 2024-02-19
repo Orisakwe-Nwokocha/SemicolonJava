@@ -68,15 +68,15 @@ public class Bank {
         account.withdraw(amount, pin);
     }
 
-    public void transfer(int numberToDebit, int numberToCredit, int amount, String pin) {
-        ensureAccountExists(numberToDebit);
-        ensureAccountExists(numberToCredit);
+    public void transfer(int sourceAccountNumber, int destinationAccountNumber, int amount, String pin) {
+        ensureAccountExists(sourceAccountNumber);
+        ensureAccountExists(destinationAccountNumber);
 
-        Account accountToDebit = findAccount(numberToDebit);
-        Account accountToCredit = findAccount(numberToCredit);
+        Account sourceAccount = findAccount(sourceAccountNumber);
+        Account destinationAccount = findAccount(destinationAccountNumber);
 
-        accountToDebit.withdraw(amount, pin);
-        accountToCredit.deposit(amount);
+        sourceAccount.withdraw(amount, pin);
+        destinationAccount.deposit(amount);
     }
 
     public void removeAccount(int accountNumber, String name) {
