@@ -10,7 +10,7 @@ public class BankTest {
 
     @BeforeEach
     public void instantiateBank() {
-        firstBank = new Bank();
+        firstBank = new Bank("First Bank");
     }
 
     @Test
