@@ -1,15 +1,15 @@
 package lemonLemon;
 
 public class Player {
-    private boolean isElimanted;
-    private int id;
+    private boolean isEliminated;
+    private final int id;
 
     public Player(int id) {
         this.id = id;
     }
 
-    public boolean isElimanted() {
-        return isElimanted;
+    public boolean isEliminated() {
+        return isEliminated;
     }
 
     public int getId() {
@@ -17,11 +17,14 @@ public class Player {
     }
 
     public void changeStatus() {
-        isElimanted = true;
+        isEliminated = true;
     }
 
-  /*  public String toString() {
-        //return
+    public String toString() {
+        return String.format("Player%d: %s", id, (isEliminated ? "eliminated" : "active"));
+    }
 
-    }*/
+    public void play(LemonLemon lemonLemon, int playerId) {
+        lemonLemon.eliminatePlayer(playerId);
+    }
 }
