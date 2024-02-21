@@ -88,7 +88,7 @@ public class BankTest {
         int accountNumber = account.getAccountNumber();
         assertNotNull(firstBank.findAccount(accountNumber));
 
-        firstBank.removeAccount(account.getAccountNumber(), account.getName());
+        firstBank.removeAccount(account.getAccountNumber(), "1234");
         assertNull(firstBank.findAccount(accountNumber));
     }
 

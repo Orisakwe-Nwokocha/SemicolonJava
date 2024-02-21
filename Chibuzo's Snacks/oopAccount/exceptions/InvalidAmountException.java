@@ -1,4 +1,4 @@
-package oopAccount;
+package oopAccount.exceptions;
 
 public class InvalidAmountException extends RuntimeException {
 

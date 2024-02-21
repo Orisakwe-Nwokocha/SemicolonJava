@@ -34,7 +34,11 @@ public class Bank {
     }
 
     private boolean isEqual(int accountNumber, Account account) {
-        return account.getAccountNumber() == accountNumber;
+        return getAccountNumber(account) == accountNumber;
+    }
+
+    public int getAccountNumber(Account account) {
+        return account.getAccountNumber();
     }
 
     public int checkBalance(int accountNumber, String pin) {
@@ -80,11 +84,11 @@ public class Bank {
         destinationAccount.deposit(amount);
     }
 
-    public void removeAccount(int accountNumber, String name) {
+    public void removeAccount(int accountNumber, String pin) {
         ensureAccountExists(accountNumber);
 
         Account account = findAccount(accountNumber);
 
-        if (account.getName().equals(name)) accounts.remove(account);
+        if (account.isCorrect(pin)) accounts.remove(account);
     }
 }

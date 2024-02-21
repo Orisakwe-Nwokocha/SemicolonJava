@@ -1,5 +1,9 @@
 package oopAccount;
 
+import oopAccount.exceptions.InsufficientFundsException;
+import oopAccount.exceptions.InvalidAmountException;
+import oopAccount.exceptions.InvalidPinException;
+
 public class Account {
     private String name;
     private int balance;
@@ -14,7 +18,6 @@ public class Account {
         this.pin = pin;
     }
 
-
     private static void validatePinFormatAndLength(String pin) {
         validatePinFormat(pin);
         validatePinLength(pin);
@@ -22,14 +25,15 @@ public class Account {
 
     private static void validatePinFormat(String pin) {
         boolean hasOnlyDigits = pin.matches("\\d+");
+
         if (!hasOnlyDigits) throw new InvalidPinException("PIN must consist of only digit numbers");
     }
 
     private static void validatePinLength(String pin) {
         boolean isPinLengthValid = pin.length() == 4;
+
         if (!isPinLengthValid) throw new InvalidPinException("PIN length must be four digits long");
     }
-
 
     public void deposit(int amount) {
         validateAmount(amount);
@@ -57,21 +61,28 @@ public class Account {
 
     private void validatePin(String pin) {
         boolean isValidPin = this.pin.equals(pin);
+
         if (!isValidPin) throw new InvalidPinException("PIN provided is not valid: " + pin);
     }
 
     private void ensureSufficientFunds(int amount) {
-        boolean fundsIsInsufficient = amount > balance;
-        if (fundsIsInsufficient) throw new InsufficientFundsException("Insufficient funds to withdraw: " + amount);
+        boolean isInsufficient = amount > balance;
+
+        if (isInsufficient) throw new InsufficientFundsException("Insufficient funds to withdraw: " + amount);
     }
 
     private static void validateAmount(int amount) {
         boolean amountIsValid = amount > 0;
+
         if (!amountIsValid) throw new InvalidAmountException("Amount must be greater than zero");
     }
 
     public int getAccountNumber() {
         return number;
+    }
+
+    public boolean isCorrect(String pin) {
+        return this.pin.equals(pin);
     }
 
     public String getName() {

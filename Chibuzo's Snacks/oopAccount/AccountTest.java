@@ -1,5 +1,8 @@
 package oopAccount;
 
+import oopAccount.exceptions.InsufficientFundsException;
+import oopAccount.exceptions.InvalidAmountException;
+import oopAccount.exceptions.InvalidPinException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -80,5 +83,50 @@ public class AccountTest {
         account.deposit(10_000);
 
         assertThrows(InvalidPinException.class, ()-> account.checkBalance("4444"));
+    }
+
+    @Test
+    public void checkBalanceWithIncorrectPin_testInvalidPinExceptionMessage() {
+        try {
+            account.checkBalance("0000");
+        }
+        catch (InvalidPinException orisha) {
+            assertEquals("PIN provided is not valid: 0000", orisha.getMessage());
+        }
+    }
+
+    @Test
+    public void deposit2k_withdraw5kWithIncorrectPin_testInsufficientExceptionMessage_balanceIs2k() {
+        account.deposit(2_000);
+        assertEquals(2_000, account.checkBalance("1234"));
+
+        try {
+            account.withdraw(5_000, "1234");
+        }
+        catch (InsufficientFundsException orisha) {
+            assertEquals("Insufficient funds to withdraw: 5000", orisha.getMessage());
+        }
+
+        assertEquals(2_000, account.checkBalance("1234"));
+    }
+
+    @Test
+    public void depositMinus5k_testInvalidAmountMessage_balanceIs0() {
+        assertEquals(0, account.checkBalance("1234"));
+
+        try {
+            account.deposit(-5_000);
+        }
+        catch (InvalidAmountException orisha) {
+            assertEquals("Amount must be greater than zero", orisha.getMessage());
+        }
+
+        assertEquals(0, account.checkBalance("1234"));
+    }
+
+    @Test
+    public void customarySetterGetterTest() {
+        assertEquals("John Doe", account.getName());
+        assertEquals(1, account.getAccountNumber());
     }
 }
