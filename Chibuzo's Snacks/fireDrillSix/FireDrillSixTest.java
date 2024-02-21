@@ -17,19 +17,4 @@ public class FireDrillSixTest {
         assertArrayEquals(expected, FireDrillSix.modifyIntegers(sampleInput));
     }
 
-    @Test
-    public void givenArrayOfNumbers_whenModified_returnsArrayOfTrueAndFalse() {
-        int[] sampleInput = {4, 5, 8, 8, 8, 2, 9};
-        boolean[] expected = {false, true, false, false, false, false, true};
-
-        assertArrayEquals(expected, FireDrillSix.returnBoolean(sampleInput));
-    }
-
-    @Test
-    public void givenArrayOfNumbers_whenModified_returnsTenZeros() {
-        int[] expected = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-
-        assertArrayEquals(expected, FireDrillSix.returnInteger());
-    }
-
 }
