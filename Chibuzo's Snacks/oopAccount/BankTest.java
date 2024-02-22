@@ -16,7 +16,7 @@ public class BankTest {
     @Test
     public void givenBank_testThatBankCanRegisterCustomerAccount() {
         Account account = firstBank.registerCustomer("John", "Doe", "1234");
-        int accountNumber = account.getAccountNumber();
+        int accountNumber = account.getNumber();
 
         assertEquals(1, accountNumber);
     }
@@ -34,7 +34,7 @@ public class BankTest {
         Account account1 = firstBank.registerCustomer("John", "Doe", "1234");
         Account account2 = firstBank.registerCustomer("John", "Doe", "1234");
 
-        Account expected = firstBank.findAccount(account2.getAccountNumber());
+        Account expected = firstBank.findAccount(account2.getNumber());
 
         assertNotEquals(expected, account1);
     }
@@ -42,7 +42,7 @@ public class BankTest {
     @Test
     public void givenBankAccount_testThatAccountIsEmpty() {
         Account account = firstBank.registerCustomer("John", "Doe", "1234");
-        int accountNumber = account.getAccountNumber();
+        int accountNumber = account.getNumber();
 
         assertEquals(0, firstBank.checkBalance(accountNumber, "1234"));
     }
@@ -50,7 +50,7 @@ public class BankTest {
     @Test
     public void givenBankAccount_when10kIsDeposited_thenBalanceIs10k() {
         Account account = firstBank.registerCustomer("John", "Doe", "1234");
-        int accountNumber = account.getAccountNumber();
+        int accountNumber = account.getNumber();
 
         firstBank.deposit(accountNumber, 10_000);
         assertEquals(10_000, firstBank.checkBalance(accountNumber, "1234"));
@@ -59,7 +59,7 @@ public class BankTest {
     @Test
     public void given7kBalance_when5kIsWithdrawn_thenBalanceIs2k() {
         Account account = firstBank.registerCustomer("John", "Doe", "1234");
-        int accountNumber = account.getAccountNumber();
+        int accountNumber = account.getNumber();
         firstBank.deposit(accountNumber, 7000);
 
         firstBank.withdraw(accountNumber, 2000, "1234");
@@ -70,11 +70,11 @@ public class BankTest {
     public void transfer25kFromAccount1ToAccount2_account2BalanceIs30k_account1BalanceIs50k() {
         Account john = firstBank.registerCustomer("John", "Doe", "1234");
         Account jane = firstBank.registerCustomer("Jane", "Doe", "0000");
-        firstBank.deposit(john.getAccountNumber(), 75_000);
-        firstBank.deposit(jane.getAccountNumber(), 5000);
+        firstBank.deposit(john.getNumber(), 75_000);
+        firstBank.deposit(jane.getNumber(), 5000);
 
-        int johnAccountNumber = john.getAccountNumber();
-        int janeAccountNumber = jane.getAccountNumber();
+        int johnAccountNumber = john.getNumber();
+        int janeAccountNumber = jane.getNumber();
 
         firstBank.transfer(johnAccountNumber, janeAccountNumber, 25_000, "1234");
         assertEquals(30_000, firstBank.checkBalance(janeAccountNumber, "0000"));
@@ -85,11 +85,17 @@ public class BankTest {
     @Test
     public void givenAccount_whenRemoved_accountIsNull() {
         Account account = firstBank.registerCustomer("John", "Doe", "1234");
-        int accountNumber = account.getAccountNumber();
+        int accountNumber = account.getNumber();
         assertNotNull(firstBank.findAccount(accountNumber));
 
-        firstBank.removeAccount(account.getAccountNumber(), "1234");
+        firstBank.removeAccount(account.getNumber(), "1234");
         assertNull(firstBank.findAccount(accountNumber));
+    }
+
+    @Test
+    public void testVariousNullExceptions() {
+        assertThrows(NullPointerException.class, ()-> firstBank.getAccountNumber(null));
+        assertThrows(NullPointerException.class, ()-> firstBank.getAccountName(null));
     }
 
 }

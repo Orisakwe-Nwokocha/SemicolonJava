@@ -91,7 +91,7 @@ public class AccountTest {
             account.checkBalance("0000");
         }
         catch (InvalidPinException orisha) {
-            assertEquals("PIN provided is not valid: 0000", orisha.getMessage());
+            assertEquals("PIN provided is not valid.", orisha.getMessage());
         }
     }
 
@@ -104,7 +104,7 @@ public class AccountTest {
             account.withdraw(5_000, "1234");
         }
         catch (InsufficientFundsException orisha) {
-            assertEquals("Insufficient funds to withdraw: 5000", orisha.getMessage());
+            assertEquals("Insufficient funds to perform this operation.", orisha.getMessage());
         }
 
         assertEquals(2_000, account.checkBalance("1234"));
@@ -118,7 +118,7 @@ public class AccountTest {
             account.deposit(-5_000);
         }
         catch (InvalidAmountException orisha) {
-            assertEquals("Amount must be greater than zero", orisha.getMessage());
+            assertEquals("Amount must be greater than zero.", orisha.getMessage());
         }
 
         assertEquals(0, account.checkBalance("1234"));
@@ -127,6 +127,6 @@ public class AccountTest {
     @Test
     public void customarySetterGetterTest() {
         assertEquals("John Doe", account.getName());
-        assertEquals(1, account.getAccountNumber());
+        assertEquals(1, account.getNumber());
     }
 }

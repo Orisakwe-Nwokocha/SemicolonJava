@@ -28,17 +28,24 @@ public class Bank {
     }
 
     public Account findAccount(int accountNumber) {
-        for (Account account : accounts) if (isEqual(accountNumber, account)) return account;
+        for (Account account : accounts) {
+            boolean isEqual = account.getNumber() == accountNumber;
+            if (isEqual) return account;
+        }
 
         return null;
     }
 
-    private boolean isEqual(int accountNumber, Account account) {
-        return getAccountNumber(account) == accountNumber;
+    public int getAccountNumber(Account account) {
+        if (account == null) throw new NullPointerException("Account does not exist.");
+
+        return account.getNumber();
     }
 
-    public int getAccountNumber(Account account) {
-        return account.getAccountNumber();
+    public String getAccountName(Account account) {
+        if (account == null) throw new NullPointerException("Account does not exist.");
+
+        return account.getName();
     }
 
     public int checkBalance(int accountNumber, String pin) {
@@ -59,11 +66,9 @@ public class Bank {
 
     private void ensureAccountExists(int accountNumber) {
         Account account = findAccount(accountNumber);
-        boolean accountIsNull = account == null;
 
-        if (accountIsNull) throw new NullPointerException("Account number provided does not exist: " + accountNumber);
+        if (account == null) throw new NullPointerException("Account number provided does not exist.");
     }
-
 
     public void withdraw(int accountNumber, int amount, String pin) {
         ensureAccountExists(accountNumber);
@@ -79,6 +84,8 @@ public class Bank {
 
         Account sourceAccount = findAccount(sourceAccountNumber);
         Account destinationAccount = findAccount(destinationAccountNumber);
+
+        if (sourceAccountNumber == destinationAccountNumber) throw new IllegalArgumentException("Invalid operation.");
 
         sourceAccount.withdraw(amount, pin);
         destinationAccount.deposit(amount);
