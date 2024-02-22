@@ -13,35 +13,6 @@ public class BankApp {
     public void main() {
         bank = new Bank("First Bank of Nigeria PLC");
         startApp();
-
-
-        /*Account johnDoe = bank.registerCustomer("John", "Doe", "1234");
-        Account janeDoe = bank.registerCustomer("Jane", "Doe", "0000");
-
-        displayHeader("\nInitial balance of the accounts:");
-        displayBalance(bank, johnDoe, "1234");
-        displayBalance(bank, janeDoe, "0000");
-
-        bank.deposit(johnDoe.getAccountNumber(), 10_000);
-        displayHeader("\nBalance after deposit:");
-        displayBalance(bank, johnDoe, "1234");
-
-        bank.withdraw(johnDoe.getAccountNumber(), 4000, "1234");
-        displayHeader("\nBalance after withdrawal:");
-        displayBalance(bank, johnDoe, "1234");
-
-        bank.transfer(johnDoe.getAccountNumber(), janeDoe.getAccountNumber(), 2000, "1234");
-        displayHeader("\nBalance after transferring urgent 2k to Jane Doe:");
-        displayBalance(bank, johnDoe, "1234");
-        displayBalance(bank, janeDoe, "0000");
-
-        int accountNumber = janeDoe.getAccountNumber();
-        bank.removeAccount(janeDoe.getAccountNumber(), "0000");
-
-        String output = bank.findAccount(accountNumber) == null ?
-                "Account successfully removed." : "Account removal unsuccessful.";
-        displayHeader("");
-        System.out.printf("%s%n", output);*/
     }
 
     private void startApp() {
@@ -60,8 +31,7 @@ public class BankApp {
                 5. Delete Account
                 6. Exit
                 
-                Select option:
-                """);
+                Select option:""");
         String userChoice = input.next();
 
         switch (userChoice) {
@@ -69,7 +39,7 @@ public class BankApp {
             case "2" -> withdraw(account);
             case "3" -> transfer(account);
             case "4" -> checkBalance(account);
-            case "5" -> removeAccount();
+            case "5" -> removeAccount(account);
             case "6" -> exit();
             default -> menu(account);
         }
@@ -78,18 +48,43 @@ public class BankApp {
     private void exit() {
         try {
             System.out.println("exiting...");
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
+            Thread.sleep(3000);
+        }
+        catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
         System.exit(0);
     }
 
-    private void removeAccount() {
+    private void removeAccount(Account account) {
+        System.out.println("\nEnter account pin:");
+        String pin = input.next();
+
+        try {
+            bank.removeAccount(bank.getAccountNumber(account), pin);
+            System.out.println("Account successfully removed.");
+        }
+        catch (NullPointerException | InvalidPinException ori) {
+            System.out.println(ori.getMessage());
+        }
+
+        exit();
     }
 
     private void checkBalance(Account account) {
+        System.out.println("\nEnter account pin:");
+        String pin = input.next();
+
+        try {
+            int balance = bank.checkBalance(bank.getAccountNumber(account), pin);
+            System.out.printf("%s balance: ₦%d%n", bank.getAccountName(account), balance);
+        }
+        catch (NullPointerException | InvalidPinException ori) {
+            System.out.println(ori.getMessage());
+        }
+
+        menu(account);
     }
 
     private void transfer(Account account) {
@@ -103,9 +98,12 @@ public class BankApp {
         try {
             bank.transfer(bank.getAccountNumber(account), destinationAccountNumber, amount, pin);
         }
-        catch (InvalidAmountException | InsufficientFundsException | InvalidPinException | NullPointerException ori) {
+        catch (NullPointerException | InvalidPinException | InvalidAmountException | InsufficientFundsException |
+                IllegalArgumentException ori) {
             System.out.println(ori.getMessage());
         }
+
+        menu(account);
     }
 
     private void withdraw(Account account) {
@@ -114,7 +112,12 @@ public class BankApp {
         System.out.println("Enter account pin:");
         String pin = input.next();
 
-        bank.withdraw(bank.getAccountNumber(account), amount, pin);
+        try {
+            bank.withdraw(bank.getAccountNumber(account), amount, pin);
+        }
+        catch (InvalidPinException | InvalidAmountException | InsufficientFundsException ori) {
+            System.out.println(ori.getMessage());
+        }
 
         menu(account);
     }
@@ -123,7 +126,12 @@ public class BankApp {
         System.out.println("\nEnter amount to deposit:");
         int amount = input.nextInt();
 
-        bank.deposit(bank.getAccountNumber(account), amount);
+        try {
+            bank.deposit(bank.getAccountNumber(account), amount);
+        }
+        catch (InvalidAmountException ori) {
+            System.out.println(ori.getMessage());
+        }
 
         menu(account);
     }
@@ -131,6 +139,7 @@ public class BankApp {
     private Account registerCustomer() {
         System.out.println("Enter first name:");
         String firstName = input.next();
+        input.nextLine();
 
         System.out.println("Enter last name:");
         String lastName = input.next();
@@ -142,14 +151,5 @@ public class BankApp {
         Account janeDoe = bank.registerCustomer("Jane", "Doe", "0000");
 
         return account;
-    }
-
-    private static void displayHeader(String header) {
-        System.out.println(header);
-    }
-
-    private static void displayBalance(Bank bank, Account account, String pin) {
-        int balance = bank.checkBalance(account.getAccountNumber(), pin);
-        System.out.printf("%s balance: ₦%d%n", account.getName(), balance);
     }
 }
