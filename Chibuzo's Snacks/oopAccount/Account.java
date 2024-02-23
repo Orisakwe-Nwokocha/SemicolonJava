@@ -18,7 +18,7 @@ public class Account {
         this.pin = pin;
     }
 
-    private static void validatePinFormatAndLength(String pin) {
+    public static void validatePinFormatAndLength(String pin) {
         validatePinFormat(pin);
         validatePinLength(pin);
     }
