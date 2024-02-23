@@ -17,8 +17,10 @@ public class BankTest {
     public void givenBank_testThatBankCanRegisterCustomerAccount() {
         Account account = firstBank.registerCustomer("John", "Doe", "1234");
         int accountNumber = account.getNumber();
+        String accountName = account.getName();
 
         assertEquals(1, accountNumber);
+        assertEquals("John Doe", accountName);
     }
 
     @Test
@@ -73,12 +75,10 @@ public class BankTest {
         firstBank.deposit(john.getNumber(), 75_000);
         firstBank.deposit(jane.getNumber(), 5000);
 
-        int johnAccountNumber = john.getNumber();
-        int janeAccountNumber = jane.getNumber();
 
-        firstBank.transfer(johnAccountNumber, janeAccountNumber, 25_000, "1234");
-        assertEquals(30_000, firstBank.checkBalance(janeAccountNumber, "0000"));
-        assertEquals(50_000, firstBank.checkBalance(johnAccountNumber, "1234"));
+        firstBank.transfer(john.getNumber(), jane.getNumber(), 25_000, "1234");
+        assertEquals(30_000, firstBank.checkBalance(jane.getNumber(), "0000"));
+        assertEquals(50_000, firstBank.checkBalance(john.getNumber(), "1234"));
     }
 
 
@@ -89,13 +89,6 @@ public class BankTest {
         assertNotNull(firstBank.findAccount(accountNumber));
 
         firstBank.removeAccount(account.getNumber(), "1234");
-        assertNull(firstBank.findAccount(accountNumber));
+        assertThrows(NullPointerException.class, ()-> firstBank.findAccount(accountNumber));
     }
-
-    @Test
-    public void testVariousNullExceptions() {
-        assertThrows(NullPointerException.class, ()-> firstBank.getAccountNumber(null));
-        assertThrows(NullPointerException.class, ()-> firstBank.getAccountName(null));
-    }
-
 }

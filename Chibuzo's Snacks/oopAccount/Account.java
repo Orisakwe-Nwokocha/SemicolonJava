@@ -60,9 +60,7 @@ public class Account {
     }
 
     private void validatePin(String pin) {
-        boolean isValidPin = this.pin.equals(pin);
-
-        if (!isValidPin) throw new InvalidPinException("PIN provided is not valid.");
+        if (isInCorrect(pin)) throw new InvalidPinException("PIN provided is not valid.");
     }
 
     private void ensureSufficientFunds(int amount) {
@@ -81,8 +79,8 @@ public class Account {
         return number;
     }
 
-    public boolean isCorrect(String pin) {
-        return this.pin.equals(pin);
+    public boolean isInCorrect(String pin) {
+        return !this.pin.equals(pin);
     }
 
     public String getName() {

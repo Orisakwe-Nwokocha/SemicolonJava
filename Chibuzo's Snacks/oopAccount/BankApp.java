@@ -7,32 +7,32 @@ import oopAccount.exceptions.InvalidPinException;
 import java.util.Scanner;
 
 public class BankApp {
-    private Bank bank;
-    private final Scanner input = new Scanner(System.in);
+    private static final Bank firstBank = new Bank("First Bank of Nigeria PLC");;
 
-    public void main() {
-        bank = new Bank("First Bank of Nigeria PLC");
+    public static void main(String[] args) {
         startApp();
     }
 
-    private void startApp() {
-        Account account = registerCustomer();
-
-        menu(account);
+    private static void startApp() {
+        registerCustomer();
     }
 
-    private void menu(Account account) {
-        System.out.println("""
+    private static void goToMainMenu(Account account) {
+        String mainMenu = """
+                
+                What do you want to do today?
                 
                 1. Deposit
                 2. Withdraw
                 3. Transfer
                 4. Check Balance
-                5. Delete Account
+                5. Close Account
                 6. Exit
                 
-                Select option:""");
-        String userChoice = input.next();
+                Select option:""";
+
+
+        String userChoice = input(mainMenu);
 
         switch (userChoice) {
             case "1" -> deposit(account);
@@ -40,116 +40,149 @@ public class BankApp {
             case "3" -> transfer(account);
             case "4" -> checkBalance(account);
             case "5" -> removeAccount(account);
-            case "6" -> exit();
-            default -> menu(account);
+            case "6" -> exitApp();
+            default -> goToMainMenu(account);
         }
     }
 
-    private void exit() {
+    private static String input(String prompt) {
+        print(prompt);
+        Scanner input = new Scanner(System.in);
+        return input.nextLine();
+    }
+
+    private static void print(String prompt) {
+        System.out.println(prompt);
+    }
+
+    private static void exitApp() {
         try {
-            System.out.println("exiting...");
-            Thread.sleep(3000);
+            print("exiting...");
+            Thread.sleep(2000);
         }
-        catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        catch (InterruptedException ignored) {
         }
 
         System.exit(0);
     }
 
-    private void removeAccount(Account account) {
-        System.out.println("\nEnter account pin:");
-        String pin = input.next();
+    private static void removeAccount(Account account) {
+        String pin = input("\nEnter account pin:");
 
         try {
-            bank.removeAccount(bank.getAccountNumber(account), pin);
-            System.out.println("Account successfully removed.");
+            firstBank.removeAccount(account.getNumber(), pin);
+            print("Account successfully removed.");
         }
-        catch (NullPointerException | InvalidPinException ori) {
-            System.out.println(ori.getMessage());
+        catch (RuntimeException orisha) {
+            print(orisha.getMessage());
         }
-
-        exit();
+        finally {
+            exitApp();
+        }
     }
 
-    private void checkBalance(Account account) {
-        System.out.println("\nEnter account pin:");
-        String pin = input.next();
+    private static void checkBalance(Account account) {
+        String pin = input("\nEnter account pin:");
 
         try {
-            int balance = bank.checkBalance(bank.getAccountNumber(account), pin);
-            System.out.printf("%s balance: ₦%d%n", bank.getAccountName(account), balance);
+            int balance = firstBank.checkBalance(account.getNumber(), pin);
+            print(account.getName() + " balance: ₦" + balance);
         }
-        catch (NullPointerException | InvalidPinException ori) {
-            System.out.println(ori.getMessage());
+        catch (RuntimeException orisha) {
+            print(orisha.getMessage());
         }
-
-        menu(account);
+        finally {
+            goToMainMenu(account);
+        }
     }
 
-    private void transfer(Account account) {
-        System.out.println("\nEnter amount to transfer:");
-        int amount = input.nextInt();
-        System.out.println("Enter account number to credit:");
-        int destinationAccountNumber = input.nextInt();
-        System.out.println("Enter account pin:");
-        String pin = input.next();
+    private static void transfer(Account account) {
+        String receiverAccountNumber = input("\nEnter account number to credit:");
+        String amount = input("Enter amount to transfer:");
+        String pin = input("Enter account pin:");
 
         try {
-            bank.transfer(bank.getAccountNumber(account), destinationAccountNumber, amount, pin);
+            firstBank.transfer(account.getNumber(), Integer.parseInt(receiverAccountNumber),
+                    Integer.parseInt(amount), pin);
+            print("Amount was successfully transferred.");
         }
-        catch (NullPointerException | InvalidPinException | InvalidAmountException | InsufficientFundsException |
-                IllegalArgumentException ori) {
-            System.out.println(ori.getMessage());
+        catch (RuntimeException orisha) {
+           print(orisha.getMessage());
         }
-
-        menu(account);
+        finally {
+            goToMainMenu(account);
+        }
     }
 
-    private void withdraw(Account account) {
-        System.out.println("\nEnter amount to withdraw:");
-        int amount = input.nextInt();
-        System.out.println("Enter account pin:");
-        String pin = input.next();
+    private static void withdraw(Account account) {
+        String amount = input("\nEnter amount to withdraw:");
+        String pin = input("Enter account pin:");
 
         try {
-            bank.withdraw(bank.getAccountNumber(account), amount, pin);
+            firstBank.withdraw(account.getNumber(), Integer.parseInt(amount), pin);
+            print("Withdraw was successful.");
         }
-        catch (InvalidPinException | InvalidAmountException | InsufficientFundsException ori) {
-            System.out.println(ori.getMessage());
+        catch (RuntimeException orisha) {
+            print(orisha.getMessage());
         }
-
-        menu(account);
+        finally {
+            goToMainMenu(account);
+        }
     }
 
-    private void deposit(Account account) {
-        System.out.println("\nEnter amount to deposit:");
-        int amount = input.nextInt();
+    private static void deposit(Account account) {
+        String amount = input("\nEnter amount to deposit:");
 
         try {
-            bank.deposit(bank.getAccountNumber(account), amount);
+            firstBank.deposit(account.getNumber(), Integer.parseInt(amount));
+            print("Amount successfully deposited.");
         }
         catch (InvalidAmountException ori) {
             System.out.println(ori.getMessage());
         }
-
-        menu(account);
+        finally {
+            goToMainMenu(account);
+        }
     }
 
-    private Account registerCustomer() {
-        System.out.println("Enter first name:");
-        String firstName = input.next();
-        input.nextLine();
+    private static void registerCustomer() {
+        print("Welcome to first mobile app!!!");
 
-        System.out.println("Enter last name:");
-        String lastName = input.next();
+        String firstName = input("Enter first name:");
+        String lastName = input("Enter last name:");
+        String pin = input("Enter pin:");
 
-        System.out.println("Enter pin:");
-        String pin = input.next();
+        Account account = null;
 
-        Account account = bank.registerCustomer(firstName, lastName, pin);
-        Account janeDoe = bank.registerCustomer("Jane", "Doe", "0000");
+        try {
+            account = firstBank.registerCustomer(firstName, lastName, pin);
+        }
+        catch (InvalidPinException e) {
+            print(e.getMessage());
 
-        return account;
+            registerCustomer();
+        }
+        finally {
+            print("\nAccount successfully created.");
+            if (account != null) print("Your account number is " + account.getNumber());
+
+            firstBank.registerCustomer("Jane", "Doe", "0000");
+
+            if (account != null) login(account);
+        }
+
     }
+
+    private static void login(Account account) {
+        print("\nWelcome to first mobile app!!!");
+        String pin = input("Enter your pin to login:");
+
+        while (account.isInCorrect(pin)) {
+            print("Incorrect pin!!!\nPlease enter your pin to login:");
+            pin = input("Enter your pin to login:");
+        }
+
+        goToMainMenu(account);
+    }
+
 }

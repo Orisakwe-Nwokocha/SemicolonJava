@@ -1,5 +1,7 @@
 package oopAccount;
 
+import oopAccount.exceptions.InvalidPinException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,69 +35,39 @@ public class Bank {
             if (isEqual) return account;
         }
 
-        return null;
-    }
-
-    public int getAccountNumber(Account account) {
-        if (account == null) throw new NullPointerException("Account does not exist.");
-
-        return account.getNumber();
-    }
-
-    public String getAccountName(Account account) {
-        if (account == null) throw new NullPointerException("Account does not exist.");
-
-        return account.getName();
+        throw new NullPointerException("Account does not exist.");
     }
 
     public int checkBalance(int accountNumber, String pin) {
-        ensureAccountExists(accountNumber);
-
         Account account = findAccount(accountNumber);
 
         return account.checkBalance(pin);
     }
 
     public void deposit(int accountNumber, int amount) {
-        ensureAccountExists(accountNumber);
-
         Account account = findAccount(accountNumber);
 
         account.deposit(amount);
     }
 
-    private void ensureAccountExists(int accountNumber) {
-        Account account = findAccount(accountNumber);
-
-        if (account == null) throw new NullPointerException("Account number provided does not exist.");
-    }
-
     public void withdraw(int accountNumber, int amount, String pin) {
-        ensureAccountExists(accountNumber);
-
         Account account = findAccount(accountNumber);
 
         account.withdraw(amount, pin);
     }
 
-    public void transfer(int sourceAccountNumber, int destinationAccountNumber, int amount, String pin) {
-        ensureAccountExists(sourceAccountNumber);
-        ensureAccountExists(destinationAccountNumber);
+    public void transfer(int senderAccountNumber, int receiverAccountNumber, int amount, String pin) {
+        Account sender = findAccount(senderAccountNumber);
+        Account receiver = findAccount(receiverAccountNumber);
 
-        Account sourceAccount = findAccount(sourceAccountNumber);
-        Account destinationAccount = findAccount(destinationAccountNumber);
-
-        if (sourceAccountNumber == destinationAccountNumber) throw new IllegalArgumentException("Invalid operation.");
-
-        sourceAccount.withdraw(amount, pin);
-        destinationAccount.deposit(amount);
+        sender.withdraw(amount, pin);
+        receiver.deposit(amount);
     }
 
     public void removeAccount(int accountNumber, String pin) {
-        ensureAccountExists(accountNumber);
-
         Account account = findAccount(accountNumber);
+        if (account.isInCorrect(pin)) throw new InvalidPinException("PIN provided is not valid.");
 
-        if (account.isCorrect(pin)) accounts.remove(account);
+        accounts.remove(account);
     }
 }
