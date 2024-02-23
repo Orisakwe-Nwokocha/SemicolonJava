@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bank {
-    private String name;
-    private List<Account> accounts;
+    private final String name;
+    private final List<Account> accounts;
     private int lastAccountCreated;
 
     public Bank(String name) {
@@ -69,5 +69,9 @@ public class Bank {
         if (account.isInCorrect(pin)) throw new InvalidPinException("PIN provided is not valid.");
 
         accounts.remove(account);
+    }
+
+    public String getName() {
+        return name;
     }
 }

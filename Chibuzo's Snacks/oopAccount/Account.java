@@ -5,10 +5,10 @@ import oopAccount.exceptions.InvalidAmountException;
 import oopAccount.exceptions.InvalidPinException;
 
 public class Account {
-    private String name;
+    private final String name;
     private int balance;
-    private String pin;
-    private int number;
+    private final String pin;
+    private final int number;
 
     public Account(String name, int number, String pin) {
         validatePinFormatAndLength(pin);

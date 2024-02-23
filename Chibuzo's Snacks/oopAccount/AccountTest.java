@@ -96,7 +96,7 @@ public class AccountTest {
     }
 
     @Test
-    public void deposit2k_withdraw5kWithIncorrectPin_testInsufficientExceptionMessage_balanceIs2k() {
+    public void deposit2k_withdraw5kWithCorrectPin_testInsufficientExceptionMessage_balanceIs2k() {
         account.deposit(2_000);
         assertEquals(2_000, account.checkBalance("1234"));
 

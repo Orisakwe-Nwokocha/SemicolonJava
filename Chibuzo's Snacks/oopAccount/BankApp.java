@@ -1,19 +1,27 @@
 package oopAccount;
 
-import oopAccount.exceptions.InsufficientFundsException;
-import oopAccount.exceptions.InvalidAmountException;
-import oopAccount.exceptions.InvalidPinException;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class BankApp {
-    private static final Bank firstBank = new Bank("First Bank of Nigeria PLC");;
+    private static final Bank firstBank = new Bank("First Bank of Nigeria PLC");
+    private static final List<Bank> otherBanks = new ArrayList<>();
 
     public static void main(String[] args) {
         startApp();
     }
 
     private static void startApp() {
+        addOtherBanks();
+    }
+
+    private static void addOtherBanks() {
+        Bank gtBank = new Bank("Guaranty Trust Bank of Nigeria PLC");
+        Bank accessBank = new Bank("Access Bank of Nigeria PLC");
+        otherBanks.add(gtBank);
+        otherBanks.add(accessBank);
+
         registerCustomer();
     }
 
@@ -97,6 +105,61 @@ public class BankApp {
     }
 
     private static void transfer(Account account) {
+        String userChoice = input("Enter 1 to transfer to first bank accounts." +
+                " Enter 2 to transfer to other bank accounts");
+
+        if (userChoice.equals("1")) intraBankTransfer(account);
+        else if (userChoice.equals("2")) interBankTransfer(account);
+        else goToMainMenu(account);
+    }
+
+    private static void interBankTransfer(Account account) {
+        print("");
+        for (Bank bank : otherBanks) print("*".repeat(5) + bank.getName() + "*".repeat(5));
+
+        String choice = input("\nSelect option:");
+        if (choice.equals("1")) transferToGtBankAccounts(account);
+        else if (choice.equals("2")) transferToAccessBankAccounts(account);
+        else goToMainMenu(account);
+    }
+
+    private static void transferToAccessBankAccounts(Account account) {
+        String receiverAccountNumber = input("\nEnter account number to credit:");
+        String amount = input("Enter amount to transfer:");
+        String pin = input("Enter account pin:");
+
+        try {
+            account.withdraw(Integer.parseInt(amount), pin);
+            otherBanks.getLast().deposit(Integer.parseInt(receiverAccountNumber), Integer.parseInt(amount));
+            print("Amount was successfully transferred.");
+        }
+        catch (RuntimeException orisha) {
+            print(orisha.getMessage());
+        }
+        finally {
+            goToMainMenu(account);
+        }
+    }
+
+    private static void transferToGtBankAccounts(Account account) {
+        String receiverAccountNumber = input("\nEnter account number to credit:");
+        String amount = input("Enter amount to transfer:");
+        String pin = input("Enter account pin:");
+
+        try {
+            account.withdraw(Integer.parseInt(amount), pin);
+            otherBanks.getFirst().deposit(Integer.parseInt(receiverAccountNumber), Integer.parseInt(amount));
+            print("Amount was successfully transferred.");
+        }
+        catch (RuntimeException orisha) {
+            print(orisha.getMessage());
+        }
+        finally {
+            goToMainMenu(account);
+        }
+    }
+
+    private static void intraBankTransfer(Account account) {
         String receiverAccountNumber = input("\nEnter account number to credit:");
         String amount = input("Enter amount to transfer:");
         String pin = input("Enter account pin:");
@@ -137,8 +200,8 @@ public class BankApp {
             firstBank.deposit(account.getNumber(), Integer.parseInt(amount));
             print("Amount successfully deposited.");
         }
-        catch (InvalidAmountException ori) {
-            System.out.println(ori.getMessage());
+        catch (RuntimeException ori) {
+            print(ori.getMessage());
         }
         finally {
             goToMainMenu(account);
@@ -157,7 +220,7 @@ public class BankApp {
         try {
             account = firstBank.registerCustomer(firstName, lastName, pin);
         }
-        catch (InvalidPinException e) {
+        catch (RuntimeException e) {
             print(e.getMessage());
 
             registerCustomer();
@@ -166,7 +229,8 @@ public class BankApp {
             print("\nAccount successfully created.");
             if (account != null) print("Your account number is " + account.getNumber());
 
-            firstBank.registerCustomer("Jane", "Doe", "0000");
+            otherBanks.getFirst().registerCustomer("Jane", "Doe", "0000");
+            otherBanks.getLast().registerCustomer("FirstName", "LastName", "4321");
 
             if (account != null) login(account);
         }

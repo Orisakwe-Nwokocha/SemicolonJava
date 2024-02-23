@@ -15,6 +15,7 @@ public class BankTest {
 
     @Test
     public void givenBank_testThatBankCanRegisterCustomerAccount() {
+        System.out.println(firstBank.getName());
         Account account = firstBank.registerCustomer("John", "Doe", "1234");
         int accountNumber = account.getNumber();
         String accountName = account.getName();
