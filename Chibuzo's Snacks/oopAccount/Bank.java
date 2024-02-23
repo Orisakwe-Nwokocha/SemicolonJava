@@ -8,7 +8,7 @@ import java.util.List;
 public class Bank {
     private String name;
     private List<Account> accounts;
-    private int numberOfAccounts;
+    private int lastAccountCreated;
 
     public Bank(String name) {
         this.name = name;
@@ -26,7 +26,7 @@ public class Bank {
     }
 
     private int generateAccountNumber() {
-         return ++numberOfAccounts;
+         return ++lastAccountCreated;
     }
 
     public Account findAccount(int accountNumber) {
