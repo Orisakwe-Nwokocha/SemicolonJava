@@ -239,7 +239,7 @@ public class BankApp {
         String pin = input("Enter your pin to login:");
 
         while (account.isInCorrect(pin)) {
-            print("Incorrect pin!!!\nPlease enter your pin to login:");
+            print("Incorrect pin!!!");
             pin = input("Enter your pin to login:");
         }
 
