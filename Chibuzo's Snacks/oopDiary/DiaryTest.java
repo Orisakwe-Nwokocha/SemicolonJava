@@ -3,6 +3,9 @@ package oopDiary;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DiaryTest {
@@ -91,4 +94,70 @@ public class DiaryTest {
         assertEquals(3, diary.numberOfEntries());
     }
 
+    @Test
+    public void findNonExistingEntry_throwsNullPointerExceptionTest() {
+        assertThrows(NullPointerException.class, ()-> diary.findEntryById(1));
+    }
+
+    @Test
+    public void givenEntry_updateEntryTitle_titleIs_newTitleTest() {
+        diary.createEntry("title", "body");
+        assertEquals(1, diary.numberOfEntries());
+        assertEquals("title", diary.findEntryById(1).getTitle());
+
+        diary.updateEntry(1, "newTitle", "body");
+        assertEquals(1, diary.numberOfEntries());
+        assertEquals("newTitle", diary.findEntryById(1).getTitle());
+    }
+    @Test
+    public void givenEntry_updateEntryBody_bodyIs_newBodyTest() {
+        diary.createEntry("title", "body");
+        assertEquals(1, diary.numberOfEntries());
+        assertEquals("body", diary.findEntryById(1).getBody());
+
+        diary.updateEntry(1, "title", "newBody");
+        assertEquals(1, diary.numberOfEntries());
+        assertEquals("newBody", diary.findEntryById(1).getBody());
+
+    }
+    @Test
+    public void givenEntry_updateEntryTitleAndBody_titleIs_newTitle_bodyIs_newBodyTest() {
+        diary.createEntry("title", "body");
+        assertEquals(1, diary.numberOfEntries());
+        assertEquals("title", diary.findEntryById(1).getTitle());
+        assertEquals("body", diary.findEntryById(1).getBody());
+
+        diary.updateEntry(1, "newTitle", "newBody");
+        assertEquals(1, diary.numberOfEntries());
+        assertEquals("newTitle", diary.findEntryById(1).getTitle());
+        assertEquals("newBody", diary.findEntryById(1).getBody());
+    }
+
+    @Test
+    public void given3Entries_updateSecondEntryTitleAndBody_titleIs_newTitle_bodyIs_newBodyTest() {
+        diary.createEntry("title", "body");
+        diary.createEntry("title2", "body2");
+        diary.createEntry("title3", "body3");
+        assertEquals(3, diary.numberOfEntries());
+        assertEquals("title2", diary.findEntryById(2).getTitle());
+        assertEquals("body2", diary.findEntryById(2).getBody());
+
+        diary.updateEntry(2, "newTitle", "newBody");
+        assertEquals(3, diary.numberOfEntries());
+        assertEquals("newTitle", diary.findEntryById(2).getTitle());
+        assertEquals("newBody", diary.findEntryById(2).getBody());
+    }
+
+    @Test
+    public void testCreationDateForEntry() {
+        diary.createEntry("title", "body");
+        Entry foundEntry = diary.findEntryById(1);
+
+        assertEquals(getCurrentDate()[0], foundEntry.getDateCreated());
+    }
+
+    private static String[] getCurrentDate() {
+        String currentDateAndTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss a"));
+        return currentDateAndTime.split(" ");
+    }
 }

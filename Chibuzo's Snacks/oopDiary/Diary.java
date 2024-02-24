@@ -39,11 +39,13 @@ public class Diary {
     }
 
     public int numberOfEntries() {
-        return lastEntryCreated;
+        return entries.size();
     }
 
     public Entry findEntryById(int entryId) {
-        return entries.get(entryId-1);
+        for (Entry entry : entries) if (entry.getId() == entryId) return entry;
+
+        throw new NullPointerException("Entry does not exist");
     }
 
     private void validate(String password) {
@@ -51,6 +53,13 @@ public class Diary {
     }
 
     public void deleteEntry(int entryId) {
+        Entry foundEntry = findEntryById(entryId);
 
+        entries.remove(foundEntry);
+    }
+
+    public void updateEntry(int entryId, String newTitle, String newBody) {
+        entries.add(entryId, new Entry(entryId, newTitle, newBody));
+        deleteEntry(entryId);
     }
 }
