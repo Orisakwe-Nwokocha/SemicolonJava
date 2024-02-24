@@ -1,7 +1,5 @@
 package oopDiary;
 
-import oopAccount.Account;
-
 import javax.swing.*;
 
 public class MainApplication {
@@ -13,17 +11,20 @@ public class MainApplication {
     }
 
     private static void startApp() {
-        print("Welcome to the Diary Application");
+        print("Welcome to C19 Diary Application");
+
         int userChoice = JOptionPane.showConfirmDialog(null, "Do you want to create a new diary?",
                 "Create Diary", JOptionPane.YES_NO_OPTION);
 
         if (userChoice == JOptionPane.YES_OPTION) createDiary();
+
         exitApp();
     }
 
     private static void createDiary() {
-        String password = input("Enter a password: ");
+        String password = input("Enter a password for  the diary: ");
         diary = user.createDiary(password);
+        print("Diary has been created");
 
         goToMainMenu();
     }
@@ -58,24 +59,39 @@ public class MainApplication {
     }
 
     private static void addEntry() {
-    }
+        checkDiaryStatus();
 
-    private static void lockDiary() {
+        String title = input("Enter Title: ");
+        String body = input("Enter Body: ");
         try {
-            user.lockDiary(diary);
+            user.createEntry(diary, title, body);
+            print("Entry has been created successfully");
         }
         catch (RuntimeException e) {
             print(e.getMessage());
         }
         finally {
+            goToMainMenu();
+        }
+    }
+
+    private static void lockDiary() {
+        try {
+            user.lockDiary(diary);
             print("Diary has been locked");
+        }
+        catch (RuntimeException e) {
+            print(e.getMessage());
+        }
+        finally {
             goToMainMenu();
         }
     }
 
     private static void findEntryById() {
-        String entryId = input("Enter ID of the entry you would like to find: ");
+        checkDiaryStatus();
 
+        String entryId = input("Enter ID of the entry you would like to find: ");
         try {
             Entry foundEntry = user.findEntryById(diary, Integer.parseInt(entryId));
             print(foundEntry.toString());
@@ -84,57 +100,59 @@ public class MainApplication {
             print(e.getMessage());
         }
         finally {
-            print("Diary has been updated");
-
             goToMainMenu();
         }
     }
 
     private static void updateEntry() {
+        checkDiaryStatus();
+
         String entryId = input("Enter ID of the entry you want to update: ");
         String newTitle = input("Enter the new title of the entry: ");
         String newBody = input("Enter the new body of the entry: ");
 
         try {
             user.updateEntry(diary, Integer.parseInt(entryId), newTitle, newBody);
+            print("Diary has been updated");
         }
         catch (RuntimeException e) {
             print(e.getMessage());
         }
         finally {
-            print("Diary has been updated");
-
             goToMainMenu();
         }
     }
 
+    private static void checkDiaryStatus() {
+        if (diary.isLocked()) {
+            print("Diary is locked");
+            unlockDiary();
+        }
+    }
+
     private static void unlockDiary() {
-        String password = input("Enter a password: ");
+        String password = input("Enter password to unlock diary: ");
 
         try {
             user.unlockDiary(diary, password);
+            print("Diary has been unlocked");
         }
         catch (RuntimeException e) {
             print(e.getMessage());
         }
         finally {
-            print(String.valueOf(diary.isLocked()));
-            print("Diary has been unlocked");
 
             goToMainMenu();
         }
     }
 
     private static void deleteEntry() {
-        print(String.valueOf(diary.isLocked()));
-        if (diary.isLocked()) {
-            print("Diary is locked");
-            unlockDiary();
-        }
+        checkDiaryStatus();
 
         String entryID = input("Enter ID of the entry you want to delete: ");
         try {
             user.deleteEntry(diary, Integer.parseInt(entryID));
+            print("Entry has been deleted")2;
         }
         catch (RuntimeException e) {
             print("There was an error while deleting the entry.\n" + e.getMessage());

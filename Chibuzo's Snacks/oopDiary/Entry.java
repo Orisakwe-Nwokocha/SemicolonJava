@@ -39,6 +39,7 @@ public class Entry {
 
     @Override
     public String toString() {
-        return String.format("Entry[id=%d]:%n\ttitle===>%s%n\tbody=%s]", id, title, body);
+        return String.format("Entry[%n\tid ===> %d%n\tdate created ===> %s%n\ttitle ===> %s%n\tbody ===> %s%n\t]",
+                id, getDateCreated(), title, body);
     }
 }

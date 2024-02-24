@@ -25,4 +25,8 @@ public class User {
     public Entry findEntryById(Diary diary, int entryId) {
         return diary.findEntryById(entryId);
     }
+
+    public void createEntry(Diary diary, String title, String body) {
+        diary.createEntry(title, body);
+    }
 }
