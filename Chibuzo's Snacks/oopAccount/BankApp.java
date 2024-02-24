@@ -34,7 +34,7 @@ public class BankApp {
                 3. Transfer
                 4. Check Balance
                 5. Close Account
-                6. Exit
+                6. Exit App
                 
                 Select option:""";
 
