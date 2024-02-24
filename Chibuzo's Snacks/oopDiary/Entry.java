@@ -36,4 +36,9 @@ public class Entry {
         String currentDateAndTime = dateCreated.format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss a"));
         return currentDateAndTime.split(" ");
     }
+
+    @Override
+    public String toString() {
+        return String.format("Entry[id=%d]:%n\ttitle===>%s%n\tbody=%s]", id, title, body);
+    }
 }
