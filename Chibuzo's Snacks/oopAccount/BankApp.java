@@ -63,7 +63,7 @@ public class BankApp {
     private static void exitApp() {
         try {
             print("exiting...");
-            Thread.sleep(2000);
+            Thread.sleep(1500);
         }
         catch (InterruptedException ignored) {
         }
