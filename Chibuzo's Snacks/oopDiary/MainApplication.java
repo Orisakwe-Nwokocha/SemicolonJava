@@ -5,6 +5,7 @@ import javax.swing.*;
 public class MainApplication {
     private static Diary diary;
     private static final User user = new User();
+    private static final Diaries shelf = user.getDiaries();
 
     public static void main(String[] args) {
         startApp();
@@ -18,14 +19,6 @@ public class MainApplication {
 
         if (userChoice == JOptionPane.YES_OPTION) createDiary();
 
-        exitApp();
-    }
-
-    private static void createDiary() {
-        String password = input("Enter a password for  the diary: ");
-        diary = user.createDiary(password);
-        print("Diary has been created");
-
         goToMainMenu();
     }
 
@@ -33,13 +26,15 @@ public class MainApplication {
         String mainMenu = """         
                 What do you want to do today?
                                 
-                1. Add Entry
-                2. Lock Diary
-                3. Unlock Diary
-                4. Find Entry by ID
-                5. Update Entry
-                6. Delete Entry
-                7. Exit
+                1. Create Diary
+                2. Delete Diary
+                3. Add Entry
+                4. Lock Diary
+                5. Unlock Diary
+                6. Find Entry by ID
+                7. Update Entry
+                8. Delete Entry
+                9. Exit
                                 
                 Select option:""";
 
@@ -47,24 +42,62 @@ public class MainApplication {
         String userChoice = input(mainMenu);
 
         switch (userChoice) {
-            case "1" -> addEntry();
-            case "2" -> lockDiary();
-            case "3" -> unlockDiary();
-            case "4" -> findEntryById();
-            case "5" -> updateEntry();
-            case "6" -> deleteEntry();
-            case "7" -> exitApp();
+            case "1" -> createDiary();
+            case "2" -> deleteDiary();
+            case "3" -> addEntry();
+            case "4" -> lockDiary();
+            case "5" -> unlockDiary();
+            case "6" -> findEntryById();
+            case "7" -> updateEntry();
+            case "8" -> deleteEntry();
+            case "9" -> exitApp();
             default -> goToMainMenu();
         }
     }
 
+    private static void createDiary() {
+        String username = input("Enter a username for the diary: ");
+        String password = input("Enter a password for  the diary: ");
+        diary = new Diary(username, password);
+
+        try {
+            user.createDiary(diary);
+            print("Diary has been created");
+        }
+        catch (RuntimeException e) {
+            print("Diary has not been created");
+            print(e.getMessage());
+        }
+        finally {
+            goToMainMenu();
+        }
+    }
+
+    private static void deleteDiary() {
+        String username = getDiaryUsername();
+        String password = input("Enter the password of  the diary: ");
+
+        try {
+            user.deleteDiary(username, password);
+            print("Diary has been deleted successfully");
+        }
+        catch (RuntimeException e) {
+            print("Error in deleting diary");
+            print(e.getMessage());
+        }
+        finally {
+            goToMainMenu();
+        }
+    }
+    
     private static void addEntry() {
-        checkDiaryStatus();
+        String username = getDiaryUsername();
+        ensureDiaryIsUnlocked(username);
 
         String title = input("Enter Title: ");
         String body = input("Enter Body: ");
         try {
-            user.createEntry(diary, title, body);
+            user.createEntry(username, title, body);
             print("Entry has been created successfully");
         }
         catch (RuntimeException e) {
@@ -73,6 +106,10 @@ public class MainApplication {
         finally {
             goToMainMenu();
         }
+    }
+
+    private static String getDiaryUsername() {
+        return input("Enter the username of the diary: ");
     }
 
     private static void lockDiary() {
@@ -89,11 +126,12 @@ public class MainApplication {
     }
 
     private static void findEntryById() {
-        checkDiaryStatus();
+        String username = getDiaryUsername();
+        ensureDiaryIsUnlocked(username);
 
         String entryId = input("Enter ID of the entry you would like to find: ");
         try {
-            Entry foundEntry = user.findEntryById(diary, Integer.parseInt(entryId));
+            Entry foundEntry = user.findEntryById(username, Integer.parseInt(entryId));
             print(foundEntry.toString());
         }
         catch (RuntimeException e) {
@@ -105,7 +143,7 @@ public class MainApplication {
     }
 
     private static void updateEntry() {
-        checkDiaryStatus();
+        ensureDiaryIsUnlocked("");
 
         String entryId = input("Enter ID of the entry you want to update: ");
         String newTitle = input("Enter the new title of the entry: ");
@@ -123,7 +161,8 @@ public class MainApplication {
         }
     }
 
-    private static void checkDiaryStatus() {
+    private static void ensureDiaryIsUnlocked(String username) {
+        diary = shelf.findByUsername(username);
         if (diary.isLocked()) {
             print("Diary is locked");
             unlockDiary();
@@ -147,12 +186,12 @@ public class MainApplication {
     }
 
     private static void deleteEntry() {
-        checkDiaryStatus();
+        ensureDiaryIsUnlocked("");
 
         String entryID = input("Enter ID of the entry you want to delete: ");
         try {
             user.deleteEntry(diary, Integer.parseInt(entryID));
-            print("Entry has been deleted")2;
+            print("Entry has been deleted");
         }
         catch (RuntimeException e) {
             print("There was an error while deleting the entry.\n" + e.getMessage());
@@ -163,12 +202,7 @@ public class MainApplication {
     }
 
     private static void exitApp() {
-        try {
-            print("exiting...");
-            Thread.sleep(1500);
-        }
-        catch (InterruptedException ignored) {
-        }
+        print("exiting...");
 
         System.exit(0);
     }

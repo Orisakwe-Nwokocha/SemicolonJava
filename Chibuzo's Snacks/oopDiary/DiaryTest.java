@@ -13,7 +13,7 @@ public class DiaryTest {
 
     @BeforeEach
     public void initializeDiary() {
-        diary = new Diary("correctPassword");
+        diary = new Diary("username", "correctPassword");
     }
 
     @Test
@@ -152,6 +152,7 @@ public class DiaryTest {
     public void testCreationDateForEntry() {
         diary.createEntry("title", "body");
         Entry foundEntry = diary.findEntryById(1);
+        System.out.println(foundEntry);
 
         assertEquals(getCurrentDate()[0], foundEntry.getDateCreated());
     }

@@ -1,32 +1,57 @@
 package oopDiary;
 
 public class User {
+    private final Diaries diariesShelf = new Diaries();
 
-    public Diary createDiary(String password){
-        return new Diary(password);
+    public void createDiary(String username, String password){
+        diariesShelf.add(username, password);
     }
 
-    public void deleteEntry(Diary diary, int entryId) {
-        diary.deleteEntry(entryId);
+    public void createDiary(Diary diary) {
+        diariesShelf.add(diary);
     }
 
-    public void unlockDiary(Diary diary, String password) {
-        diary.unlockDiary(password);
+    public void deleteEntry(String username, int entryId) {
+        Diary foundDiary = diariesShelf.findByUsername(username);
+
+        foundDiary.deleteEntry(entryId);
     }
 
-    public void lockDiary(Diary diary) {
-        diary.lockDiary();
+    public void unlockDiary(String username, String password) {
+        Diary foundDiary = diariesShelf.findByUsername(username);
+
+        foundDiary.unlockDiary(password);
     }
 
-    public void updateEntry(Diary diary, int entryId, String newTitle, String newBody) {
-        diary.updateEntry(entryId, newTitle, newBody);
+    public void lockDiary(String username) {
+        Diary foundDiary = diariesShelf.findByUsername(username);
+
+        foundDiary.lockDiary();
     }
 
-    public Entry findEntryById(Diary diary, int entryId) {
-        return diary.findEntryById(entryId);
+    public void updateEntry(String username, int entryId, String newTitle, String newBody) {
+        Diary foundDiary = diariesShelf.findByUsername(username);
+
+        foundDiary.updateEntry(entryId, newTitle, newBody);
     }
 
-    public void createEntry(Diary diary, String title, String body) {
-        diary.createEntry(title, body);
+    public Entry findEntryById(String username, int entryId) {
+        Diary foundDiary = diariesShelf.findByUsername(username);
+
+        return foundDiary.findEntryById(entryId);
+    }
+
+    public void createEntry(String username, String title, String body) {
+        Diary foundDiary = diariesShelf.findByUsername(username);
+
+        foundDiary.createEntry(title, body);
+    }
+
+    public Diaries getDiaries() {
+        return diariesShelf;
+    }
+
+    public void deleteDiary(String username, String password) {
+        diariesShelf.delete(username, password);
     }
 }

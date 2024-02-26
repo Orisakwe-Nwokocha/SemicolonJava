@@ -5,12 +5,14 @@ import java.util.List;
 
 public class Diary {
 
+    private final String username;
     private boolean isLocked;
     private String password;
     private int lastEntryCreated;
     private List<Entry> entries = new ArrayList<>();
 
-    public Diary(String password) {
+    public Diary(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 
@@ -59,7 +61,24 @@ public class Diary {
     }
 
     public void updateEntry(int entryId, String newTitle, String newBody) {
-        entries.add(entryId, new Entry(entryId, newTitle, newBody));
-        deleteEntry(entryId);
+        Entry foundEntry = findEntryById(entryId);
+
+        foundEntry.updateTitle(newTitle);
+        foundEntry.updateBody(newBody);
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+
+        return (object instanceof Diary diary) && this.username.equals(diary.username);
+    }
+
+    public boolean verifyPassword(String password) {
+        return this.password.equals(password);
     }
 }

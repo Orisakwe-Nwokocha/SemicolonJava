@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Entry {
-    private int id;
+    private final int id;
     private String title;
     private String body;
     private final LocalDateTime dateCreated;
@@ -41,5 +41,13 @@ public class Entry {
     public String toString() {
         return String.format("Entry[%n\tid ===> %d%n\tdate created ===> %s%n\ttitle ===> %s%n\tbody ===> %s%n\t]",
                 id, getDateCreated(), title, body);
+    }
+
+    public void updateTitle(String newTitle) {
+        this.title = newTitle;
+    }
+
+    public void updateBody(String newBody) {
+        this.body = newBody;
     }
 }
