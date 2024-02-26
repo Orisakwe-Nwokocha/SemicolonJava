@@ -5,7 +5,7 @@ import javax.swing.*;
 public class MainApplication {
     private static Diary diary;
     private static final User user = new User();
-    private static final Diaries shelf = user.getDiaries();
+    private static final Diaries diariesShelf = user.getDiaries();
 
     public static void main(String[] args) {
         startApp();
@@ -89,18 +89,20 @@ public class MainApplication {
             goToMainMenu();
         }
     }
-    
+
     private static void addEntry() {
         String username = getDiaryUsername();
         ensureDiaryIsUnlocked(username);
 
-        String title = input("Enter Title: ");
-        String body = input("Enter Body: ");
+        String title = input("Enter the title: ");
+        String body = input("Enter the body: ");
+
         try {
             user.createEntry(username, title, body);
             print("Entry has been created successfully");
         }
         catch (RuntimeException e) {
+            print("Error in creating entry");
             print(e.getMessage());
         }
         finally {
@@ -108,13 +110,12 @@ public class MainApplication {
         }
     }
 
-    private static String getDiaryUsername() {
-        return input("Enter the username of the diary: ");
-    }
-
     private static void lockDiary() {
+        String username = getDiaryUsername();
+        checkDiaryStatus(username);
+
         try {
-            user.lockDiary(diary);
+            user.lockDiary(username);
             print("Diary has been locked");
         }
         catch (RuntimeException e) {
@@ -123,6 +124,11 @@ public class MainApplication {
         finally {
             goToMainMenu();
         }
+    }
+
+    private static void checkDiaryStatus(String username) {
+        diary = diariesShelf.findByUsername(username);
+        if (diary.isLocked()) throw new IllegalStateException("Diary is already locked");
     }
 
     private static void findEntryById() {
@@ -143,6 +149,7 @@ public class MainApplication {
     }
 
     private static void updateEntry() {
+        String username = getDiaryUsername();
         ensureDiaryIsUnlocked("");
 
         String entryId = input("Enter ID of the entry you want to update: ");
@@ -150,7 +157,7 @@ public class MainApplication {
         String newBody = input("Enter the new body of the entry: ");
 
         try {
-            user.updateEntry(diary, Integer.parseInt(entryId), newTitle, newBody);
+            user.updateEntry(username, Integer.parseInt(entryId), newTitle, newBody);
             print("Diary has been updated");
         }
         catch (RuntimeException e) {
@@ -162,18 +169,25 @@ public class MainApplication {
     }
 
     private static void ensureDiaryIsUnlocked(String username) {
-        diary = shelf.findByUsername(username);
-        if (diary.isLocked()) {
-            print("Diary is locked");
-            unlockDiary();
+        diary = diariesShelf.findByUsername(username);
+
+        try {
+            if (diary.isLocked()) throw new IllegalStateException("Diary is locked");
+        }
+        catch (RuntimeException e) {
+            print(e.getMessage());
+        }
+        finally {
+            goToMainMenu();
         }
     }
 
     private static void unlockDiary() {
+        String username = getDiaryUsername();
         String password = input("Enter password to unlock diary: ");
 
         try {
-            user.unlockDiary(diary, password);
+            user.unlockDiary(username, password);
             print("Diary has been unlocked");
         }
         catch (RuntimeException e) {
@@ -186,11 +200,12 @@ public class MainApplication {
     }
 
     private static void deleteEntry() {
+        String username = getDiaryUsername();
         ensureDiaryIsUnlocked("");
 
         String entryID = input("Enter ID of the entry you want to delete: ");
         try {
-            user.deleteEntry(diary, Integer.parseInt(entryID));
+            user.deleteEntry(username, Integer.parseInt(entryID));
             print("Entry has been deleted");
         }
         catch (RuntimeException e) {
@@ -205,6 +220,10 @@ public class MainApplication {
         print("exiting...");
 
         System.exit(0);
+    }
+
+    private static String getDiaryUsername() {
+        return input("Enter the username of the diary: ");
     }
 
     private static String input(String prompt) {
