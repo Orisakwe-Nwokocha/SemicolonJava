@@ -34,7 +34,7 @@ public class MainApplication {
                 6. Find Entry by ID
                 7. Update Entry
                 8. Delete Entry
-                9. View ALl Entries
+                9. View All Entries
                 10. Exit
                                 
                 Select option:""";
@@ -145,20 +145,71 @@ public class MainApplication {
 
     private static void updateEntry() {
         String username = getDiaryUsername();
+        ensureDiaryExists(username);
         ensureDiaryIsUnlocked(username);
 
         String entryId = input("Enter ID of the entry you want to update: ");
-        String newTitle = input("Enter the new title of the entry: ");
-        String newBody = input("Enter the new body of the entry: ");
 
+        String userChoice = input("""
+                Enter 1 to update the title
+                Enter 2 to update the body
+                Enter 3 to update both""");
+        switch (userChoice) {
+            case "1" -> updateEntryTitle(entryId, username);
+            case "2" -> updateEntryBody(entryId, username);
+            case "3" -> updateEntryTitleAndBody(username, entryId);
+            default -> goToMainMenu();
+        }
+    }
+
+    private static void updateEntryTitle(String entryId, String username) {
         try {
+            String body = diary.findEntryById(Integer.parseInt(entryId)).getBody();
+            String newTitle = input("Enter the new title of the entry: ");
+
+            user.updateEntry(username, Integer.parseInt(entryId), newTitle, body);
+            print("Diary has been updated");
+        } catch (RuntimeException e) {
+            print("Error: " + e.getMessage());
+        } finally {
+            goToMainMenu();
+        }
+    }
+
+    private static void updateEntryBody(String entryId, String username) {
+        try {
+            String title = diary.findEntryById(Integer.parseInt(entryId)).getTitle();
+            String newBody = input("Enter the new body of the entry: ");
+
+            user.updateEntry(username, Integer.parseInt(entryId), title, newBody);
+            print("Diary has been updated");
+        } catch (RuntimeException e) {
+            print("Error: " + e.getMessage());
+        } finally {
+            goToMainMenu();
+        }
+    }
+
+    private static void updateEntryTitleAndBody(String username, String entryId) {
+        try {
+            String newTitle = input("Enter the new title of the entry: ");
+            String newBody = input("Enter the new body of the entry: ");
+            
             user.updateEntry(username, Integer.parseInt(entryId), newTitle, newBody);
             print("Diary has been updated");
+        } catch (RuntimeException e) {
+            print("Error: " + e.getMessage());
+        } finally {
+            goToMainMenu();
+        }
+    }
+
+    private static void ensureDiaryExists(String username) {
+        try {
+            diary = diariesShelf.findByUsername(username);
         }
         catch (RuntimeException e) {
-            print(e.getMessage());
-        }
-        finally {
+            print("Error: " + e.getMessage());
             goToMainMenu();
         }
     }
@@ -234,12 +285,12 @@ public class MainApplication {
     }
 
     private static void checkLockStatus(String username) {
-        diary = diariesShelf.findByUsername(username);
+        ensureDiaryExists(username);
         if (diary.isLocked()) throw new IllegalStateException("Diary is already locked");
     }
 
     private static void checkUnlockStatus(String username) {
-        diary = diariesShelf.findByUsername(username);
+        ensureDiaryExists(username);
         if (!diary.isLocked()) throw new IllegalStateException("Diary is already unlocked");
     }
 
