@@ -149,6 +149,16 @@ public class DiaryTest {
     }
 
     @Test
+    public void testThatDiaryCanViewAllEntries() {
+        diary.createEntry("title1", "body1");
+        diary.createEntry("title2", "body2");
+
+
+        Entry[] entries = {new Entry(1, "title1", "body1"), new Entry(2, "title2", "body2")};
+        assertArrayEquals(entries, diary.getEntries());
+    }
+
+    @Test
     public void testCreationDateForEntry() {
         diary.createEntry("title", "body");
         Entry foundEntry = diary.findEntryById(1);

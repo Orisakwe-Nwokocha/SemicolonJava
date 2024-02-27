@@ -72,13 +72,17 @@ public class Diary {
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
 
-        return (object instanceof Diary diary) && this.username.equals(diary.username);
+        return (obj instanceof Diary diary) && this.username.equals(diary.username);
     }
 
     public boolean verifyPassword(String password) {
         return this.password.equals(password);
+    }
+
+    public Entry[] getEntries() {
+        return entries.toArray(new Entry[0]);
     }
 }

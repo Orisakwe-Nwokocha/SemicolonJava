@@ -80,5 +80,4 @@ public class DiariesTest {
         assertEquals(0, shelf.size());
 
     }
-
 }
