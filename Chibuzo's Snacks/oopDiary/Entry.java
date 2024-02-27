@@ -50,4 +50,14 @@ public class Entry {
     public void updateBody(String newBody) {
         this.body = newBody;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+
+        return (obj instanceof Entry entry)
+                && this.id == entry.id
+                && this.title.equals(entry.title)
+                && this.body.equals(entry.body);
+    }
 }

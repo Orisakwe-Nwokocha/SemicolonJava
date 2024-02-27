@@ -54,4 +54,10 @@ public class User {
     public void deleteDiary(String username, String password) {
         diariesShelf.delete(username, password);
     }
+
+    public Entry[] viewAllEntries(String username) {
+        Diary foundDiary = diariesShelf.findByUsername(username);
+
+        return foundDiary.getEntries();
+    }
 }

@@ -201,6 +201,19 @@ public class MainApplication {
     }
 
     private static void viewAllEntries() {
+        String username = getDiaryUsername();
+        ensureDiaryIsUnlocked(username);
+
+        try {
+            Entry[] entries = user.viewAllEntries(username);
+            for (Entry entry : entries) print(entry.toString());
+        }
+        catch (RuntimeException e) {
+            print("Error: " + e.getMessage());
+        }
+        finally {
+            goToMainMenu();
+        }
     }
 
     private static void exitApp() {

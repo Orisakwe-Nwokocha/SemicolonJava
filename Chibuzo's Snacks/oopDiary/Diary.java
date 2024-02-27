@@ -83,6 +83,8 @@ public class Diary {
     }
 
     public Entry[] getEntries() {
+        if (entries.isEmpty()) throw new IllegalStateException("No entries in the diary");
+
         return entries.toArray(new Entry[0]);
     }
 }
