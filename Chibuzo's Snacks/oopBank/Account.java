@@ -1,8 +1,8 @@
-package oopAccount;
+package oopBank;
 
-import oopAccount.exceptions.InsufficientFundsException;
-import oopAccount.exceptions.InvalidAmountException;
-import oopAccount.exceptions.InvalidPinException;
+import oopBank.exceptions.InsufficientFundsException;
+import oopBank.exceptions.InvalidAmountException;
+import oopBank.exceptions.InvalidPinException;
 
 public class Account {
     private final String name;

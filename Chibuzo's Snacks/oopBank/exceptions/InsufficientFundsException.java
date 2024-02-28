@@ -1,4 +1,4 @@
-package oopAccount.exceptions;
+package oopBank.exceptions;
 
 public class InsufficientFundsException extends RuntimeException {
 

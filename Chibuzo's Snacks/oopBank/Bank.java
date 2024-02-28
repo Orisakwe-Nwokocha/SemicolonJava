@@ -1,6 +1,6 @@
-package oopAccount;
+package oopBank;
 
-import oopAccount.exceptions.InvalidPinException;
+import oopBank.exceptions.InvalidPinException;
 
 import java.util.ArrayList;
 import java.util.List;
