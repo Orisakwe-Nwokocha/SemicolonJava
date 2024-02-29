@@ -15,6 +15,13 @@ public class SevenSegmentDisplayTest {
         display = new SevenSegmentDisplay();
     }
 
+    public static void main(String[] args) {
+        System.out.println(display.displaySegment("11101111"));
+        System.out.println(display.displaySegment("01101111"));
+        System.out.println(display.displaySegment("00101011"));
+        System.out.println(display.displaySegment("00111111"));
+    }
+
     @Test
     public void userInputsNonDigitNumbers_throwsNonDigitNumberExceptionTest() {
         assertThrows(NonDigitNumberException.class, () -> display.displaySegment("1234s678"));
@@ -45,6 +52,8 @@ public class SevenSegmentDisplayTest {
     public void given11111101_boardIsOnTest() {
         display.displaySegment("11111101");
         assertTrue(display.isOn());
+        display.displaySegment("11111100");
+        assertFalse(display.isOn());
     }
 
     @Test
@@ -65,6 +74,7 @@ public class SevenSegmentDisplayTest {
                 # # # #
                 """;
         assertEquals(expected, actual);
+        System.out.println(actual);
     }
 
     @Test
@@ -100,11 +110,11 @@ public class SevenSegmentDisplayTest {
         String actual = display.displaySegment("11110011");
         assertTrue(display.isOn());
         String expected = """
+                # # # #
                       #
+                # # # #
                       #
-                      #
-                      #
-                      #
+                # # # #
                 """;
         assertEquals(expected, actual);
         System.out.println(actual);
@@ -114,9 +124,9 @@ public class SevenSegmentDisplayTest {
         String actual = display.displaySegment("01100111");
         assertTrue(display.isOn());
         String expected = """
-                      #
-                      #
-                      #
+                #     #
+                #     #
+                # # # #
                       #
                       #
                 """;
@@ -128,11 +138,11 @@ public class SevenSegmentDisplayTest {
         String actual = display.displaySegment("10110111");
         assertTrue(display.isOn());
         String expected = """
+                # # # #
+                #
+                # # # #
                       #
-                      #
-                      #
-                      #
-                      #
+                # # # #
                 """;
         assertEquals(expected, actual);
         System.out.println(actual);
@@ -142,11 +152,11 @@ public class SevenSegmentDisplayTest {
         String actual = display.displaySegment("10111111");
         assertTrue(display.isOn());
         String expected = """
-                      #
-                      #
-                      #
-                      #
-                      #
+                # # # #
+                #
+                # # # #
+                #     #
+                # # # #
                 """;
         assertEquals(expected, actual);
         System.out.println(actual);
@@ -156,7 +166,7 @@ public class SevenSegmentDisplayTest {
         String actual = display.displaySegment("11100001");
         assertTrue(display.isOn());
         String expected = """
-                      #
+                # # # #
                       #
                       #
                       #
@@ -170,11 +180,11 @@ public class SevenSegmentDisplayTest {
         String actual = display.displaySegment("11111111");
         assertTrue(display.isOn());
         String expected = """
-                      #
-                      #
-                      #
-                      #
-                      #
+                # # # #
+                #     #
+                # # # #
+                #     #
+                # # # #
                 """;
         assertEquals(expected, actual);
         System.out.println(actual);
@@ -184,11 +194,11 @@ public class SevenSegmentDisplayTest {
         String actual = display.displaySegment("11110111");
         assertTrue(display.isOn());
         String expected = """
+                # # # #
+                #     #
+                # # # #
                       #
-                      #
-                      #
-                      #
-                      #
+                # # # #
                 """;
         assertEquals(expected, actual);
         System.out.println(actual);
