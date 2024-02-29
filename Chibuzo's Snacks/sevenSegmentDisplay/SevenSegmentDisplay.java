@@ -28,7 +28,7 @@ public class SevenSegmentDisplay {
         };
     }
 
-    public String displaySegment(char... digits) {
+    private static String displaySegment(char... digits) {
         StringBuilder output = new StringBuilder();
 
         output.append(digits[0] == '1' ? "# # # #" : "       ").append("\n");
@@ -52,7 +52,7 @@ public class SevenSegmentDisplay {
                 """;
     }
 
-    private String displayOne() {
+    private static String displayOne() {
         return """
                       #
                       #
@@ -62,7 +62,7 @@ public class SevenSegmentDisplay {
                 """;
     }
 
-    private String displayTwo() {
+    private static String displayTwo() {
         return """
                 # # # #
                       #
@@ -71,7 +71,7 @@ public class SevenSegmentDisplay {
                 # # # #
                 """;
     }
-    private String displayThree() {
+    private static String displayThree() {
         return """
                 # # # #
                       #
@@ -80,7 +80,7 @@ public class SevenSegmentDisplay {
                 # # # #
                 """;
     }
-    private String displayFour() {
+    private static String displayFour() {
         return """
                 #     #
                 #     #
@@ -89,7 +89,7 @@ public class SevenSegmentDisplay {
                       #
                 """;
     }
-    private String displayFive() {
+    private static String displayFive() {
         return """
                 # # # #
                 #
@@ -98,7 +98,7 @@ public class SevenSegmentDisplay {
                 # # # #
                 """;
     }
-    private String displaySix() {
+    private static String displaySix() {
         return """
                 # # # #
                 #
@@ -107,7 +107,7 @@ public class SevenSegmentDisplay {
                 # # # #
                 """;
     }
-    private String displaySeven() {
+    private static String displaySeven() {
         return """
                 # # # #
                       #
@@ -116,7 +116,7 @@ public class SevenSegmentDisplay {
                       #
                 """;
     }
-    private String displayEight() {
+    private static String displayEight() {
         return """
                 # # # #
                 #     #
@@ -125,7 +125,7 @@ public class SevenSegmentDisplay {
                 # # # #
                 """;
     }
-    private String displayNine() {
+    private static String displayNine() {
         return """
                 # # # #
                 #     #

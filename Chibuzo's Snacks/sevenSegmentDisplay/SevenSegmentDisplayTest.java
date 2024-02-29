@@ -16,6 +16,7 @@ public class SevenSegmentDisplayTest {
     }
 
     public static void main(String[] args) {
+        display = new SevenSegmentDisplay();
         System.out.println(display.displaySegment("11101111"));
         System.out.println(display.displaySegment("01101111"));
         System.out.println(display.displaySegment("00101011"));
