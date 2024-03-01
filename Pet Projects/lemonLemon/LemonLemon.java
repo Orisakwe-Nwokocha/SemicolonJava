@@ -37,13 +37,27 @@ public class LemonLemon {
 
     public void eliminatePlayer(int playerId) {
         players[playerId - 1].changeStatus();
-        eliminatedPlayers.add(getPlayer(playerId));
-        checkForWinners();
+
+        Player player = getPlayer(playerId);
+
+        boolean condition = contains(playerId) && !containsEliminatedPlayer(player);
+        if (condition) eliminatedPlayers.add(player);
+
+        if (condition()) determineWinners();
     }
 
-    private void checkForWinners() {
-        boolean isValid = players.length - eliminatedPlayers.size() == 2;
-        if (isValid) determineWinners();
+    private boolean containsEliminatedPlayer(Player player) {
+        for (Player eliminatedPlayer : eliminatedPlayers) if (eliminatedPlayer.equals(player)) return true;
+        return false;
+    }
+
+    private boolean contains(int playerId) {
+        for (Player player : players) if (player.getId() == playerId) return true;
+        return false;
+    }
+
+    private boolean condition() {
+        return (players.length - eliminatedPlayers.size()) == 2;
     }
 
     private void determineWinners() {
@@ -57,17 +71,17 @@ public class LemonLemon {
         winners = temp.toArray(new Player[0]);
     }
 
-    public ArrayList<String> generateTwoLemonNumbers() {
+    public String[] generateTwoLemonNumbers() {
         validateNumberOfPlayers();
 
-        ArrayList<String> output = new ArrayList<>();
+        String[] output = new String[2];
 
         SecureRandom secureRandom = new SecureRandom();
         int randomNumber1 = generateValidRandomNumber(secureRandom);
         int randomNumber2 = generateValidRandomNumber(secureRandom);
 
-        output.add("Lemon" + randomNumber1);
-        output.add("Lemon" + randomNumber2);
+        output[0] = ("Lemon" + randomNumber1);
+        output[1] = ("Lemon" + randomNumber2);
 
         return output;
     }
@@ -82,16 +96,18 @@ public class LemonLemon {
     }
 
     private void validateNumberOfPlayers() {
-        boolean condition = players.length - eliminatedPlayers.size() < 4;
+        boolean condition = (players.length - eliminatedPlayers.size()) < 4;
 
         if (condition) throw new IllegalStateException("Number of players is less than 4");
     }
 
     public Player[] getWinners() {
-        return winners;
+
+        if (condition()) return winners;
+        return null;
     }
 
-    public ArrayList<Player> getEliminatedPlayers() {
-        return eliminatedPlayers;
+    public Player[] getEliminatedPlayers() {
+        return eliminatedPlayers.toArray(new Player[0]);
     }
 }
