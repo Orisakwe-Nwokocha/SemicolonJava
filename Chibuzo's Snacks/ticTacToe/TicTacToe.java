@@ -53,7 +53,6 @@ public class TicTacToe {
         for (int index = 0; index < 3; index++) {
             if (isHorizontal(index)) return;
             if (isVertical(index)) return;
-
         }
 
         if (isLeftDiagonal()) return;
