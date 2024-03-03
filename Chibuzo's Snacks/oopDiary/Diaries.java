@@ -28,8 +28,8 @@ public class Diaries {
         throw new NullPointerException("Diary not found");
     }
 
-    private void validate(Diary diary) {
-        for (Diary d : diaries) if (diary.equals(d)) throw new IllegalArgumentException("Username already exists");
+    private void validate(Diary d) {
+        for (Diary diary : diaries) if (diary.equals(d)) throw new IllegalArgumentException("Username already exists");
     }
 
     public void delete(String username, String password) {
