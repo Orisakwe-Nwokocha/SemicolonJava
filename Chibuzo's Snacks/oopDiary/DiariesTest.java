@@ -42,7 +42,7 @@ public class DiariesTest {
     }
 
     @Test
-    public void givenDifferentUsername_whenEquals_thenDiariesEqualTest() {
+    public void givenDifferentUsername_whenEquals_thenDiariesNotEqualTest() {
         shelf.add("differentUsername", "correctPassword");
         assertEquals(1, shelf.size());
 
