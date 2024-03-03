@@ -34,20 +34,16 @@ public class DiariesTest {
 
     @Test
     public void givenSameUsername_whenEquals_thenDiariesEqualTest() {
-        shelf.add("username", "correctPassword");
-        assertEquals(1, shelf.size());
+        Diary diary2 = new Diary("username", "correctPassword");
 
-        assertTrue(diary.equals(shelf.findByUsername("username")));
-        assertEquals(diary, shelf.findByUsername("username"));
+        assertEquals(diary, diary2);
     }
 
     @Test
     public void givenDifferentUsername_whenEquals_thenDiariesNotEqualTest() {
-        shelf.add("differentUsername", "correctPassword");
-        assertEquals(1, shelf.size());
+        Diary diary2 = new Diary("differentUsername", "correctPassword");
 
-        assertFalse(diary.equals(shelf.findByUsername("differentUsername")));
-        assertNotEquals(diary, shelf.findByUsername("differentUsername"));
+        assertNotEquals(diary, diary2);
     }
 
 
