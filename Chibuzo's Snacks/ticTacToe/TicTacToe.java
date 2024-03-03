@@ -53,6 +53,7 @@ public class TicTacToe {
         for (int index = 0; index < 3; index++) {
             if (isHorizontal(index)) return;
             if (isVertical(index)) return;
+
         }
 
         if (isLeftDiagonal()) return;
@@ -68,19 +69,23 @@ public class TicTacToe {
     }
 
     private boolean isVertical(int index) {
-        return checkSquares(index, 0, 0, 1);
-    }
-
-    private boolean isHorizontal(int index) {
         return checkSquares(0, index, 1, 0);
     }
 
-    private boolean checkSquares(int row, int column, int rowIncrement, int columnIncrement) {
+    private boolean isHorizontal(int index) {
+        return checkSquares(index, 0, 0, 1);
+    }
+
+    private boolean checkSquares(int startRow, int startColumn, int rowIncrement, int columnIncrement) {
         int numberOfXs = 0;
         int numberOfOs = 0;
 
         for (int index = 0; index < 3; index++) {
-            CellType type = positionBoard[(row + index) * rowIncrement][(column + index) * columnIncrement];
+            int row = (startRow + index) * rowIncrement;
+            int column = (startColumn + index) * columnIncrement;
+
+            CellType type = positionBoard[row][column];
+
             if (type == CellType.X) numberOfXs++;
             else if (type == CellType.O) numberOfOs++;
         }
