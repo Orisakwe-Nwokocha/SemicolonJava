@@ -1,5 +1,5 @@
 package ticTacToe;
 
-public enum Type {
+public enum CellType {
     O, X, EMPTY;
 }

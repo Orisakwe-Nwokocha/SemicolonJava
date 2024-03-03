@@ -26,8 +26,8 @@ public class Main {
         Player playerOne = game.getPlayers()[0];
         Player playerTwo = game.getPlayers()[1];
 
-        print("Player 1, you are " + playerOne.type(), "Info");
-        print("Player 2, you are " + playerTwo.type(), "Info");
+        print("Player 1, you are " + playerOne.cellType(), "Info");
+        print("Player 2, you are " + playerTwo.cellType(), "Info");
         print(game.displayBoard(), "Display board");
 
         playGame();

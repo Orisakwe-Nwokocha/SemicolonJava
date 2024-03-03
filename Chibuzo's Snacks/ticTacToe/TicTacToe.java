@@ -6,28 +6,26 @@ import java.util.Arrays;
 public class TicTacToe {
 
     private final Player[] players = new Player[2];
-    private final Type[][] positionBoard;
+    private final CellType[][] positionBoard;
     private Player winner;
-    private int numberOfXs = 0;
-    private int numberOfOs = 0;
 
     public TicTacToe(int playerOneId, int playerTwoId) {
-         positionBoard = new Type[3][3];
+         positionBoard = new CellType[3][3];
 
-         Type playerOneType = playerOneId == 1 ? Type.X : Type.O;
-         Type playerTwoType = playerTwoId == 2 ? Type.O : Type.X;
+         CellType playerOneCellType = playerOneId == 1 ? CellType.X : CellType.O;
+         CellType playerTwoCellType = playerTwoId == 2 ? CellType.O : CellType.X;
 
-         players[0] = new Player(1, playerOneType);
-         players[1] = new Player(2, playerTwoType);
+         players[0] = new Player(1, playerOneCellType);
+         players[1] = new Player(2, playerTwoCellType);
 
-         for (Type[] position: positionBoard) Arrays.fill(position, Type.EMPTY);
+         for (CellType[] position: positionBoard) Arrays.fill(position, CellType.EMPTY);
     }
 
     public Player[] getPlayers() {
         return players;
     }
 
-    public Type[][] getPositionBoard() {
+    public CellType[][] getPositionBoard() {
         return positionBoard;
     }
 
@@ -41,7 +39,7 @@ public class TicTacToe {
         validate(row, column);
 
         Player player = getPlayer(playerId);
-        positionBoard[row][column] = player.type();
+        positionBoard[row][column] = player.cellType();
 
         checkForWinner();
     }
@@ -52,107 +50,55 @@ public class TicTacToe {
     }
 
     private void checkForWinner() {
-
-        for (int index1 = 0; index1 < 3; index1++) {
-            if (isHorizontal(index1)) break;
-            numberOfXs = 0;
-            numberOfOs = 0;
-
-            if (isVertical(index1)) break;
-            numberOfXs = 0;
-            numberOfOs = 0;
-
-            if (isDiagonalRight()) break;
-            numberOfXs = 0;
-            numberOfOs = 0;
-
-            if (isDiagonalLeft()) break;
-            numberOfXs = 0;
-            numberOfOs = 0;
+        for (int index = 0; index < 3; index++) {
+            if (isHorizontal(index)) return;
+            if (isVertical(index)) return;
         }
+
+        if (isLeftDiagonal()) return;
+        checkRightDiagonal();
     }
 
-    private boolean isDiagonalLeft() {
-        int index = 0;
-        while (index < 3) {
-            if (positionBoard[index][2 - index] == Type.X) numberOfXs++;
-            if (positionBoard[index][2 - index] == Type.O) numberOfOs++;
-            index++;
+    private void checkRightDiagonal() {
+        checkSquares(0, -2, 1, -1);
+    }
+
+    private boolean isLeftDiagonal() {
+        return checkSquares(0, 0, 1, 1);
+    }
+
+    private boolean isVertical(int index) {
+        return checkSquares(index, 0, 0, 1);
+    }
+
+    private boolean isHorizontal(int index) {
+        return checkSquares(0, index, 1, 0);
+    }
+
+    private boolean checkSquares(int row, int column, int rowIncrement, int columnIncrement) {
+        int numberOfXs = 0;
+        int numberOfOs = 0;
+
+        for (int index = 0; index < 3; index++) {
+            CellType type = positionBoard[(row + index) * rowIncrement][(column + index) * columnIncrement];
+            if (type == CellType.X) numberOfXs++;
+            else if (type == CellType.O) numberOfOs++;
         }
 
         if (numberOfXs == 3) {
-            winner = getPlayer(Type.X);
+            winner = getPlayer(CellType.X);
             return true;
         }
-        if (numberOfOs == 3) {
-            winner = getPlayer(Type.O);
+        else if (numberOfOs == 3) {
+            winner = getPlayer(CellType.O);
             return true;
         }
 
         return false;
     }
 
-    private boolean isDiagonalRight() {
-        int index = 0;
-        while (index < 3) {
-            if (positionBoard[index][index] == Type.X) numberOfXs++;
-            if (positionBoard[index][index] == Type.O) numberOfOs++;
-            index++;
-        }
-
-        if (numberOfXs == 3) {
-            winner = getPlayer(Type.X);
-            return true;
-        }
-        if (numberOfOs == 3) {
-            winner = getPlayer(Type.O);
-            return true;
-        }
-
-        return false;
-    }
-
-
-    private boolean isVertical(int index1) {
-
-        for (int index2 = 0; index2 < 3; index2++) {
-            if (positionBoard[index2][index1] == Type.X) numberOfXs++;
-            if (positionBoard[index2][index1] == Type.O) numberOfOs++;
-        }
-
-        if (numberOfXs == 3) {
-            winner = getPlayer(Type.X);
-            return true;
-        }
-        if (numberOfOs == 3) {
-            winner = getPlayer(Type.O);
-            return true;
-        }
-
-        return false;
-    }
-
-    private boolean isHorizontal(int index1) {
-        for (int index2 = 2; index2 >= 0; index2--) {
-            if (positionBoard[index1][index2] == Type.X) numberOfXs++;
-            if (positionBoard[index1][index2] == Type.O) numberOfOs++;
-        }
-
-        if (numberOfXs == 3) {
-            winner = getPlayer(Type.X);
-            return true;
-        }
-        if (numberOfOs == 3) {
-            winner = getPlayer(Type.O);
-            return true;
-        }
-
-        return false;
-    }
-
-
-    private Player getPlayer(Type type) {
-        return players[0].type() == type ? players[0] : players[1];
+    private Player getPlayer(CellType cellType) {
+        return players[0].cellType() == cellType ? players[0] : players[1];
     }
 
     private void validateRange(int square) {
@@ -161,7 +107,7 @@ public class TicTacToe {
     }
 
     private void validate(int row, int column) {
-        boolean isFilled = positionBoard[row][column] != Type.EMPTY;
+        boolean isFilled = positionBoard[row][column] != CellType.EMPTY;
         if (isFilled) throw new InvalidPositionException("Position is already taken.");
     }
 
@@ -189,15 +135,15 @@ public class TicTacToe {
 
     private void displayBoard(int row, String blank, StringBuilder board, String vertical) {
         for (int column = 0; column < 3; column++) {
-            Type type = positionBoard[row][column];
-            String position = type == Type.EMPTY ? blank : type.toString();
+            CellType cellType = positionBoard[row][column];
+            String position = cellType == CellType.EMPTY ? blank : cellType.toString();
 
             board.append(vertical).append(blank).append(position).append(blank);
         }
     }
 
     public boolean isBoardFull() {
-        for (Type[] types : positionBoard) for (Type type : types) if (type == Type.EMPTY) return false;
+        for (CellType[] cellTypes : positionBoard) for (CellType cellType : cellTypes) if (cellType == CellType.EMPTY) return false;
         return true;
     }
 }

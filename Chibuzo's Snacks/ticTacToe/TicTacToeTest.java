@@ -8,8 +8,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TicTacToeTest {
     private TicTacToe ticTacToeGame;
-    private final Type empty = Type.EMPTY;
-    private final Type[][] testPositionBoard = new Type[][]{{empty, empty, empty},
+    private final CellType empty = CellType.EMPTY;
+    private final CellType[][] testPositionBoard = new CellType[][]{{empty, empty, empty},
             {empty, empty, empty},
             {empty, empty, empty}};;
 
@@ -38,14 +38,14 @@ public class TicTacToeTest {
 
     @Test
     public void testThatGameHasPositionBoard() {
-        Type[][] positionBoard = ticTacToeGame.getPositionBoard();
+        CellType[][] positionBoard = ticTacToeGame.getPositionBoard();
 
         assertArrayEquals(testPositionBoard, positionBoard);
     }
 
     @Test
     public void testThatBoardIsFilledWithDummyEnumValuesByDefault() {
-        Type[][] positionBoard = ticTacToeGame.getPositionBoard();
+        CellType[][] positionBoard = ticTacToeGame.getPositionBoard();
 
         assertArrayEquals(testPositionBoard, positionBoard);
     }
@@ -55,7 +55,7 @@ public class TicTacToeTest {
         Player[] players = ticTacToeGame.getPlayers();
         Player playerOne = players[0];
 
-        assertEquals(Type.X, playerOne.type());
+        assertEquals(CellType.X, playerOne.cellType());
     }
 
     @Test
@@ -63,7 +63,7 @@ public class TicTacToeTest {
         Player[] players = ticTacToeGame.getPlayers();
         Player playerTwo = players[1];
 
-        assertEquals(Type.O, playerTwo.type());
+        assertEquals(CellType.O, playerTwo.cellType());
     }
 
     @Test
@@ -73,24 +73,24 @@ public class TicTacToeTest {
         Player playerOne = players[0];
         Player playerTwo = players[1];
 
-        assertEquals(Type.O, playerOne.type());
-        assertEquals(Type.X, playerTwo.type());
+        assertEquals(CellType.O, playerOne.cellType());
+        assertEquals(CellType.X, playerTwo.cellType());
     }
 
     @Test
     public void testThatGameCanMarkPosition() {
-        Type[][] positionBoard = ticTacToeGame.getPositionBoard();
+        CellType[][] positionBoard = ticTacToeGame.getPositionBoard();
         ticTacToeGame.markPosition(1, 1);
-        assertNotEquals(Type.EMPTY, positionBoard[0][0]);
-        assertEquals(Type.X, positionBoard[0][0]);
+        assertNotEquals(CellType.EMPTY, positionBoard[0][0]);
+        assertEquals(CellType.X, positionBoard[0][0]);
 
         ticTacToeGame.markPosition(2, 5);
-        assertNotEquals(Type.EMPTY, positionBoard[1][1]);
-        assertEquals(Type.O, positionBoard[1][1]);
+        assertNotEquals(CellType.EMPTY, positionBoard[1][1]);
+        assertEquals(CellType.O, positionBoard[1][1]);
 
         ticTacToeGame.markPosition(1, 9);
-        assertNotEquals(Type.EMPTY, positionBoard[2][2]);
-        assertEquals(Type.X, positionBoard[2][2]);
+        assertNotEquals(CellType.EMPTY, positionBoard[2][2]);
+        assertEquals(CellType.X, positionBoard[2][2]);
     }
 
     @Test
@@ -129,10 +129,10 @@ public class TicTacToeTest {
             playerTwo.play(ticTacToeGame, count + 1);
         }
 
-        Type[][] positionBoard = ticTacToeGame.getPositionBoard();
-        assertNotEquals(Type.EMPTY, positionBoard[0][0]);
-        assertNotEquals(Type.EMPTY, positionBoard[1][1]);
-        assertNotEquals(Type.EMPTY, positionBoard[2][2]);
+        CellType[][] positionBoard = ticTacToeGame.getPositionBoard();
+        assertNotEquals(CellType.EMPTY, positionBoard[0][0]);
+        assertNotEquals(CellType.EMPTY, positionBoard[1][1]);
+        assertNotEquals(CellType.EMPTY, positionBoard[2][2]);
     }
 
     @Test
@@ -142,7 +142,7 @@ public class TicTacToeTest {
         ticTacToeGame.markPosition(1, 3);
 
         assertNotNull(ticTacToeGame.getWinner());
-        assertEquals(Type.X, ticTacToeGame.getWinner().type());
+        assertEquals(CellType.X, ticTacToeGame.getWinner().cellType());
     }
 
     @Test
@@ -152,7 +152,7 @@ public class TicTacToeTest {
         ticTacToeGame.markPosition(2, 3);
 
         assertNotNull(ticTacToeGame.getWinner());
-        assertEquals(Type.O, ticTacToeGame.getWinner().type());
+        assertEquals(CellType.O, ticTacToeGame.getWinner().cellType());
     }
 
     @Test
@@ -162,7 +162,7 @@ public class TicTacToeTest {
         ticTacToeGame.markPosition(1, 7);
 
         assertNotNull(ticTacToeGame.getWinner());
-        assertEquals(Type.X, ticTacToeGame.getWinner().type());
+        assertEquals(CellType.X, ticTacToeGame.getWinner().cellType());
     }
 
     @Test
@@ -172,7 +172,7 @@ public class TicTacToeTest {
         ticTacToeGame.markPosition(2, 7);
 
         assertNotNull(ticTacToeGame.getWinner());
-        assertEquals(Type.O, ticTacToeGame.getWinner().type());
+        assertEquals(CellType.O, ticTacToeGame.getWinner().cellType());
     }
 
     @Test
@@ -182,7 +182,7 @@ public class TicTacToeTest {
         ticTacToeGame.markPosition(1, 9);
 
         assertNotNull(ticTacToeGame.getWinner());
-        assertEquals(Type.X, ticTacToeGame.getWinner().type());
+        assertEquals(CellType.X, ticTacToeGame.getWinner().cellType());
     }
 
     @Test
@@ -192,7 +192,7 @@ public class TicTacToeTest {
         ticTacToeGame.markPosition(2, 9);
 
         assertNotNull(ticTacToeGame.getWinner());
-        assertEquals(Type.O, ticTacToeGame.getWinner().type());
+        assertEquals(CellType.O, ticTacToeGame.getWinner().cellType());
     }
 
     @Test
@@ -202,7 +202,7 @@ public class TicTacToeTest {
         ticTacToeGame.markPosition(1, 7);
 
         assertNotNull(ticTacToeGame.getWinner());
-        assertEquals(Type.X, ticTacToeGame.getWinner().type());
+        assertEquals(CellType.X, ticTacToeGame.getWinner().cellType());
     }
 
     @Test
@@ -212,7 +212,7 @@ public class TicTacToeTest {
         ticTacToeGame.markPosition(2, 7);
 
         assertNotNull(ticTacToeGame.getWinner());
-        assertEquals(Type.O, ticTacToeGame.getWinner().type());
+        assertEquals(CellType.O, ticTacToeGame.getWinner().cellType());
     }
 
     @Test
@@ -231,7 +231,7 @@ public class TicTacToeTest {
             if (!ticTacToeGame.isBoardFull()) System.out.println(ticTacToeGame.displayBoard());
         }
 
-        System.out.println(ticTacToeGame.displayBoard());
+        if (ticTacToeGame.isBoardFull())System.out.println(ticTacToeGame.displayBoard());
         System.out.println(ticTacToeGame.getWinner());
     }
 
