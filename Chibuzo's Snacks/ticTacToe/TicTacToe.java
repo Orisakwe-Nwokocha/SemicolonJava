@@ -91,10 +91,6 @@ public class TicTacToe {
         else return numberOfOs == 3;
     }
 
-//    private Player getPlayer(CellType cellType) {
-//        return players[0].cellType() == cellType ? players[0] : players[1];
-//    }
-
     private void validateRange(int square) {
         boolean isOutOfRange = square < 1 || square > 9;
         if (isOutOfRange) throw new IllegalArgumentException("Square must be between 1 and 9");
