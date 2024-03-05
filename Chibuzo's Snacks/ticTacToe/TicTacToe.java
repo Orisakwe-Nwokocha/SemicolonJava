@@ -33,15 +33,13 @@ public class TicTacToe {
         validateRange(square);
 
         int row = square % 3 == 0 ? (square / 3) - 1 : square / 3;
-        int column = square % 3 == 0 ? (square / 3) - 1 : (square % 3) - 1;
-        if (square % 3 == 0) column = 2;
-
+        int column = square % 3 == 0 ? 2 : (square % 3) - 1;
         validate(row, column);
 
         Player player = getPlayer(playerId);
         positionBoard[row][column] = player.cellType();
 
-        checkForWinner();
+        if (isWinner()) winner = player;
     }
 
     private Player getPlayer(int playerId) {
@@ -49,33 +47,33 @@ public class TicTacToe {
         return players[1];
     }
 
-    private void checkForWinner() {
+    private boolean isWinner() {
         for (int index = 0; index < 3; index++) {
-            if (isHorizontal(index)) return;
-            if (isVertical(index)) return;
+            if (isHorizontal(index)) return true;
+            else if (isVertical(index)) return true;
         }
 
-        if (isLeftDiagonal()) return;
-        checkRightDiagonal();
+        if (isLeftDiagonal()) return true;
+        else return isRightDiagonal();
     }
 
-    private void checkRightDiagonal() {
-        checkSquares(0, -2, 1, -1);
+    private boolean isRightDiagonal() {
+        return isWinner(0, -2, 1, -1);
     }
 
     private boolean isLeftDiagonal() {
-        return checkSquares(0, 0, 1, 1);
+        return isWinner(0, 0, 1, 1);
     }
 
     private boolean isVertical(int index) {
-        return checkSquares(0, index, 1, 0);
+        return isWinner(0, index, 1, 0);
     }
 
     private boolean isHorizontal(int index) {
-        return checkSquares(index, 0, 0, 1);
+        return isWinner(index, 0, 0, 1);
     }
 
-    private boolean checkSquares(int startRow, int startColumn, int rowIncrement, int columnIncrement) {
+    private boolean isWinner(int startRow, int startColumn, int rowIncrement, int columnIncrement) {
         int numberOfXs = 0;
         int numberOfOs = 0;
 
@@ -89,21 +87,13 @@ public class TicTacToe {
             else if (type == CellType.O) numberOfOs++;
         }
 
-        if (numberOfXs == 3) {
-            winner = getPlayer(CellType.X);
-            return true;
-        }
-        else if (numberOfOs == 3) {
-            winner = getPlayer(CellType.O);
-            return true;
-        }
-
-        return false;
+        if (numberOfXs == 3) return true;
+        else return numberOfOs == 3;
     }
 
-    private Player getPlayer(CellType cellType) {
-        return players[0].cellType() == cellType ? players[0] : players[1];
-    }
+//    private Player getPlayer(CellType cellType) {
+//        return players[0].cellType() == cellType ? players[0] : players[1];
+//    }
 
     private void validateRange(int square) {
         boolean isOutOfRange = square < 1 || square > 9;
@@ -125,7 +115,6 @@ public class TicTacToe {
         String blank = " ";
 
         StringBuilder board = new StringBuilder();
-
 
         for (int row = 0; ; row++) {
             board.append(horizontal).append("\n");
