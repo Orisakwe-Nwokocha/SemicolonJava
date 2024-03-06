@@ -50,7 +50,7 @@ public class Main {
 
         computerMove(computer);
 
-        boolean gameIsOn = game.getWinner() == null && !game.isBoardFull();
+        boolean gameIsOn = !game.isBoardFull();
         if (gameIsOn) playVsComputer(playerOne);
     }
 
@@ -94,7 +94,7 @@ public class Main {
         playerOneMove(playerOne);
         playerTwoMove(playerTwo);
 
-        boolean gameIsOn = game.getWinner() == null && !game.isBoardFull();
+        boolean gameIsOn = !game.isBoardFull();
         if (gameIsOn) playVsHuman(playerOne);
     }
 
