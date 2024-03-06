@@ -1,9 +1,11 @@
 package ticTacToe;
 
 import javax.swing.*;
+import java.security.SecureRandom;
 
 public class Main {
     private static TicTacToe game;
+    private static boolean isInvalidMove = true;
 
     public static void main(String[] args) {
         startApp();
@@ -17,8 +19,7 @@ public class Main {
     }
 
     private static void selectType() {
-        int userChoice = JOptionPane.showConfirmDialog(null, "Player 1, do you want to use X?",
-                "Select option", JOptionPane.YES_NO_OPTION);
+        int userChoice = getChoice("Player 1, do you want to use X?");
 
         if (userChoice == JOptionPane.YES_OPTION) game = new TicTacToe(1, 2);
         else game = new TicTacToe(2, 1);
@@ -26,49 +27,92 @@ public class Main {
         Player playerOne = game.getPlayers()[0];
         Player playerTwo = game.getPlayers()[1];
 
-        print("Player 1, you are " + playerOne.cellType(), "Info");
-        print("Player 2, you are " + playerTwo.cellType(), "Info");
-        print(game.displayBoard(), "Display board");
+        print("Player 1 is " + playerOne.cellType(), "Info");
+        print("Player 2 is " + playerTwo.cellType(), "Info");
 
         playGame();
     }
 
     private static void playGame() {
-        Player playerOne = game.getPlayers()[0];
-        Player playerTwo = game.getPlayers()[1];
+        int choice = getChoice("Do you want to play against computer?");
 
-        boolean continueGame = true;
-        while (continueGame) {
+        Player playerOne = game.getPlayers()[0];
+        print(game.displayBoard(), "Display board");
+
+        if (choice == JOptionPane.YES_OPTION) playVsComputer(playerOne);
+        playVsHuman(playerOne);
+    }
+
+    private static void playVsComputer(Player playerOne) {
+        Player computer = game.getPlayers()[1];
+
+        playerOneMove(playerOne);
+
+        computerMove(computer);
+
+        boolean gameIsOn = game.getWinner() == null && !game.isBoardFull();
+        if (gameIsOn) playVsComputer(playerOne);
+    }
+
+    private static void computerMove(Player computer) {
+        SecureRandom random = new SecureRandom();
+
+        isInvalidMove = true;
+        while (isInvalidMove) {
+            int computerMove = random.nextInt(1, 10);
+            try {
+                computer.play(game, computerMove);
+                print(game.displayBoard(), "Display board");
+
+                checkGameStatus();
+                isInvalidMove = false;
+            }
+            catch (RuntimeException ignored) {}
+        }
+    }
+
+    private static void playerOneMove(Player playerOne) {
+        isInvalidMove = true;
+        while (isInvalidMove) {
             try {
                 String playerOnePosition = input("Player 1, select a position (1-9)");
                 playerOne.play(game, Integer.parseInt(playerOnePosition));
                 print(game.displayBoard(), "Display board");
 
                 checkGameStatus();
-                continueGame = false;
+                isInvalidMove = false;
             }
             catch (RuntimeException e) {
                 displayErrorMessage(e);
             }
         }
+    }
 
-        continueGame = true;
-        while (continueGame) {
+    private static void playVsHuman(Player playerOne) {
+        Player playerTwo = game.getPlayers()[1];
+
+        playerOneMove(playerOne);
+        playerTwoMove(playerTwo);
+
+        boolean gameIsOn = game.getWinner() == null && !game.isBoardFull();
+        if (gameIsOn) playVsHuman(playerOne);
+    }
+
+    private static void playerTwoMove(Player playerTwo) {
+        isInvalidMove = true;
+        while (isInvalidMove) {
             try {
                 String playerTwoPosition = input("Player 2, select a position (1-9)");
                 playerTwo.play(game, Integer.parseInt(playerTwoPosition));
                 print(game.displayBoard(), "Display board");
 
                 checkGameStatus();
-                continueGame = false;
+                isInvalidMove = false;
             }
             catch (RuntimeException e) {
                 displayErrorMessage(e);
             }
         }
-
-        boolean gameIsOn = game.getWinner() == null && !game.isBoardFull();
-        if (gameIsOn) playGame();
     }
 
     private static void displayErrorMessage(RuntimeException e) {
@@ -84,6 +128,7 @@ public class Main {
 
     private static void declareDraw() {
         print("Game ended in a draw", "Status");
+        print(game.displayBoard(), "Display board");
         exit();
     }
 
@@ -94,6 +139,7 @@ public class Main {
 
     private static void declareWinner() {
         print(game.getWinner().toString() + " is the winner!!!", "Champion");
+        print(game.displayBoard(), "Display board");
         exit();
     }
 
@@ -103,6 +149,11 @@ public class Main {
 
     private static String input(String message) {
         return JOptionPane.showInputDialog(null, message, "Make your move", JOptionPane.QUESTION_MESSAGE);
+    }
+
+    private static int getChoice(String message) {
+        return JOptionPane.showConfirmDialog(null, message,
+                "Select option", JOptionPane.YES_NO_OPTION);
     }
 
 }
