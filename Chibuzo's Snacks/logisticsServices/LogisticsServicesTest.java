@@ -7,11 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class LogisticsServicesTest {
 
     @Test
-    public void given0SuccessfulDeliveries_whenCalculated_thenRidersWageIs0() {
-        assertEquals(0, LogisticsServices.calculateRidersWage(-1));
-    }
-
-    @Test
     public void given25SuccessfulDeliveries_whenCalculated_thenRidersWageIs9000() {
         assertEquals(9_000, LogisticsServices.calculateRidersWage(25));
     }
@@ -51,4 +46,13 @@ public class LogisticsServicesTest {
         assertEquals(45_000, LogisticsServices.calculateRidersWage(80));
     }
 
+    @Test
+    public void given0SuccessfulDeliveries_illegalArgumentExceptionIsThrown() {
+        assertThrows(IllegalArgumentException.class, () -> LogisticsServices.calculateRidersWage(0));
+    }
+
+    @Test
+    public void given101SuccessfulDeliveries_illegalArgumentExceptionIsThrown() {
+        assertThrows(IllegalArgumentException.class, () -> LogisticsServices.calculateRidersWage(101));
+    }
 }
