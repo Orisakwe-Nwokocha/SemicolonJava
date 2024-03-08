@@ -9,7 +9,6 @@ public class Main {
 
     public static void main(String[] args) {
         startApp();
-
     }
 
     private static void startApp() {
@@ -20,7 +19,6 @@ public class Main {
 
     private static void selectType() {
         int userChoice = getChoice("Player 1, do you want to use X?");
-
         if (userChoice == JOptionPane.YES_OPTION) game = new TicTacToe(1, 2);
         else game = new TicTacToe(2, 1);
 
@@ -47,11 +45,56 @@ public class Main {
         Player computer = game.getPlayers()[1];
 
         playerOneMove(playerOne);
-
         computerMove(computer);
 
         boolean gameIsOn = !game.isBoardFull();
         if (gameIsOn) playVsComputer(playerOne);
+    }
+
+    private static void playVsHuman(Player playerOne) {
+        Player playerTwo = game.getPlayers()[1];
+
+        playerOneMove(playerOne);
+        playerTwoMove(playerTwo);
+
+        boolean gameIsOn = !game.isBoardFull();
+        if (gameIsOn) playVsHuman(playerOne);
+    }
+
+    private static void playerOneMove(Player playerOne) {
+        isInvalidMove = true;
+        while (isInvalidMove) {
+            try {
+                String playerOnePosition = input("Player 1, select a position (1-9)");
+                playerOne.play(game, Integer.parseInt(playerOnePosition));
+                print(game.displayBoard(), "Display board");
+
+                checkGameStatus();
+                isInvalidMove = false;
+            }
+            catch (RuntimeException e) {
+                displayErrorMessage(e);
+                print(game.displayBoard(), "Display board");
+            }
+        }
+    }
+
+    private static void playerTwoMove(Player playerTwo) {
+        isInvalidMove = true;
+        while (isInvalidMove) {
+            try {
+                String playerTwoPosition = input("Player 2, select a position (1-9)");
+                playerTwo.play(game, Integer.parseInt(playerTwoPosition));
+                print(game.displayBoard(), "Display board");
+
+                checkGameStatus();
+                isInvalidMove = false;
+            }
+            catch (RuntimeException e) {
+                displayErrorMessage(e);
+                print(game.displayBoard(), "Display board");
+            }
+        }
     }
 
     private static void computerMove(Player computer) {
@@ -71,59 +114,17 @@ public class Main {
         }
     }
 
-    private static void playerOneMove(Player playerOne) {
-        isInvalidMove = true;
-        while (isInvalidMove) {
-            try {
-                String playerOnePosition = input("Player 1, select a position (1-9)");
-                playerOne.play(game, Integer.parseInt(playerOnePosition));
-                print(game.displayBoard(), "Display board");
-
-                checkGameStatus();
-                isInvalidMove = false;
-            }
-            catch (RuntimeException e) {
-                displayErrorMessage(e);
-            }
-        }
-    }
-
-    private static void playVsHuman(Player playerOne) {
-        Player playerTwo = game.getPlayers()[1];
-
-        playerOneMove(playerOne);
-        playerTwoMove(playerTwo);
-
-        boolean gameIsOn = !game.isBoardFull();
-        if (gameIsOn) playVsHuman(playerOne);
-    }
-
-    private static void playerTwoMove(Player playerTwo) {
-        isInvalidMove = true;
-        while (isInvalidMove) {
-            try {
-                String playerTwoPosition = input("Player 2, select a position (1-9)");
-                playerTwo.play(game, Integer.parseInt(playerTwoPosition));
-                print(game.displayBoard(), "Display board");
-
-                checkGameStatus();
-                isInvalidMove = false;
-            }
-            catch (RuntimeException e) {
-                displayErrorMessage(e);
-            }
-        }
-    }
-
-    private static void displayErrorMessage(RuntimeException e) {
-        JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
-
     private static void checkGameStatus() {
-        boolean isWinnerNull = game.getWinner() == null;
+        boolean isWinner = game.getWinner() != null;
 
-        if (!isWinnerNull) declareWinner();
-        if (game.isBoardFull()) declareDraw();
+        if (isWinner) declareWinner();
+        else if (game.isBoardFull()) declareDraw();
+    }
+
+    private static void declareWinner() {
+        print(game.getWinner().toString() + " is the winner!!!", "Congratulations!");
+        print(game.displayBoard(), "Display board");
+        exit();
     }
 
     private static void declareDraw() {
@@ -133,14 +134,8 @@ public class Main {
     }
 
     private static void exit() {
-        print("Thank you for playing our game!!!", "Goodbye");
+        print("Thank you for playing!!!", "Goodbye");
         System.exit(0);
-    }
-
-    private static void declareWinner() {
-        print(game.getWinner().toString() + " is the winner!!!", "Champion");
-        print(game.displayBoard(), "Display board");
-        exit();
     }
 
     private static void print(String message, String title) {
@@ -156,4 +151,7 @@ public class Main {
                 "Select option", JOptionPane.YES_NO_OPTION);
     }
 
+    private static void displayErrorMessage(RuntimeException e) {
+        JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
 }

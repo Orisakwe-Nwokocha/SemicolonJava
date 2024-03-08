@@ -137,9 +137,9 @@ public class TicTacToeTest {
 
     @Test
     public void testThatGameCanDetermineWinnerHorizontallyForEnumX() {
-        ticTacToeGame.markPosition(1, 1);
-        ticTacToeGame.markPosition(1, 2);
-        ticTacToeGame.markPosition(1, 3);
+        ticTacToeGame.markPosition(1, 7);
+        ticTacToeGame.markPosition(1, 8);
+        ticTacToeGame.markPosition(1, 9);
 
         assertNotNull(ticTacToeGame.getWinner());
         assertEquals(CellType.X, ticTacToeGame.getWinner().cellType());
@@ -157,9 +157,9 @@ public class TicTacToeTest {
 
     @Test
     public void testThatGameCanDetermineWinnerVerticallyForEnumX() {
-        ticTacToeGame.markPosition(1, 1);
-        ticTacToeGame.markPosition(1, 4);
-        ticTacToeGame.markPosition(1, 7);
+        ticTacToeGame.markPosition(1, 3);
+        ticTacToeGame.markPosition(1, 6);
+        ticTacToeGame.markPosition(1, 9);
 
         assertNotNull(ticTacToeGame.getWinner());
         assertEquals(CellType.X, ticTacToeGame.getWinner().cellType());
@@ -167,9 +167,9 @@ public class TicTacToeTest {
 
     @Test
     public void testThatGameCanDetermineWinnerVerticallyForEnumO() {
-        ticTacToeGame.markPosition(2, 1);
-        ticTacToeGame.markPosition(2, 4);
-        ticTacToeGame.markPosition(2, 7);
+        ticTacToeGame.markPosition(2, 3);
+        ticTacToeGame.markPosition(2, 6);
+        ticTacToeGame.markPosition(2, 9);
 
         assertNotNull(ticTacToeGame.getWinner());
         assertEquals(CellType.O, ticTacToeGame.getWinner().cellType());

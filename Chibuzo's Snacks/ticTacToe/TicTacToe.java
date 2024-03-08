@@ -48,17 +48,13 @@ public class TicTacToe {
     }
 
     private boolean isWinner() {
-        for (int index = 0; index < 3; index++) {
-            if (isHorizontal(index)) return true;
-            else if (isVertical(index)) return true;
-        }
+        for (int index = 0; index < 3; index++) if (isHorizontal(index) || isVertical(index)) return true;
 
-        if (isLeftDiagonal()) return true;
-        else return isRightDiagonal();
+        return isLeftDiagonal() || isRightDiagonal();
     }
 
     private boolean isRightDiagonal() {
-        return isWinner(0, -2, 1, -1);
+        return isWinner(0, 2, 1, -1);
     }
 
     private boolean isLeftDiagonal() {
@@ -78,8 +74,8 @@ public class TicTacToe {
         int numberOfOs = 0;
 
         for (int index = 0; index < 3; index++) {
-            int row = (startRow + index) * rowIncrement;
-            int column = (startColumn + index) * columnIncrement;
+            int row = startRow + (index * rowIncrement);
+            int column = startColumn + (index * columnIncrement);
 
             CellType type = positionBoard[row][column];
 
