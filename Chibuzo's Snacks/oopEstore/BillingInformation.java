@@ -3,7 +3,7 @@ package oopEstore;
 public class BillingInformation {
     private String phoneNumber;
     private String receiverName;
-    private String deliveryAddress;
+    private Address deliveryAddress;
     private CreditCardInformation creditCardInfo;
 
 }
