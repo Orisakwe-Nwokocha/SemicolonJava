@@ -17,7 +17,9 @@ public class Product {
 
     @Override
     public String toString() {
-        return String.format("%n\tid => %d%n\t%s%n\t%s%n\t₦%,.2f", id, name, description, price);
+        String format = "%n\t%s%n\t%s%n\t%s%n\t₦%,.2f%n\tID: %d";
+
+        return String.format(format, name, description, category, price, id);
     }
 
 

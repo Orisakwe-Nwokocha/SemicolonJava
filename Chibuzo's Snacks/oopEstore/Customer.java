@@ -1,16 +1,15 @@
 package oopEstore;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class Customer extends User {
     private BillingInformation billingInformation;
-    private final ShoppingCart cart = new ShoppingCart();
+    private ShoppingCart cart = new ShoppingCart();
     private final List<Order> orders = new ArrayList<>();
 
-    public Customer(String name, int age, String emailAddress, Address homeAddress, String password, String phone) {
-        super(name, age, emailAddress, homeAddress, password, phone);
+    public Customer(int id, String name, int age, String emailAddress, Address homeAddress, String password, String phone) {
+        super(id, name, age, emailAddress, homeAddress, password, phone);
     }
 
     public List<Item> viewCart() {
@@ -39,4 +38,5 @@ public class Customer extends User {
     public List<Order> viewOrders() {
         return orders;
     }
+
 }

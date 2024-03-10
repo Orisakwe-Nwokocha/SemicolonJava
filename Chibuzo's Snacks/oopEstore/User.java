@@ -1,6 +1,7 @@
 package oopEstore;
 
 public class User {
+    private int id;
     private String name;
     private int age;
     private String emailAddress;
@@ -8,7 +9,8 @@ public class User {
     private String password;
     private  String phone;
 
-    public User(String name, int age, String emailAddress, Address homeAddress, String password, String phone) {
+    public User(int id, String name, int age, String emailAddress, Address homeAddress, String password, String phone) {
+        this.id = id;
         this.name = name;
         this.age = age;
         this.emailAddress = emailAddress;
@@ -17,5 +19,11 @@ public class User {
         this.phone = phone;
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public final boolean isCorrect(String password) {
+        return this.password.equals(password);
+    }
 }

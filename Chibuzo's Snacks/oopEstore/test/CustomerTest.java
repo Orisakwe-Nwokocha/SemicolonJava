@@ -1,6 +1,7 @@
 package oopEstore;
 
 import oopEstore.exceptions.ItemNotFoundException;
+import oopEstore.exceptions.UnsuccessfulTransactionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,8 +19,7 @@ public class CustomerTest {
     @BeforeEach
     public void startWithThis() {
         address = new Address("city", "country", "1", "street", "state");
-        orisha = new Customer("orisha", 15, "o@mail.com", address, "password",
-                "phone");
+        orisha = new Customer(1, "orisha", 15, "o@mail.com", address, "password", "phone");
 
         phone = new Product(1, "Pixel", 350_000.0, "Smartphone", ProductCategory.ELECTRONICS);
         chocolate = new Product(2, "Magic", 2_000, "Chocolate", ProductCategory.GROCERIES);
@@ -131,6 +131,15 @@ public class CustomerTest {
     }
 
     @Test
-    public void unsuccessful
+    public void checkoutWithEmptyCart_illegalStateExceptionIsThrown() {
+        assertThrows(IllegalStateException.class, () -> orisha.checkout());
+    }
+
+    @Test
+    public void checkoutWithNullBillingInformation_unsuccessfulTransactionExceptionIsThrown() {
+        orisha.addToCart(phone, 1);
+
+        assertThrows(UnsuccessfulTransactionException.class, () -> orisha.checkout());
+    }
 
 }

@@ -1,8 +1,10 @@
 package oopEstore;
 
+import oopEstore.exceptions.UnsuccessfulTransactionException;
+
 public class Checkout {
     public static Order placeOrder(ShoppingCart cart, BillingInformation billingInformation) {
-        validate(billingInformation);
+        validate(cart, billingInformation);
         double totalPrice = calculateTotalPrice(cart);
 
         return new Order(cart, totalPrice);
@@ -20,7 +22,8 @@ public class Checkout {
         return totalPrice;
     }
 
-    private static void validate(BillingInformation billingInformation) {
+    private static void validate(ShoppingCart cart, BillingInformation billingInformation) {
+        if (cart.view().isEmpty()) throw new IllegalStateException("Shopping cart is empty");
         if (billingInformation == null) throw new UnsuccessfulTransactionException("Cancelled - payment unsuccessful");
     }
 }
