@@ -13,6 +13,7 @@ public class CustomerTest {
     private Address address;
     private Product phone;
     private Product chocolate;
+    private BillingInformation billingInformation;
 
     @BeforeEach
     public void startWithThis() {
@@ -22,6 +23,12 @@ public class CustomerTest {
 
         phone = new Product(1, "Pixel", 350_000.0, "Smartphone", ProductCategory.ELECTRONICS);
         chocolate = new Product(2, "Magic", 2_000, "Chocolate", ProductCategory.GROCERIES);
+
+        CreditCardInformation cardInformation = new CreditCardInformation("123", "09/24",
+                "5678 1234 9012 3456", "orisha", CardType.MASTER_CARD);
+
+        billingInformation = new BillingInformation("08125358910", "orisha",
+                address, cardInformation);
     }
 
     @Test
@@ -114,14 +121,16 @@ public class CustomerTest {
         orisha.addToCart(phone, 1);
         orisha.addToCart(chocolate, 5);
         assertEquals(2, orisha.viewCart().size());
+        assertEquals(0, orisha.viewOrders().size());
 
-        CreditCardInformation cardInformation = new CreditCardInformation("123", "09/24",
-                "5678 1234 9012 3456", "orisha", CardType.MASTER_CARD);
+        orisha.setBillingInformation(billingInformation);
+        orisha.checkout();
+        assertEquals(1, orisha.viewOrders().size());
 
-        BillingInformation billingInformation = new BillingInformation("08125358910", "orisha",
-                address, cardInformation);
-
-        orisha.checkout(billingInformation);
+        System.out.println(orisha.viewOrders());
     }
+
+    @Test
+    public void unsuccessful
 
 }

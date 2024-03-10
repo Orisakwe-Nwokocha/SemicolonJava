@@ -20,7 +20,7 @@ public class ShoppingCart {
 
     private void updateQuantity(Product product, int quantity) {
         Item foundItem = findItem(product.getId());
-        foundItem.updateQuantity(quantity);
+        foundItem.updateQuantityOfProduct(quantity);
     }
 
     private boolean isPresent(Product product) {

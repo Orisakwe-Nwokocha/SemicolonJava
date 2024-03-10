@@ -19,7 +19,7 @@ public class Item {
         return product;
     }
 
-    public void updateQuantity(int quantityOfProduct) {
+    public void updateQuantityOfProduct(int quantityOfProduct) {
         validate(quantityOfProduct);
         this.quantityOfProduct = quantityOfProduct;
     }
@@ -36,5 +36,9 @@ public class Item {
         return (obj instanceof Item item)
                 && (this.product.equals(item.product)
                 && this.quantityOfProduct == item.quantityOfProduct);
+    }
+
+    public int getQuantityOfProduct() {
+        return quantityOfProduct;
     }
 }
