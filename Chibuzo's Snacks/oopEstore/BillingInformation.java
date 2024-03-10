@@ -1,9 +1,5 @@
 package oopEstore;
 
-public class BillingInformation {
-    private String phoneNumber;
-    private String receiverName;
-    private Address deliveryAddress;
-    private CreditCardInformation creditCardInfo;
+public record BillingInformation(String phoneNumber, String receiverName, Address deliveryAddress, CreditCardInformation creditCardInfo) {
 
 }

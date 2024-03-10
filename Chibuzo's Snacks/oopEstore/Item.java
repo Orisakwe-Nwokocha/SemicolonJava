@@ -5,16 +5,23 @@ public class Item {
     private int quantityOfProduct;
 
     public Item(Product product, int quantityOfProduct) {
+        validate(quantityOfProduct);
+
         this.product = product;
         this.quantityOfProduct = quantityOfProduct;
+    }
+
+    private static void validate(int quantityOfProduct) {
+        if (quantityOfProduct <= 0) throw new IllegalArgumentException("Quantity of product must be greater than zero");
     }
 
     public Product getProduct() {
         return product;
     }
 
-    public void updateQuantity(int quantity) {
-        this.quantityOfProduct += quantity;
+    public void updateQuantity(int quantityOfProduct) {
+        validate(quantityOfProduct);
+        this.quantityOfProduct = quantityOfProduct;
     }
 
     @Override
