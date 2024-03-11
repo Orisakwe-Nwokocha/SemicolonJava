@@ -135,8 +135,15 @@ public class CustomerTest {
     }
 
     @Test
-    public void checkoutWithNullBillingInformation_unsuccessfulTransactionExceptionIsThrown() {
+    public void checkoutWithInvalidCardType_unsuccessfulTransactionExceptionIsThrown() {
         orisha.addToCart(phone, 1);
+        CreditCardInformation cardInformation = new CreditCardInformation("123", "09/24",
+                "5678 1234 9012 3456", "orisha", null);
+
+        billingInformation = new BillingInformation("08125358910", "orisha",
+                address, cardInformation);
+
+        orisha.setBillingInformation(billingInformation);
 
         assertThrows(UnsuccessfulTransactionException.class, () -> orisha.checkout());
 

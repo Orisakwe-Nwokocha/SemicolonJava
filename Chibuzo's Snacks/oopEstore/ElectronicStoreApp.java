@@ -64,14 +64,13 @@ public class ElectronicStoreApp {
         if (choice == 1) initializeAddress();
 
         print("Enter your credit card information", "Thanks");
-
-        String creditCardNumber = input("Enter the credit card number:");
-        String cardHolderName = input("Enter the card holder name:");
-        String creditCardExpirationDate = input("Enter the credit card expiration date (mm/yy):");
-        String creditCardCvv = input("Enter the credit card cvv:");
+        CreditCardInformation cardInformation = getCreditCardInformation();
 
 
     }
+
+
+
 
     private static void removeFromCart() {
         checkCartStatus();
@@ -160,6 +159,25 @@ public class ElectronicStoreApp {
         String stateName = input("Enter your state name:");
 
         address = new Address(cityName, countryName, houseNumber, streetName, stateName);
+    }
+
+    private static CreditCardInformation getCreditCardInformation() {
+        String creditCardNumber = input("Enter the credit card number:");
+        String cardHolderName = input("Enter the card holder name:");
+        String creditCardExpirationDate = input("Enter the credit card expiration date (mm/yy):");
+        String creditCardCvv = input("Enter the credit card cvv:");
+        CardType cardType = getCardType(creditCardNumber);
+
+        return new CreditCardInformation(creditCardCvv, creditCardExpirationDate, creditCardNumber, cardHolderName, cardType);
+    }
+
+    private static CardType getCardType(String creditCardNumber) {
+        if (creditCardNumber.charAt(0) == '4') return CardType.VISA_CARD;
+        else if (creditCardNumber.charAt(0) == '5' && creditCardNumber.length() == 18) return CardType.VERVE;
+        else if (creditCardNumber.charAt(0) == '5') return CardType.MASTER_CARD;
+        else if (creditCardNumber.charAt(0) == '3' && creditCardNumber.charAt(1) == '7') return CardType.AMERICA_EXPRESS;
+
+        return null;
     }
 
     private static void exit() {
