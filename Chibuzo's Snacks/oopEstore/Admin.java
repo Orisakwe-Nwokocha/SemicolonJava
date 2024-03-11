@@ -38,7 +38,7 @@ public final class Admin extends User {
         if (!customer.isCorrect(password)) throw new IncorrectPasswordException("Password provided is not correct");
     }
 
-    private Customer findCustomer(int customerId) {
+    public Customer findCustomer(int customerId) {
         for (Customer customer : customers) if (customer.getId() == customerId) return customer;
         throw new IllegalArgumentException("Customer with id " + customerId + " not found");
     }

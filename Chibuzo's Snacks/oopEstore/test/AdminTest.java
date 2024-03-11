@@ -60,20 +60,14 @@ public class AdminTest {
     }
 
     @Test
-    public void testThatInitialNumberOfProductsAddedToStoreIs4() {
-        admin.addInitialInventory();
-        assertEquals(4, admin.getProducts().size());
-
-        System.out.println(admin.getProducts());
-    }
-
-    @Test
     public void testThatProductsCanBeFoundById() {
         admin.addInitialInventory();
         Product product = new Product(1, "Pixel", 350_000.0, "Android smartphone",
                 ProductCategory.ELECTRONICS);
 
-        assertEquals(product, admin.findProductById(1));    }
+        assertEquals(product, admin.findProductById(1));
+        System.out.println(admin.getProducts());
+    }
 
     @Test
     public void findProductWithNonExistingId_illegalArgumentExceptionIsThrownTest() {

@@ -60,7 +60,9 @@ public class CustomerTest {
 
     @Test
     public void given1ItemInCart_whenRemoved_thenNumberOfItemsInCartIs0() {
-        orisha.addToCart(phone, 1);
+        ShoppingCart cart = new ShoppingCart();
+        cart.add(phone, 1);
+        orisha.setShoppingCart(cart);
         assertEquals(1, orisha.viewCart().size());
 
         orisha.removeFromCart(phone.getId());
@@ -117,10 +119,12 @@ public class CustomerTest {
 
     @Test
     public void givenItemsInCart_whenCheckedOut_thenNumberOfOrdersIs1() {
+        System.out.println(Checkout.calculateTotalPrice(orisha.getCart()));
         orisha.addToCart(phone, 1);
         orisha.addToCart(chocolate, 5);
         assertEquals(2, orisha.viewCart().size());
         assertEquals(0, orisha.viewOrders().size());
+        System.out.println(Checkout.calculateTotalPrice(orisha.getCart()));
 
         orisha.setBillingInformation(billingInformation);
         orisha.checkout();
@@ -135,15 +139,14 @@ public class CustomerTest {
     }
 
     @Test
-    public void checkoutWithInvalidCardType_unsuccessfulTransactionExceptionIsThrown() {
+    public void checkoutWithInvalidCardType_unsuccessfulTransactionExceptionIsThrownTest() {
         orisha.addToCart(phone, 1);
+
         CreditCardInformation cardInformation = new CreditCardInformation("123", "09/24",
                 "5678 1234 9012 3456", "orisha", null);
-
-        billingInformation = new BillingInformation("08125358910", "orisha",
-                address, cardInformation);
-
-        orisha.setBillingInformation(billingInformation);
+        billingInformation = new BillingInformation("08125358910",
+                "orisha", address, cardInformation);
+        if (orisha.getBillingInformation() == null) orisha.setBillingInformation(billingInformation);
 
         assertThrows(UnsuccessfulTransactionException.class, () -> orisha.checkout());
 

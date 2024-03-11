@@ -37,4 +37,15 @@ public final class Customer extends User {
         return orders;
     }
 
+    public BillingInformation getBillingInformation() {
+        return billingInformation;
+    }
+
+    public ShoppingCart getCart() {
+        return cart;
+    }
+
+    public void setShoppingCart(ShoppingCart cart) {
+        this.cart = cart;
+    }
 }

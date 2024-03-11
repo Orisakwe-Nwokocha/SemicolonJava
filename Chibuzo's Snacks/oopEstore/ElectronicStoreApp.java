@@ -3,14 +3,17 @@ package oopEstore;
 import javax.swing.*;
 
 public class ElectronicStoreApp {
-    private static final Address adminAddress = new Address("city", "country", "1",
+    private static final Address dummyAddress = new Address("city", "country", "1",
             "street", "state");
     private static final Admin admin = new Admin(1, "admin", 47, "admin@mail.com",
-            adminAddress, "password", "phone");
+            dummyAddress, "password", "phone");
 
-    private static Customer customer = new Customer(1, "orisha", 15, "o@mail.com",
-            adminAddress, "password", "phone");
+    private static Customer customer = new Customer(-1, "orisha", 15, "o@mail.com",
+            dummyAddress, "dummyPassword", "phone");
     private static Address address;
+    private static boolean isLoggedIn;
+    private static BillingInformation billingInformation;
+    private static ShoppingCart cart;
 
     public static void main(String[] args) {
         startApp();
@@ -22,7 +25,7 @@ public class ElectronicStoreApp {
         print("Welcome to C19 Electronic Store", "Welcome");
 
         int choice = getChoice("Do you want to create an account?");
-        if (choice == 0) createAccount();
+        if (choice == JOptionPane.YES_OPTION) createAccount();
 
         gotoMainMenu();
     }
@@ -34,7 +37,11 @@ public class ElectronicStoreApp {
                 3. Add items to cart
                 4. View cart
                 5. Checkout
+                6. View orders
                 7. Remove items from cart
+                8. Login
+                9. Close account
+                10. Logout
                 11. Exit app
                 
                 Select option:
@@ -50,36 +57,92 @@ public class ElectronicStoreApp {
             case "3": addToCart();
             case "4": viewCart();
             case "5": checkout();
+            case "6": viewOrders();
             case "7": removeFromCart();
+            case "8": login();
+            case "9": deleteAccount();
+            case "10": logout();
             case "11": exit();
             default: gotoMainMenu();
         }
     }
 
-    private static void checkout() {
-        String receiverPhoneNumber = input("Enter the receiver's phone number:");
-        String receiverName = input("Enter the receiver's name:");
+    private static void deleteAccount() {
+        checkLoginStatus();
 
-        int choice = getChoice("Is the delivery address the same as your home address?");
-        if (choice == 1) initializeAddress();
-
-        print("Enter your credit card information", "Thanks");
-        CreditCardInformation cardInformation = getCreditCardInformation();
-
-
-    }
-
-
-
-
-    private static void removeFromCart() {
-        checkCartStatus();
-        String productId = input("Please enter the id of the product you want to remove from your cart:");
+        String customerId = input("Enter your customer ID:");
+        String password = input("Enter your password:");
 
         try {
-            customer.removeFromCart(Integer.parseInt(productId));
+            customer = admin.findCustomer(Integer.parseInt(customerId));
+        }
+        catch (RuntimeException e) {
+            displayErrorMessage(e.getMessage());
+            gotoMainMenu();
+        }
+        finally {
+            validate(password);
+            admin.removeCustomerAccount(Integer.parseInt(customerId), password);
+            isLoggedIn = false;
+            print("Your account has been deleted successfully", "Account deleted");
 
-            print("Item successfully removed from cart", "Removed From Cart");
+            gotoMainMenu();
+        }
+    }
+
+    private static void logout() {
+        checkLoginStatus();
+        isLoggedIn = false;
+        print("You are now logged out", "Logout");
+
+        gotoMainMenu();
+    }
+
+    private static void login() {
+        print("Welcome to C19 Electronic Store", "Login");
+
+        String customerId = input("Enter your customer ID:");
+        String password = input("Enter your password:");
+
+        try {
+            cart = customer.getCart();
+            customer = admin.findCustomer(Integer.parseInt(customerId));
+        }
+        catch (RuntimeException e) {
+            displayErrorMessage(e.getMessage());
+            gotoMainMenu();
+        }
+        finally {
+            validate(password);
+            isLoggedIn = true;
+            print("Your account has been logged in", "Login");
+            customer.setShoppingCart(cart);
+
+            gotoMainMenu();
+        }
+    }
+
+    private static void viewOrders() {
+        checkLoginStatus();
+        checkOrderStatus();
+
+        for (Order order : customer.viewOrders()) print(order.toString(), "Orders placed");
+
+        gotoMainMenu();
+    }
+
+    private static void checkout() {
+        checkLoginStatus();
+        checkCartStatus();
+
+        if (customer.getBillingInformation() == null) collectBillInformationDetails();
+        customer.setBillingInformation(billingInformation);
+
+        if (checkoutChoice() == JOptionPane.NO_OPTION) gotoMainMenu();
+
+        try {
+            customer.checkout();
+            print("Your order has been successfully placed!!!", "Thank you for your order");
         }
         catch (RuntimeException e) {
             displayErrorMessage(e.getMessage());
@@ -89,15 +152,24 @@ public class ElectronicStoreApp {
         }
     }
 
-    private static void checkCartStatus() {
-        if (customer.viewCart().isEmpty()) {
-            displayErrorMessage("There are no items in your cart.");
+    private static void removeFromCart() {
+        checkCartStatus();
+        String productId = input("Please enter the id of the product you want to remove from your cart:");
+
+        try {
+            customer.removeFromCart(Integer.parseInt(productId));
+            print("Item successfully removed from cart", "Removed from cart");
+        }
+        catch (RuntimeException e) {
+            displayErrorMessage(e.getMessage());
+        }
+        finally {
             gotoMainMenu();
         }
     }
 
     private static void viewCart() {
-        if (customer.viewCart().isEmpty()) print("Cart is empty", "Items in cart");
+        if (customer.viewCart().isEmpty()) print("Your cart is empty!", "Items in cart");
         else for (Item item : customer.viewCart()) print(item.toString(), "Items in cart");
 
         gotoMainMenu();
@@ -119,11 +191,11 @@ public class ElectronicStoreApp {
         finally {
             gotoMainMenu();
         }
-
     }
 
     private static void browseProducts() {
         for (Product product : admin.getProducts()) print(product.toString(), "Available products");
+
         gotoMainMenu();
     }
 
@@ -151,6 +223,12 @@ public class ElectronicStoreApp {
         }
     }
 
+    private static void exit() {
+        print("Thank you for shopping with us!!!", "Goodbye");
+
+        System.exit(0);
+    }
+
     private static void initializeAddress() {
         String cityName = input("Enter your city name:");
         String countryName = input("Enter your country name:");
@@ -159,6 +237,19 @@ public class ElectronicStoreApp {
         String stateName = input("Enter your state name:");
 
         address = new Address(cityName, countryName, houseNumber, streetName, stateName);
+    }
+
+    private static void collectBillInformationDetails() {
+        String receiverPhoneNumber = input("Enter the receiver's phone number:");
+        String receiverName = input("Enter the receiver's name:");
+
+        int choice = getChoice("Is the delivery address the same as your home address?");
+        if (choice == 1) initializeAddress();
+
+        print("Enter your credit card information", "Thanks");
+        CreditCardInformation cardInformation = getCreditCardInformation();
+
+        billingInformation = new BillingInformation(receiverPhoneNumber, receiverName, address, cardInformation);
     }
 
     private static CreditCardInformation getCreditCardInformation() {
@@ -180,9 +271,41 @@ public class ElectronicStoreApp {
         return null;
     }
 
-    private static void exit() {
-        print("Thank you for shopping with us!!!", "Goodbye");
-        System.exit(0);
+    private static void checkCartStatus() {
+        if (customer.viewCart().isEmpty()) {
+            displayErrorMessage("There are no items in your cart.");
+            gotoMainMenu();
+        }
+    }
+
+    private static void checkLoginStatus() {
+        if (!isLoggedIn) {
+            displayErrorMessage("You need to be logged in to perform this operation.");
+            gotoMainMenu();
+        }
+    }
+
+    private static void checkOrderStatus() {
+        if (customer.viewOrders().isEmpty()) {
+            displayErrorMessage("You haven't ordered any items yet.");
+            gotoMainMenu();
+        }
+    }
+
+    private static int checkoutChoice() {
+        double totalPrice = Checkout.calculateTotalPrice(customer.getCart());
+        String checkoutMessage = String.format("""
+                The total price of items in your cart is ₦%.2f
+                Do you wish to proceed?""", totalPrice);
+
+        return getChoice(checkoutMessage);
+    }
+
+    private static void validate(String password) {
+        if (!customer.isCorrect(password)) {
+            displayErrorMessage("Invalid Password");
+            gotoMainMenu();
+        }
     }
 
     private static void print(String message, String title) {

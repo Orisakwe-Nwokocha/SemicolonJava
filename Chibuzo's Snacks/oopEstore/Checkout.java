@@ -10,7 +10,7 @@ public class Checkout {
         return new Order(cart, totalPrice);
     }
 
-    private static double calculateTotalPrice(ShoppingCart cart) {
+    public static double calculateTotalPrice(ShoppingCart cart) {
         double totalPrice = 0.0;
         for (Item item : cart.view()) {
             Product product = item.getProduct();
