@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Products {
+public final class Products {
     private static final List<Product> products = new ArrayList<>();
     private static int numberOfProducts;
 
@@ -13,11 +13,16 @@ public class Products {
     }
 
     public static List<Product> view() {
-        add();
         return products;
     }
 
     public static int generateProductId() {
         return ++numberOfProducts;
+    }
+
+    public static Product findProductById(int productId) {
+        for (Product product : products) if (product.getId() == productId) return product;
+
+        throw new IllegalArgumentException("No such product exists with id " + productId);
     }
 }

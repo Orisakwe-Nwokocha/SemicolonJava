@@ -85,7 +85,6 @@ public class CustomerTest {
         }
     }
 
-
     @Test
     public void quantityOfProductXIs1_addQuantity_thenQuantityOfProductXIs2_numberOfItemsInCartIs1() {
         orisha.addToCart(phone, 1);
@@ -140,6 +139,13 @@ public class CustomerTest {
         orisha.addToCart(phone, 1);
 
         assertThrows(UnsuccessfulTransactionException.class, () -> orisha.checkout());
+
+        try {
+            orisha.checkout();
+        }
+        catch (UnsuccessfulTransactionException e) {
+            assertEquals("Cancelled - payment unsuccessful", e.getMessage());
+        }
     }
 
 }

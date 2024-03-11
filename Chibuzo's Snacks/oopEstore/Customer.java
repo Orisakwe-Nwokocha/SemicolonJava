@@ -3,7 +3,7 @@ package oopEstore;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Customer extends User {
+public final class Customer extends User {
     private BillingInformation billingInformation;
     private ShoppingCart cart = new ShoppingCart();
     private final List<Order> orders = new ArrayList<>();
@@ -25,10 +25,8 @@ public class Customer extends User {
     }
 
     public void checkout() {
-        setBillingInformation(billingInformation);
-
-        Order order = Checkout.placeOrder(cart, billingInformation);
-        orders.add(order);
+        Order newOrder = Checkout.placeOrder(cart, billingInformation);
+        orders.add(newOrder);
     }
 
     public void setBillingInformation(BillingInformation billingInformation) {

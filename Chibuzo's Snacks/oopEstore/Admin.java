@@ -4,7 +4,7 @@ import oopEstore.exceptions.IncorrectPasswordException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Admin extends User {
+public final class Admin extends User {
     private List<Customer> customers = new ArrayList<>();
     private int numberOfCustomers;
 
@@ -20,9 +20,11 @@ public class Admin extends User {
         customers.add(customer);
     }
 
-    public void registerCustomer(String name, int age, String emailAddress, Address homeAddress, String password, String phone) {
+    public Customer registerCustomer(String name, int age, String emailAddress, Address homeAddress, String password, String phone) {
         Customer newCustomer = new Customer(++numberOfCustomers, name, age, emailAddress, homeAddress, password, phone);
         customers.add(newCustomer);
+
+        return newCustomer;
     }
 
     public void removeCustomerAccount(int customerId, String password) {
@@ -53,5 +55,9 @@ public class Admin extends User {
         Product clothing = new Product(Products.generateProductId(), "Levis", 20_000.0, "Jeans", ProductCategory.CLOTHING);
 
         Products.add(electronic, grocery, utensil, clothing);
+    }
+
+    public Product findProductById(int productId) {
+        return Products.findProductById(productId);
     }
 }

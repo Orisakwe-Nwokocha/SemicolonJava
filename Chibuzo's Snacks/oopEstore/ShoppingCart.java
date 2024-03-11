@@ -5,7 +5,7 @@ import oopEstore.exceptions.ItemNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShoppingCart {
+public final class ShoppingCart {
     private List<Item> items = new ArrayList<>();
 
     public List<Item> view() {
@@ -19,7 +19,7 @@ public class ShoppingCart {
     }
 
     private void updateQuantity(Product product, int quantity) {
-        Item foundItem = findItem(product.getId());
+        Item foundItem = findItemBy(product.getId());
         foundItem.updateQuantityOfProduct(quantity);
     }
 
@@ -31,15 +31,16 @@ public class ShoppingCart {
 
     public void remove(int productId) {
         if (items.isEmpty()) throw new IllegalStateException("Shopping cart is empty");
-        Item foundItem = findItem(productId);
+
+        Item foundItem = findItemBy(productId);
 
         items.remove(foundItem);
     }
 
-    private Item findItem(int id) {
+    private Item findItemBy(int productId) {
         for (Item item : items) {
             Product product = item.getProduct();
-            if (product.getId() == id) return item;
+            if (product.getId() == productId) return item;
         }
 
         throw new ItemNotFoundException("Item is not in the cart.");

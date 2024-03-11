@@ -1,6 +1,6 @@
 package oopEstore;
 
-public class Product {
+public final class Product {
     private int id;
     private String name;
     private double price;
@@ -15,6 +15,14 @@ public class Product {
         this.category = category;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
     @Override
     public String toString() {
         String format = "%n\t%s%n\t%s%n\t%s%n\t₦%,.2f%n\tID: %d";
@@ -22,12 +30,10 @@ public class Product {
         return String.format(format, name, description, category, price, id);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
 
-    public int getId() {
-        return id;
-    }
-
-    public double getPrice() {
-        return price;
+        return (obj instanceof Product product) && this.id == product.id;
     }
 }

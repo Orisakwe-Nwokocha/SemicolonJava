@@ -1,5 +1,5 @@
 package oopEstore;
 
-public record BillingInformation(String phoneNumber, String receiverName, Address deliveryAddress, CreditCardInformation creditCardInfo) {
+public record BillingInformation(String receiverPhoneNumber, String receiverName, Address deliveryAddress, CreditCardInformation creditCardInfo) {
 
 }

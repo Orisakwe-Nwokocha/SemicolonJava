@@ -1,6 +1,6 @@
 package oopEstore;
 
-public class Item {
+public final class Item {
     private Product product;
     private int quantityOfProduct;
 
