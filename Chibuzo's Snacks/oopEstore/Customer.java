@@ -27,6 +27,8 @@ public final class Customer extends User {
     public void checkout() {
         Order newOrder = Checkout.placeOrder(cart, billingInformation);
         orders.add(newOrder);
+
+        cart = new ShoppingCart();
     }
 
     public void setBillingInformation(BillingInformation billingInformation) {

@@ -26,6 +26,6 @@ public class Checkout {
         if (cart.view().isEmpty()) throw new IllegalStateException("Shopping cart is empty");
 
         CardType cardType = billingInformation.creditCardInfo().cardType();
-        if (cardType == null) throw new UnsuccessfulTransactionException("Cancelled - payment unsuccessful");
+        if (cardType == null) throw new UnsuccessfulTransactionException("Invalid card - payment unsuccessful");
     }
 }

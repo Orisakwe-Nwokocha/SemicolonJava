@@ -13,13 +13,9 @@ public class ElectronicStoreApp {
     private static Address address;
     private static boolean isLoggedIn;
     private static BillingInformation billingInformation;
-    private static ShoppingCart cart;
+    private static final ShoppingCart cart = customer.getCart();
 
-    public static void main(String[] args) {
-        startApp();
-    }
-
-    private static void startApp() {
+    public static void startApp() {
         admin.addInitialInventory();
 
         print("Welcome to C19 Electronic Store", "Welcome");
@@ -99,13 +95,13 @@ public class ElectronicStoreApp {
     }
 
     private static void login() {
+        if (isLoggedIn) gotoMainMenu();
         print("Welcome to C19 Electronic Store", "Login");
 
         String customerId = input("Enter your customer ID:");
         String password = input("Enter your password:");
 
         try {
-            cart = customer.getCart();
             customer = admin.findCustomer(Integer.parseInt(customerId));
         }
         catch (RuntimeException e) {
@@ -146,6 +142,8 @@ public class ElectronicStoreApp {
         }
         catch (RuntimeException e) {
             displayErrorMessage(e.getMessage());
+
+            if (billingInformation.creditCardInfo().cardType() == null)updateCardInfo();
         }
         finally {
             gotoMainMenu();
@@ -211,14 +209,18 @@ public class ElectronicStoreApp {
 
         try {
             customer = admin.registerCustomer(name, Integer.parseInt(age), email, address, password, phone);
-
             print("Account created successfully", "Success");
             print("Your account id is " + customer.getId(), "Success");
         }
         catch (RuntimeException e) {
             displayErrorMessage(e.getMessage());
+            gotoMainMenu();
         }
         finally {
+            isLoggedIn = true;
+            print("Your account has been logged in", "Login");
+            customer.setShoppingCart(cart);
+
             gotoMainMenu();
         }
     }
@@ -271,6 +273,16 @@ public class ElectronicStoreApp {
         return null;
     }
 
+    private static void updateCardInfo() {
+        int choice = getChoice("Do you want to update your card details?");
+        if (choice == 1) gotoMainMenu();
+
+        CreditCardInformation updatedCardInfo = getCreditCardInformation();
+
+        billingInformation = new BillingInformation(billingInformation.receiverPhoneNumber(),
+                billingInformation.receiverName(), address, updatedCardInfo);
+    }
+
     private static void checkCartStatus() {
         if (customer.viewCart().isEmpty()) {
             displayErrorMessage("There are no items in your cart.");
@@ -295,7 +307,7 @@ public class ElectronicStoreApp {
     private static int checkoutChoice() {
         double totalPrice = Checkout.calculateTotalPrice(customer.getCart());
         String checkoutMessage = String.format("""
-                The total price of items in your cart is ₦%.2f
+                The total price of items in your cart is ₦%,.2f
                 Do you wish to proceed?""", totalPrice);
 
         return getChoice(checkoutMessage);

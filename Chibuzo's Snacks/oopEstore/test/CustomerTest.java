@@ -154,7 +154,7 @@ public class CustomerTest {
             orisha.checkout();
         }
         catch (UnsuccessfulTransactionException e) {
-            assertEquals("Cancelled - payment unsuccessful", e.getMessage());
+            assertEquals("Invalid card - payment unsuccessful", e.getMessage());
         }
     }
 
