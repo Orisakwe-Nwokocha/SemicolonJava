@@ -3,14 +3,13 @@ import java.util.Scanner;
 public class MenstrualAppMain {
     private static MenstrualApp cycleTracker;
     private static final Scanner scanner = new Scanner(System.in);
-    private static User user;
 
     public static void main(String[] args) {
         startApp();
     }
 
     private static void displayUserResult() {
-        user = cycleTracker.getUser();
+        User user = cycleTracker.getUser();
         user.calculateMenstrualCycle(cycleTracker);
 
         Date ovulationDay = cycleTracker.getOvulationDate();
@@ -52,16 +51,12 @@ public class MenstrualAppMain {
 
     private static void setMensesLength() {
         String mensesPhaseLength = input("How many days does your period usually last:");
-        if (isInvalidData(mensesPhaseLength)) {
-            print("Invalid data. Please try again.");
-            setMensesLength();
-        }
-
         try {
             cycleTracker.setMensesPhaseLength(Integer.parseInt(mensesPhaseLength));
         }
         catch (RuntimeException e) {
-            print(e.getMessage());
+            print("Invalid data. Please try again.");
+            setMensesLength();
         }
 
         setCycleLength();

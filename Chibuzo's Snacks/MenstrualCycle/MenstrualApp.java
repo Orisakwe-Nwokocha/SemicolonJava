@@ -59,7 +59,9 @@ public class MenstrualApp {
         setPeriodStartDate(previousPeriodStartDate.toString());
         ovulationDate.setDate(previousPeriodDay, previousPeriodMonth, previousPeriodYear);
 
-        for (int count = 1; count <= averageCycleLength - 14; count++) ovulationDate.nextDay();
+        int length = averageCycleLength >= 28 ? (averageCycleLength - 28) + 14 : 14 - (28 - averageCycleLength);
+
+        for (int count = 1; count <= length; count++) ovulationDate.nextDay();
 
     }
 

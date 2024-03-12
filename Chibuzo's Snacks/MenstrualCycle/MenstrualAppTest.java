@@ -8,10 +8,9 @@ public class MenstrualAppTest {
 
     @BeforeEach
     public void setUp() {
-        cycleTracker = new MenstrualApp("27/01/2024");
-        cycleTracker.setAverageCycleLength(28);
+        cycleTracker = new MenstrualApp("23/02/2024");
+        cycleTracker.setAverageCycleLength(35);
     }
-
 
     @Test
     public void testThatIrregularMenstrualCyclesAreDetected(){
@@ -29,8 +28,8 @@ public class MenstrualAppTest {
 
         user.calculateMenstrualCycle(cycleTracker);
 
-        assertEquals("10/02/2024", cycleTracker.getOvulationDate().toString());
-        assertEquals("24/02/2024", cycleTracker.getNextPeriodStartDate().toString());
+        assertEquals("15/03/2024", cycleTracker.getOvulationDate().toString());
+        assertEquals("29/03/2024", cycleTracker.getNextPeriodStartDate().toString());
     }
 
 
