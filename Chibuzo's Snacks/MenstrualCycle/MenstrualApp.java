@@ -1,6 +1,4 @@
-import java.util.Arrays;
-
-public class MenstrualCycleTracker {
+public class MenstrualApp {
     private User user;
     private int previousPeriodDay;
     private int previousPeriodMonth;
@@ -11,7 +9,7 @@ public class MenstrualCycleTracker {
     private int mensesPhaseLength;
     private int averageCycleLength;
 
-    public MenstrualCycleTracker(String lastPeriodDate) {
+    public MenstrualApp(String lastPeriodDate) {
         user = new User(lastPeriodDate);
 
         setPeriodStartDate(user.getLastPeriodDate());

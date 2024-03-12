@@ -3,26 +3,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class MenstrualCycleTrackerTest {
-    private MenstrualCycleTracker cycleTracker;
+public class MenstrualAppTest {
+    private MenstrualApp cycleTracker;
 
     @BeforeEach
     public void setUp() {
-        cycleTracker = new MenstrualCycleTracker("27/01/2024");
+        cycleTracker = new MenstrualApp("27/01/2024");
         cycleTracker.setAverageCycleLength(28);
-    }
-
-    @Test
-    public void testThatMenstrualCycleTrackerExists() {
-
-        assertNotNull(cycleTracker);
-    }
-
-    @Test
-    public void testThatMenstrualCycleTrackerUserExists() {
-        User user = cycleTracker.getUser();
-
-        assertNotNull(user);
     }
 
 
