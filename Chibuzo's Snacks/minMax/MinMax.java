@@ -3,20 +3,13 @@ package minMax;
 public class MinMax {
 
     public static int[] firstTry(int... numbers) {
-        int[] minMax = new int[2];
-
         int min = getMinMax(1, numbers);
         int max = getMinMax(2, numbers);
 
-        minMax[0] = getMinMaxSum(max, numbers);
-        minMax[1] = getMinMaxSum(min, numbers);
-
-        return minMax;
+        return new int[]{getMinMaxSum(max, numbers), getMinMaxSum(min, numbers)};
     }
 
     public static int[] secondTry(int... numbers) {
-        int[] minMax = new int[2];
-
         int min = Integer.MAX_VALUE;
         int max = numbers[0];
 
@@ -27,10 +20,7 @@ public class MinMax {
             if(sum > max) max = sum;
         }
 
-        minMax[0] = min;
-        minMax[1] = max;
-
-        return minMax;
+        return new int[]{min, max};
     }
 
     private static int getSum(int[] numbers, int number, int sum) {
