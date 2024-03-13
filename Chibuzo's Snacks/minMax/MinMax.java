@@ -1,10 +1,13 @@
 package minMax;
 
+import java.util.Arrays;
+
 public class MinMax {
 
     public static int[] firstTry(int... numbers) {
-        int min = getMinMax(1, numbers);
-        int max = getMinMax(2, numbers);
+        Arrays.sort(numbers);
+        int min = numbers[0];
+        int max = numbers[numbers.length - 1];
 
         return new int[]{getMinMaxSum(max, numbers), getMinMaxSum(min, numbers)};
     }
@@ -29,19 +32,6 @@ public class MinMax {
             sum += num;
         }
         return sum;
-    }
-
-    private static int getMinMax(int flag, int... numbers) {
-        if (flag == 1) {
-            int min = numbers[0];
-            for (int number : numbers) if (number < min) min = number;
-            return min;
-        }
-        else {
-            int max = numbers[0];
-            for (int number : numbers) if (number > max) max = number;
-            return max;
-        }
     }
 
     private static int getMinMaxSum(int flag, int... numbers) {
