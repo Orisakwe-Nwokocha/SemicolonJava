@@ -1,34 +1,25 @@
-import java.util.Scanner;
-
 public class StudentGrade {
+    private int[][] grades;
 
-    private static int[][] grades;
-
-    public static void setGrades(int[][] grades) {
-        StudentGrade.grades = grades;
+    public void setGrades(int[][] grades) {
+        this.grades = grades;
     }
 
-    public static int getTotal(int[] setOfGrades) {
+    public int getTotal(int[] setOfGrades) {
         int sum = 0;
-
-        for (int grade: setOfGrades) {
-            sum += grade;
-        }
+        for (int grade: setOfGrades) sum += grade;
 
         return sum;
     }
 
-    public static double getAverage(int[] setOfGrades) {
+    public double getAverage(int[] setOfGrades) {
         int total = 0;
-
-        for (int grade: setOfGrades) {
-            total += grade;
-        }
+        for (int grade: setOfGrades) total += grade;
 
         return (double) total / setOfGrades.length;
     }
 
-    public static int getPosition(int[] setOfGrades) {
+    public int getPosition(int[] setOfGrades) {
         int total = 0;
         double average = 0.0;
         int position = 1;
@@ -38,36 +29,30 @@ public class StudentGrade {
             average = (double) total / setOfGrades.length;
         }
 
-        for (int[] grade : grades) {
-            if (average < getAverage(grade)) {
-                position++;
-            }
-        }
+        for (int[] grade : grades) if (average < getAverage(grade)) position++;
 
         return position;
     }
 
-    public static void outputGrades() {
+    public void outputGrades() {
         print("===============================================================================");
         System.out.print("STUDENT           ");
-        for (int subject = 0; subject < grades[0].length; subject++) {
-            System.out.printf("SUB%d    ", subject + 1);
-        }
+
+        for (int subject = 0; subject < grades[0].length; subject++) System.out.printf("SUB%d    ", subject + 1);
+
         print(" TOT     AVE     POS");
         print("===============================================================================");
 
         for (int student = 0; student < grades.length; student++) {
             System.out.printf("Student %3d       ", student + 1);
 
-            for (int subject: grades[student]) {
-                System.out.printf("%3d     ", subject);
-            }
+            for (int subject: grades[student]) System.out.printf("%3d     ", subject);
 
             int total = getTotal(grades[student]);
             double average = getAverage(grades[student]);
             int studentPosition = getPosition(grades[student]);
-            System.out.printf("%4d    %5.2f     %d%n", total, average, studentPosition);
 
+            System.out.printf("%4d    %5.2f     %d%n", total, average, studentPosition);
         }
 
         print("===============================================================================");
@@ -75,81 +60,51 @@ public class StudentGrade {
 
     }
 
-    public static int getHighestScore(int subject) {
+    public int getHighestScore(int subject) {
         int highestGrade = 0;
-
-        for (int student = 0; student < grades.length; student++) {
-            if (grades[student][subject] > highestGrade) {
-                highestGrade = grades[student][subject];
-            }
-        }
+        for (int[] grade : grades) if (grade[subject] > highestGrade) highestGrade = grade[subject];
         
         return highestGrade;
     }
 
-    public static int getLowestScore(int subject) {
+    public int getLowestScore(int subject) {
         int lowestGrade = getHighestScore(subject);
-        
-       for (int[] student : grades) {
-            if (student[subject] < lowestGrade) {
-                lowestGrade = student[subject];
-            }
-        }
+        for (int[] student : grades) if (student[subject] < lowestGrade) lowestGrade = student[subject];
 
         return lowestGrade;
     }
 
-    public static int getTotalScore(int subject) {
+    public int getTotalScore(int subject) {
         int totalGrade = 0;
+        for (int[] student : grades) totalGrade += student[subject];
 
-        for (int[] student : grades) {
-                totalGrade += student[subject];
-        }
         return totalGrade;
     }
 
-    public static double getAverageScore(int subject) {
-        double sum = getTotalScore(subject);
-
-        return sum / grades.length;
+    public double getAverageScore(int subject) {
+        return (double) getTotalScore(subject) / grades.length;
     }
 
-    public static int getNoOfPasses(int subject) {
-        int passMark = 50;
+    public int getNoOfPasses(int subject) {
         int pass = 0;
-
-        for (int[] student : grades) {
-
-            if (student[subject] >= passMark) {
-                pass++;
-            }
-        }
+        for (int[] student : grades) if (student[subject] >= 50) pass++;
 
         return pass;
     }
 
-    public static int getNoOfFails(int subject) {
-        int passMark = 50;
+    public int getNoOfFails(int subject) {
         int fail = 0;
-
-        for (int[] student : grades) {
-
-            if (student[subject] < passMark) {
-                fail++;
-            }
-        }
+        for (int[] student : grades) if (student[subject] < 50) fail++;
 
         return fail;
     }
 
-    public static void getHardestSubject() {
+    public void getHardestSubject() {
         int hardestSubject = 0;
         int fail = 0;
 
         for (int[] student : grades) {
-
             for (int subject = 0; subject < student.length; subject++) {
-
                 if (getNoOfFails(subject) > fail) {
                     hardestSubject = subject + 1;
                     fail = getNoOfFails(subject);
@@ -157,22 +112,16 @@ public class StudentGrade {
             }
         }
 
-        if(fail > 0) {
-            System.out.printf("The hardest subject is Subject %d with %d failures%n", hardestSubject, fail);
-        } else {
-            print("There are apparently no hard subjects because there are 0 failures");
-        }
-
+        if(fail > 0) System.out.printf("The hardest subject is Subject %d with %d failures%n", hardestSubject, fail);
+        else print("There are apparently no hard subjects because there are 0 failures");
     }
 
-    public static void getEasiestSubject() {
+    public void getEasiestSubject() {
         int easiestSubject = 0;
         int pass = 0;
 
         for (int[] student : grades) {
-
             for (int subject = 0; subject < student.length; subject++) {
-
                 if (getNoOfPasses(subject) > pass) {
                     easiestSubject = subject + 1;
                     pass = getNoOfPasses(subject);
@@ -180,15 +129,11 @@ public class StudentGrade {
             }
         }
 
-        if (pass > 0) {
-            System.out.printf("The easiest subject is Subject %d with %d passes%n", easiestSubject, pass);
-        } else {
-            print("There are apparently no easy subjects because there are 0 passes");
-        }
-
+        if (pass > 0) System.out.printf("The easiest subject is Subject %d with %d passes%n", easiestSubject, pass);
+        else print("There are apparently no easy subjects because there are 0 passes");
     }
 
-    public static void getOverallHighestScore() {
+    public void getOverallHighestScore() {
         int overallHighestScore = grades[0][0];
         int overallHighestScoringStudent = 0;
         int subjectScoredIn = 0;
@@ -203,16 +148,12 @@ public class StudentGrade {
             }
         }
 
-        if (overallHighestScore > 0) {
-            System.out.printf("The overall Highest score is scored by Student %d in subject %d scoring %d%n",
-                    overallHighestScoringStudent, subjectScoredIn, overallHighestScore);
-        } else {
-            print("All scores were 0, so there is no overall Highest score");
-        }
-
+        String format = "The overall Highest score is scored by Student %d in subject %d scoring %d%n";
+        if (overallHighestScore > 0) System.out.printf(format, overallHighestScoringStudent, subjectScoredIn, overallHighestScore);
+        else print("All scores were 0, so there is no overall Highest score");
     }
 
-    public static void getOverallLowestScore() {
+    public void getOverallLowestScore() {
         int overallLowestScore = grades[0][0];
         int overallLowestScoringStudent = 0;
         int subjectScoredIn = 0;
@@ -227,34 +168,25 @@ public class StudentGrade {
             }
         }
 
-        if (overallLowestScore > 0) {
-            System.out.printf("The overall Lowest score is scored by Student %d in subject %d scoring %d%n",
-                    (overallLowestScoringStudent + 1), (subjectScoredIn + 1), overallLowestScore);
-        } else {
-            print("All scores were 0, so there is no overall Lowest score");
-        }
-
+        String format = "The overall Lowest score is scored by Student %d in subject %d scoring %d%n";
+        if (overallLowestScore > 0) System.out.printf(format, (overallLowestScoringStudent + 1), (subjectScoredIn + 1), overallLowestScore);
+        else print("All scores were 0, so there is no overall Lowest score");
     }
 
-    public static void processGraduatingStudents() {
+    public void processGraduatingStudents() {
         int bestSubTotal = 0;
         int bestGraduatingStudent = 0;
 
         for (int student = 0; student < grades.length; student++) {
-            for (int subject = 0; subject < grades[student].length; subject++) {
-                if (getTotal(grades[student]) > bestSubTotal) {
-                    bestGraduatingStudent = student + 1;
-                    bestSubTotal = getTotal(grades[student]);
-                }
+            if (getTotal(grades[student]) > bestSubTotal) {
+                bestGraduatingStudent = student + 1;
+                bestSubTotal = getTotal(grades[student]);
             }
         }
 
-        if (bestSubTotal > 0) {
-            System.out.printf("Best Graduating Student is: Student %d scoring %d%n",
-                    bestGraduatingStudent, bestSubTotal);
-        } else {
-            print("All scores were 0, so there is no Best Graduating Student");
-        }
+        if (bestSubTotal > 0) System.out.printf("Best Graduating Student is: Student %d scoring %d%n", bestGraduatingStudent, bestSubTotal);
+        else print("All scores were 0, so there is no Best Graduating Student");
+
         print("===============================================================================\n");
         print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
@@ -262,25 +194,19 @@ public class StudentGrade {
         int worstGraduatingStudent = 0;
 
         for (int student = 0; student < grades.length; student++) {
-            for (int subject = 0; subject < grades[student].length; subject++) {
-                if (getTotal(grades[student]) < worstSubTotal) {
-                    worstGraduatingStudent = student + 1;
-                    worstSubTotal = getTotal(grades[student]);
-                }
+            if (getTotal(grades[student]) < worstSubTotal) {
+                worstGraduatingStudent = student + 1;
+                worstSubTotal = getTotal(grades[student]);
             }
         }
 
-        if (worstSubTotal > 0) {
-            System.out.printf("Worst Graduating Student is: Student %d scoring %d%n",
-                    worstGraduatingStudent, worstSubTotal);
-        } else {
-            print("All scores were 0, so there is no Worst Graduating Student");
-        }
-        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        if (worstSubTotal > 0) System.out.printf("Worst Graduating Student is: Student %d scoring %d%n", worstGraduatingStudent, worstSubTotal);
+        else print("All scores were 0, so there is no Worst Graduating Student");
 
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
     }
 
-    public static void subjectSummary() {
+    public void subjectSummary() {
         print("SUBJECT SUMMARY");
 
         for (int subject = 0; subject < grades[0].length; subject++) {
@@ -294,12 +220,10 @@ public class StudentGrade {
                 }
             }
 
-            int lowestScore = getLowestScore(subject);
             int lowestScoringStudent = 0;
             for (int student = 0; student < grades.length; student++) {
-                if (lowestScore == grades[student][subject]) {
-                    lowestScoringStudent = student + 1;
-                }
+                boolean lowestScore = grades[student][subject] == getLowestScore(subject);
+                if (lowestScore) lowestScoringStudent = student + 1;
             }
 
             int totalScore = getTotalScore(subject);
@@ -314,9 +238,9 @@ public class StudentGrade {
                     Average score is: %.2f
                     Number of passes: %d
                     Number of fails: %d
-                    """, highestScoringStudent, highestScore, lowestScoringStudent, lowestScore, totalScore, averageScore, noOfPassScores, noOfFailScores);
+                    """, highestScoringStudent, highestScore, lowestScoringStudent, getLowestScore(subject), totalScore, averageScore, noOfPassScores, noOfFailScores);
 
-            System.out.println();
+            print("");
         }
 
         getHardestSubject();
@@ -331,19 +255,17 @@ public class StudentGrade {
         print("===============================================================================");
 
         int classTotal = 0;
-        for (int[] student : grades) {
-            classTotal += getTotal(student);
-        }
+        for (int[] student : grades) classTotal += getTotal(student);
         double classAverage = (double) classTotal / grades.length;
 
         System.out.printf("""
                 Class Total score is: %d
                 Class Average score is: %.2f
                 ===============================================================================
-                """, classTotal,classAverage);
+                """, classTotal, classAverage);
     }
 
-    public static void processGrades() {
+    public void processGrades() {
         outputGrades();
         subjectSummary();
     }
@@ -351,5 +273,4 @@ public class StudentGrade {
     private static void print(String prompt) {
         System.out.println(prompt);
     }
-    
 }

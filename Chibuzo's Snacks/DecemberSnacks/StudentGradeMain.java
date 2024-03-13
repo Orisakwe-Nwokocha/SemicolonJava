@@ -4,14 +4,13 @@ public class StudentGradeMain {
     private static int row = 0;
     private static int column = 0;
     private static int score = 0;
+    private static final StudentGrade gradeApp = new StudentGrade();
 
     public static void main(String[] args) {
-       // int[][] h = {{4, 32}, {89, 23}, {45, 67}, {23, 34}, {12, 98}};
-
-       // StudentGrade.setGrades(h);
-
-        setGrades();
-        StudentGrade.processGrades();
+        int[][] gradeArray = {{67, 21, 49}, {98, 62, 56}, {93, 34, 27}, {78, 83, 66}};
+        gradeApp.setGrades(gradeArray);
+        //setGrades();
+        gradeApp.processGrades();
     }
 
     public static void setGrades() {
@@ -28,7 +27,7 @@ public class StudentGradeMain {
             print("Saving >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\nSaved successfully\n");
         }
 
-        StudentGrade.setGrades(grades);
+        gradeApp.setGrades(grades);
     }
 
     private static void collectGrades(int subjectsColumn, int student, int[][] grades) {
@@ -63,7 +62,7 @@ public class StudentGradeMain {
             print(e.getMessage());
             getColumn();
         }
-        
+
         return column;
     }
 
