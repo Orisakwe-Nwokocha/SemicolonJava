@@ -8,10 +8,14 @@ import static turtleGraphics.Direction.*;
 
 public class TurtleTest {
     private Turtle turtle;
+    private Sketchpad sketchpad;
+    private final int[][] testFloor = new int[20][20];
+
 
     @BeforeEach
     public void initialiseTurtle() {
         turtle = new Turtle();
+        sketchpad = new Sketchpad(20, 20);
     }
 
     @Test
@@ -118,5 +122,167 @@ public class TurtleTest {
         assertSame(EAST, turtle.getCurrentDirection());
     }
 
+    @Test
+    public void testThatTurtleCanMoveForwardWhileFacingEast() {
+        assertSame(EAST, turtle.getCurrentDirection());
+        assertEquals(new Position(0, 0), turtle.getCurrentPosition());
 
+        turtle.moveForward(5, sketchpad);
+        assertEquals(new Position(0, 4), turtle.getCurrentPosition());
+    }
+
+    @Test
+    public void testThatTurtleCanDrawOnSketchpadWhileFacingEast() {
+        assertSame(EAST, turtle.getCurrentDirection());
+        assertEquals(new Position(0, 0), turtle.getCurrentPosition());
+
+        int[][] floor = sketchpad.getFloor();
+        assertArrayEquals(testFloor, floor);
+        turtle.penDown();
+        assertFalse(turtle.isPenUp());
+
+        turtle.moveForward(5, sketchpad);
+        assertEquals(1, floor[0][0]);
+        assertEquals(1, floor[0][1]);
+        assertEquals(1, floor[0][2]);
+        assertEquals(1, floor[0][3]);
+        assertEquals(1, floor[0][4]);
+
+        assertEquals(new Position(0, 4), turtle.getCurrentPosition());
+    }
+
+    @Test
+    public void testThatTurtleCanMoveForwardWhileFacingSouth() {
+        turtle.moveForward(5, sketchpad);
+        assertEquals(new Position(0, 4), turtle.getCurrentPosition());
+        turtle.turnRight();
+        assertEquals(SOUTH, turtle.getCurrentDirection());
+
+        turtle.moveForward(5, sketchpad);
+        assertEquals(new Position(4, 4), turtle.getCurrentPosition());
+    }
+
+    @Test
+    public void testThatTurtleCanDrawOnSketchpadWhileFacingSouth() {
+        turtle.moveForward(5, sketchpad);
+        assertEquals(new Position(0, 4), turtle.getCurrentPosition());
+        turtle.turnRight();
+        assertEquals(SOUTH, turtle.getCurrentDirection());
+
+        int[][] floor = sketchpad.getFloor();
+        assertArrayEquals(testFloor, floor);
+        turtle.penDown();
+        assertFalse(turtle.isPenUp());
+
+        turtle.moveForward(5, sketchpad);
+        assertEquals(1, floor[0][4]);
+        assertEquals(1, floor[1][4]);
+        assertEquals(1, floor[2][4]);
+        assertEquals(1, floor[3][4]);
+        assertEquals(1, floor[4][4]);
+
+        assertEquals(new Position(4, 4), turtle.getCurrentPosition());
+    }
+
+    @Test
+    public void testThatTurtleCanMoveForwardWhileFacingWest() {
+        turtle.moveForward(5, sketchpad);
+        turtle.turnRight();
+        turtle.moveForward(5, sketchpad);
+        assertEquals(new Position(4, 4), turtle.getCurrentPosition());
+        turtle.turnRight();
+        assertEquals(WEST, turtle.getCurrentDirection());
+
+        turtle.moveForward(5, sketchpad);
+        assertEquals(new Position(4, 0), turtle.getCurrentPosition());
+    }
+
+    @Test
+    public void testThatTurtleCanDrawOnSketchpadWhileFacingWest() {
+        turtle.moveForward(5, sketchpad);
+        turtle.turnRight();
+        turtle.moveForward(5, sketchpad);
+        assertEquals(new Position(4, 4), turtle.getCurrentPosition());
+        turtle.turnRight();
+        assertEquals(WEST, turtle.getCurrentDirection());
+
+        int[][] floor = sketchpad.getFloor();
+        assertArrayEquals(testFloor, floor);
+        turtle.penDown();
+        assertFalse(turtle.isPenUp());
+
+        turtle.moveForward(5, sketchpad);
+        assertEquals(1, floor[4][4]);
+        assertEquals(1, floor[4][3]);
+        assertEquals(1, floor[4][2]);
+        assertEquals(1, floor[4][1]);
+        assertEquals(1, floor[4][0]);
+
+        assertEquals(new Position(4, 0), turtle.getCurrentPosition());
+    }
+
+    @Test
+    public void testThatTurtleCanMoveForwardWhileFacingNorth() {
+        turtle.moveForward(5, sketchpad);
+        turtle.turnRight();
+        turtle.moveForward(5, sketchpad);
+        turtle.turnRight();
+        turtle.moveForward(5, sketchpad);
+        assertEquals(new Position(4, 0), turtle.getCurrentPosition());
+        turtle.turnRight();
+        assertEquals(NORTH, turtle.getCurrentDirection());
+
+        turtle.moveForward(5, sketchpad);
+        assertEquals(new Position(0, 0), turtle.getCurrentPosition());
+    }
+
+    @Test
+    public void testThatTurtleCanDrawOnSketchpadWhileFacingNorth() {
+        turtle.moveForward(5, sketchpad);
+        turtle.turnRight();
+        turtle.moveForward(5, sketchpad);
+        turtle.turnRight();
+        turtle.moveForward(5, sketchpad);
+        assertEquals(new Position(4, 0), turtle.getCurrentPosition());
+        turtle.turnRight();
+        assertEquals(NORTH, turtle.getCurrentDirection());
+
+        int[][] floor = sketchpad.getFloor();
+        assertArrayEquals(testFloor, floor);
+        turtle.penDown();
+        assertFalse(turtle.isPenUp());
+
+        turtle.moveForward(5, sketchpad);
+        assertEquals(1, floor[4][0]);
+        assertEquals(1, floor[3][0]);
+        assertEquals(1, floor[2][0]);
+        assertEquals(1, floor[1][0]);
+        assertEquals(1, floor[0][0]);
+
+        assertEquals(new Position(0, 0), turtle.getCurrentPosition());
+    }
+
+    @Test
+    public void testThatSketchpadCanDisplayFloor() {
+        int[][] floor = sketchpad.getFloor();
+        assertArrayEquals(testFloor, floor);
+
+        String displayedFloor = sketchpad.displayFloor();
+        System.out.println(displayedFloor);
+
+        turtle.penDown();
+        assertFalse(turtle.isPenUp());
+        turtle.moveForward(12, sketchpad);
+        turtle.turnRight();
+        turtle.moveForward(12, sketchpad);
+        turtle.turnRight();
+        turtle.moveForward(12, sketchpad);
+        turtle.turnRight();
+        turtle.moveForward(12, sketchpad);
+        assertEquals(NORTH, turtle.getCurrentDirection());
+        assertEquals(new Position(0, 0), turtle.getCurrentPosition());
+
+        displayedFloor = sketchpad.displayFloor();
+        System.out.println(displayedFloor);
+    }
 }
