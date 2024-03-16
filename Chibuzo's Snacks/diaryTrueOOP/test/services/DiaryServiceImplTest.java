@@ -54,4 +54,32 @@ public class DiaryServiceImplTest {
         assertEquals(0L, diaryService.getNumberOfUsers());
     }
 
+    @Test
+    public void testThatUserCanLoginIntoAccount() {
+        RegisterRequest request = new RegisterRequest();
+        request.setUsername("username");
+        request.setPassword("password");
+
+        diaryService.register(request);
+        assertFalse(diaryService.isLoggedIn());
+
+        diaryService.login(request);
+        assertTrue(diaryService.isLoggedIn());
+    }
+
+    @Test
+    public void testThatUserCanLogoutFromAccount() {
+        RegisterRequest request = new RegisterRequest();
+        request.setUsername("username");
+        request.setPassword("password");
+
+        diaryService.register(request);
+        assertFalse(diaryService.isLoggedIn());
+        diaryService.login(request);
+        assertTrue(diaryService.isLoggedIn());
+
+        diaryService.logout(request);
+        assertFalse(diaryService.isLoggedIn());
+    }
+
 }

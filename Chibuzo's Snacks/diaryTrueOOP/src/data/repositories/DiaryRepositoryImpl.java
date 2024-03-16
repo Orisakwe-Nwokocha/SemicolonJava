@@ -60,8 +60,6 @@ public class DiaryRepositoryImpl implements DiaryRepository {
 
     @Override
     public void delete(Diary diary) {
-        Diary foundDiary = findById(diary.getUsername());
-
-        diaries.remove(foundDiary);
+        diaries.remove(diary);
     }
 }

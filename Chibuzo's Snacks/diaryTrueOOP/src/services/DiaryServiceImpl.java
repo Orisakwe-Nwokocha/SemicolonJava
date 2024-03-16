@@ -7,6 +7,8 @@ import dtos.requests.RegisterRequest;
 
 public class DiaryServiceImpl implements DiaryService {
     private final DiaryRepository repository = new DiaryRepositoryImpl();
+    private boolean isLoggedIn;
+
     @Override
     public void register(RegisterRequest request) {
         validate(request);
@@ -20,30 +22,69 @@ public class DiaryServiceImpl implements DiaryService {
     private void validate(RegisterRequest request) {
         validateNull(request);
         validateBlank(request);
-        if (repository.findById(request.getUsername()) != null) throw new UsernameExistsException("Username already exists.");
+        validateDuplicate(request);
     }
 
+    private void validateDuplicate(RegisterRequest request) {
+        boolean isDuplicate = findById(request) != null;
+
+        if (isDuplicate) throw new UsernameExistsException("Username already exists.");
+    }
+
+
     private static void validateBlank(RegisterRequest request) {
-        if (request.getUsername().isBlank() || request.getPassword().isBlank()) throw new IllegalArgumentException("Username and password cannot be empty.");
+        boolean isBlank = request.getUsername().isBlank() || request.getPassword().isBlank();
+
+        if (isBlank) throw new IllegalArgumentException("Username and password cannot be empty.");
     }
 
     private static void validateNull(RegisterRequest request) {
-        if (request.getUsername() == null || request.getPassword() == null) throw new NullPointerException("Username and password cannot be null.");
+        boolean isNull = request.getUsername() == null || request.getPassword() == null;
+
+        if (isNull) throw new NullPointerException("Username and password cannot be null.");
+    }
+
+    private Diary findById(RegisterRequest request) {
+        return repository.findById(request.getUsername());
     }
 
     @Override
     public void login(RegisterRequest request) {
+        Diary foundDiary = findById(request.getUsername());
 
+        if (foundDiary != null) loginTo(foundDiary, request);
+    }
+
+    private Diary findById(String username) {
+        return repository.findById(username);
+    }
+
+
+    private void loginTo(Diary foundDiary, RegisterRequest request) {
+        boolean isPasswordCorrect = foundDiary.getPassword().equals(request.getPassword());
+
+        if (isPasswordCorrect) isLoggedIn = true;
     }
 
     @Override
     public void logout(RegisterRequest request) {
+        Diary foundDiary = findById(request.getUsername());
 
+        if (foundDiary != null) logOutOf(foundDiary, request);
+    }
+
+    private void logOutOf(Diary foundDiary, RegisterRequest request) {
+        boolean isPasswordCorrect = foundDiary.getPassword().equals(request.getPassword());
+
+        if (isPasswordCorrect) isLoggedIn = false;    }
+
+    @Override
+    public boolean isLoggedIn() {
+        return isLoggedIn;
     }
 
     @Override
     public void lock(RegisterRequest request) {
-
     }
 
     @Override
