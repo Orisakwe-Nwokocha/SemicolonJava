@@ -4,6 +4,7 @@ import data.models.Diary;
 import data.repositories.DiaryRepository;
 import data.repositories.DiaryRepositoryImpl;
 import dtos.requests.RegisterRequest;
+import services.exceptions.UsernameExistsException;
 
 public class DiaryServiceImpl implements DiaryService {
     private final DiaryRepository repository = new DiaryRepositoryImpl();
@@ -76,7 +77,8 @@ public class DiaryServiceImpl implements DiaryService {
     private void logOutOf(Diary foundDiary, RegisterRequest request) {
         boolean isPasswordCorrect = foundDiary.getPassword().equals(request.getPassword());
 
-        if (isPasswordCorrect) isLoggedIn = false;    }
+        if (isPasswordCorrect) isLoggedIn = false;
+    }
 
     @Override
     public boolean isLoggedIn() {
@@ -85,16 +87,35 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public void lock(RegisterRequest request) {
+        Diary foundDiary = findById(request.getUsername());
+
+        if (foundDiary != null) foundDiary.lockDiary();
     }
 
     @Override
     public void unlock(RegisterRequest request) {
+        Diary foundDiary = findById(request.getUsername());
 
+        if (foundDiary != null) unlock(foundDiary, request);
+    }
+
+    private static void unlock(Diary foundDiary, RegisterRequest request) {
+        boolean isPasswordCorrect = foundDiary.getPassword().equals(request.getPassword());
+
+        if (isPasswordCorrect) foundDiary.unlockDiary();
     }
 
     @Override
-    public void removeUser(RegisterRequest request) {
+    public boolean isLocked(RegisterRequest request) {
+        Diary foundDiary = findById(request.getUsername());
 
+        if (foundDiary != null) return foundDiary.isLocked();
+        return false;
+    }
+
+    @Override
+    public void remove(RegisterRequest request) {
+        repository.delete(request.getUsername());
     }
 
     @Override

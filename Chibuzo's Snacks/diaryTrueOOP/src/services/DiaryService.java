@@ -9,6 +9,7 @@ public interface DiaryService {
     boolean isLoggedIn();
     void lock(RegisterRequest request);
     void unlock(RegisterRequest request);
-    void removeUser(RegisterRequest request);
+    boolean isLocked(RegisterRequest request);
+    void remove(RegisterRequest request);
     long getNumberOfUsers();
 }

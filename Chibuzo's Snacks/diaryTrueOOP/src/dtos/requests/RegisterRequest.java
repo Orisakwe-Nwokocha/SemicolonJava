@@ -5,7 +5,7 @@ public class RegisterRequest {
     private String password;
 
     public void setUsername(String username) {
-        this.username = username;
+        this.username = username.toLowerCase();
     }
 
     public void setPassword(String password) {

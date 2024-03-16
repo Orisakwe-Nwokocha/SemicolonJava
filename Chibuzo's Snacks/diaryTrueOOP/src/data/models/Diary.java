@@ -6,6 +6,7 @@ public class Diary {
     private String username;
     private String password;
     private int id;
+    private boolean isLocked;
 
     public Diary() {}
 
@@ -36,5 +37,17 @@ public class Diary {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isLocked() {
+        return isLocked;
+    }
+
+    public void lockDiary() {
+        isLocked = true;
+    }
+
+    public void unlockDiary() {
+        isLocked = false;
     }
 }
