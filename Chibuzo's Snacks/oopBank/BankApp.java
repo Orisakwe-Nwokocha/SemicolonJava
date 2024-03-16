@@ -6,6 +6,7 @@ import java.util.List;
 
 public class BankApp {
     private static final Bank firstBank = new Bank("First Bank of Nigeria PLC");
+    private static Account account = new Account("dummyName", -10000, "9999");
     private static final List<Bank> otherBanks = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -13,6 +14,8 @@ public class BankApp {
     }
 
     private static void startApp() {
+        print("Welcome to First Bank!!!");
+
         addOtherBanks();
     }
 
@@ -22,19 +25,23 @@ public class BankApp {
         otherBanks.add(gtBank);
         otherBanks.add(accessBank);
 
-        registerCustomer();
+        otherBanks.getFirst().registerCustomer("Jane", "Doe", "0000");
+        otherBanks.getLast().registerCustomer("FirstName", "LastName", "4321");
+
+        goToMainMenu();
     }
 
-    private static void goToMainMenu(Account account) {
+    private static void goToMainMenu() {
         String mainMenu = """         
                 What do you want to do today?
                 
-                1. Deposit
-                2. Withdraw
-                3. Transfer
-                4. Check Balance
-                5. Close Account
-                6. Exit App
+                1. Create a new account.
+                2. Deposit
+                3. Withdraw
+                4. Transfer
+                5. Check Balance
+                6. Close Account
+                7. Exit App
                 
                 Select option:""";
 
@@ -42,13 +49,14 @@ public class BankApp {
         String userChoice = input(mainMenu);
 
         switch (userChoice) {
-            case "1" -> deposit(account);
-            case "2" -> withdraw(account);
-            case "3" -> transfer(account);
-            case "4" -> checkBalance(account);
-            case "5" -> removeAccount(account);
-            case "6" -> exitApp();
-            default -> goToMainMenu(account);
+            case "1" -> registerCustomer();
+            case "2" -> deposit();
+            case "3" -> withdraw();
+            case "4" -> transfer();
+            case "5" -> checkBalance();
+            case "6" -> removeAccount();
+            case "7" -> exitApp();
+            default -> goToMainMenu();
         }
     }
 
@@ -61,17 +69,13 @@ public class BankApp {
     }
 
     private static void exitApp() {
-        try {
-            print("exiting...");
-            Thread.sleep(1500);
-        }
-        catch (InterruptedException ignored) {
-        }
+        print("exiting...");
+        print("Thanks for using our app!!!");
 
         System.exit(0);
     }
 
-    private static void removeAccount(Account account) {
+    private static void removeAccount() {
         String pin = input("Enter account pin:");
 
         try {
@@ -86,7 +90,7 @@ public class BankApp {
         }
     }
 
-    private static void checkBalance(Account account) {
+    private static void checkBalance() {
         String pin = input("Enter account pin:");
 
         try {
@@ -97,18 +101,18 @@ public class BankApp {
             print(orisha.getMessage());
         }
         finally {
-            goToMainMenu(account);
+            goToMainMenu();
         }
     }
 
-    private static void transfer(Account account) {
+    private static void transfer() {
         String userChoice = input("""
                 Enter 1 to transfer to first bank accounts
                 Enter 2 to transfer to other bank accounts""");
 
         if (userChoice.equals("1")) intraBankTransfer(account);
         else if (userChoice.equals("2")) interBankTransfer(account);
-        else goToMainMenu(account);
+        else goToMainMenu();
     }
 
     private static void interBankTransfer(Account account) {
@@ -118,7 +122,7 @@ public class BankApp {
         if (choice.equals("1")) transferToGtBankAccounts(account);
         else if (choice.equals("2")) transferToAccessBankAccounts(account);
 
-        goToMainMenu(account);
+        goToMainMenu();
     }
 
     private static void transferToAccessBankAccounts(Account account) {
@@ -135,7 +139,7 @@ public class BankApp {
             print(orisha.getMessage());
         }
         finally {
-            goToMainMenu(account);
+            goToMainMenu();
         }
     }
 
@@ -153,7 +157,7 @@ public class BankApp {
             print(orisha.getMessage());
         }
         finally {
-            goToMainMenu(account);
+            goToMainMenu();
         }
     }
 
@@ -171,11 +175,11 @@ public class BankApp {
            print(orisha.getMessage());
         }
         finally {
-            goToMainMenu(account);
+            goToMainMenu();
         }
     }
 
-    private static void withdraw(Account account) {
+    private static void withdraw() {
         String amount = input("Enter amount to withdraw:");
         String pin = input("Enter account pin:");
 
@@ -187,11 +191,11 @@ public class BankApp {
             print(orisha.getMessage());
         }
         finally {
-            goToMainMenu(account);
+            goToMainMenu();
         }
     }
 
-    private static void deposit(Account account) {
+    private static void deposit() {
         String amount = input("Enter amount to deposit:");
 
         try {
@@ -202,32 +206,28 @@ public class BankApp {
             print(ori.getMessage());
         }
         finally {
-            goToMainMenu(account);
+            goToMainMenu();
         }
     }
 
     private static void registerCustomer() {
-        print("Welcome to First Bank.\nEnter your details to create an account");
-
         String firstName = input("Enter first name:");
         String lastName = input("Enter last name:");
         String pin = input("Enter pin:");
 
+
         try {
-            Account.validatePinFormatAndLength(pin);
+            account = firstBank.registerCustomer(firstName, lastName, pin);
         }
         catch (RuntimeException e) {
+            print(e.getMessage());
             print("Account creation was not successful");
-            registerCustomer();
+            
+            goToMainMenu();
         }
         finally {
-            Account account = firstBank.registerCustomer(firstName, lastName, pin);
             print("Account successfully created.");
             print("Your account number is " + account.getNumber());
-
-            firstBank.registerCustomer("FirstName", "LastName", "1020");
-            otherBanks.getFirst().registerCustomer("Jane", "Doe", "0000");
-            otherBanks.getLast().registerCustomer("FirstName", "LastName", "4321");
 
             login(account);
         }
@@ -238,11 +238,25 @@ public class BankApp {
         print("Welcome to first mobile app!!!");
         String pin = input("Enter your pin to login:");
 
+        int count = 0;
+
         while (account.isInCorrect(pin)) {
+            count++;
+
             print("Incorrect pin!!!");
+
+            if (count == 3) getChoice();
+
             pin = input("Enter your pin to login:");
         }
 
-        goToMainMenu(account);
+        goToMainMenu();
+    }
+
+    private static void getChoice() {
+        int choice = JOptionPane.showConfirmDialog(null, "Do you want to create another account?",
+            "Yes/No", JOptionPane.YES_NO_OPTION);
+        if (choice == 0) registerCustomer();
+        else goToMainMenu();
     }
 }

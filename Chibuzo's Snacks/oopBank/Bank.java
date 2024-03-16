@@ -16,10 +16,12 @@ public class Bank {
     }
 
     public Account registerCustomer(String firstName, String lastName, String pin) {
+        Account.validatePinFormatAndLength(pin);
+
         String name = firstName + " " + lastName;
         int number = generateAccountNumber();
-        Account account = new Account(name, number, pin);
 
+        Account account = new Account(name, number, pin);
         accounts.add(account);
 
         return account;
