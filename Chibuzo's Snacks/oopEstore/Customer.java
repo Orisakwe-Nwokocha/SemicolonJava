@@ -8,6 +8,8 @@ public final class Customer extends User {
     private ShoppingCart cart = new ShoppingCart();
     private final List<Order> orders = new ArrayList<>();
 
+    public Customer() {}
+
     public Customer(int id, String name, int age, String emailAddress, Address homeAddress, String password, String phone) {
         super(id, name, age, emailAddress, homeAddress, password, phone);
     }
@@ -17,6 +19,8 @@ public final class Customer extends User {
     }
 
     public void addToCart(Product product, int quantity) {
+        Inventory.validateQuantityOf(product, quantity);
+
         cart.add(product, quantity);
     }
 
@@ -27,6 +31,8 @@ public final class Customer extends User {
     public void checkout() {
         Order newOrder = Checkout.placeOrder(cart, billingInformation);
         orders.add(newOrder);
+
+        Inventory.updateProductQuantity(cart);
 
         cart = new ShoppingCart();
     }

@@ -6,7 +6,10 @@ import java.util.List;
 
 public final class Admin extends User {
     private List<Customer> customers = new ArrayList<>();
+    private Inventory inventory = new Inventory();
     private int numberOfCustomers;
+
+    public Admin() {}
 
     public Admin(int id, String name, int age, String emailAddress, Address homeAddress, String password, String phone) {
         super(id, name, age, emailAddress, homeAddress, password, phone);
@@ -44,20 +47,24 @@ public final class Admin extends User {
     }
 
     public List<Product> getProducts() {
-        return Products.view();
+        return inventory.view();
     }
 
     public void addInitialInventory() {
-        Product electronic = new Product(Products.generateProductId(), "Pixel", 350_000.0, "Android smartphone",
-                ProductCategory.ELECTRONICS);
-        Product grocery = new Product(Products.generateProductId(), "Magic", 2_000.0, "Chocolate", ProductCategory.GROCERIES);
-        Product utensil = new Product(Products.generateProductId(), "Plate", 1_000.0, "Earthenware", ProductCategory.UTENSILS);
-        Product clothing = new Product(Products.generateProductId(), "Levis", 20_000.0, "Jeans", ProductCategory.CLOTHING);
+        Product electronic = new Product(inventory.generateProductId(), "Pixel", 350_000.0, "Android smartphone",
+                ProductCategory.ELECTRONICS, 10);
+        Product grocery = new Product(inventory.generateProductId(), "Magic", 2_000.0, "Chocolate", ProductCategory.GROCERIES, 50);
+        Product utensil = new Product(inventory.generateProductId(), "Plate", 1_000.0, "Earthenware", ProductCategory.UTENSILS, 25);
+        Product clothing = new Product(inventory.generateProductId(), "Levis", 20_000.0, "Jeans", ProductCategory.CLOTHING, 30);
 
-        Products.add(electronic, grocery, utensil, clothing);
+        inventory.add(electronic, grocery, utensil, clothing);
+    }
+
+
+    private record Create(Product electronic, Product grocery, Product utensil, Product clothing) {
     }
 
     public Product findProductById(int productId) {
-        return Products.findProductById(productId);
+        return inventory.findProductById(productId);
     }
 }

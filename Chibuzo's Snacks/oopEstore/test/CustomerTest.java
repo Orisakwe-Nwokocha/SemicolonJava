@@ -21,8 +21,8 @@ public class CustomerTest {
         address = new Address("city", "country", "1", "street", "state");
         orisha = new Customer(1, "orisha", 15, "o@mail.com", address, "password", "phone");
 
-        phone = new Product(1, "Pixel", 350_000.0, "Smartphone", ProductCategory.ELECTRONICS);
-        chocolate = new Product(2, "Magic", 2_000, "Chocolate", ProductCategory.GROCERIES);
+        phone = new Product(1, "Pixel", 350_000.0, "Smartphone", ProductCategory.ELECTRONICS, 10);
+        chocolate = new Product(2, "Magic", 2_000, "Chocolate", ProductCategory.GROCERIES, 100);
 
         CreditCardInformation cardInformation = new CreditCardInformation("123", "09/24",
                 "5678 1234 9012 3456", "orisha", CardType.MASTER_CARD);
@@ -156,6 +156,31 @@ public class CustomerTest {
         catch (UnsuccessfulTransactionException e) {
             assertEquals("Invalid card - payment unsuccessful", e.getMessage());
         }
+    }
+
+    @Test
+    public void given10QuantityOfElectronics_customerBuys1Product_whenCheckedOut_thenNumberOfAvailableElectronicsIs9() {
+        Inventory inventory = new Inventory();
+        inventory.add(phone);
+
+        assertEquals(10, inventory.getQuantityOf(1));
+        orisha.addToCart(phone, 1);
+
+        orisha.setBillingInformation(billingInformation);
+        orisha.checkout();
+
+        assertEquals(9, inventory.getQuantityOf(1));
+    }
+
+    @Test
+    public void customerAddsToCartProductQuantityAboveAvailableStock_IllegalArgumentExceptionIsThrownTest() {
+        Inventory inventory = new Inventory();
+        inventory.add(phone);
+
+        assertEquals(10, inventory.getQuantityOf(1));
+
+        assertThrows(IllegalArgumentException.class, () -> orisha.addToCart(phone, 11));
+        assertEquals(10, inventory.getQuantityOf(1));
     }
 
 }

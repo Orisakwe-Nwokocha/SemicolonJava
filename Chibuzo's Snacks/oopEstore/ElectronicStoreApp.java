@@ -8,8 +8,7 @@ public class ElectronicStoreApp {
     private static final Admin admin = new Admin(1, "admin", 47, "admin@mail.com",
             dummyAddress, "password", "phone");
 
-    private static Customer customer = new Customer(-1, "orisha", 15, "o@mail.com",
-            dummyAddress, "dummyPassword", "phone");
+    private static Customer customer = new Customer();
     private static Address address;
     private static boolean isLoggedIn;
     private static BillingInformation billingInformation;
@@ -48,18 +47,18 @@ public class ElectronicStoreApp {
 
     private static void handleUserChoice(String userChoice) {
         switch (userChoice) {
-            case "1": createAccount();
-            case "2": browseProducts();
-            case "3": addToCart();
-            case "4": viewCart();
-            case "5": checkout();
-            case "6": viewOrders();
-            case "7": removeFromCart();
-            case "8": login();
-            case "9": deleteAccount();
-            case "10": logout();
-            case "11": exit();
-            default: gotoMainMenu();
+            case "1" -> createAccount();
+            case "2" -> browseProducts();
+            case "3" -> addToCart();
+            case "4" -> viewCart();
+            case "5" -> checkout();
+            case "6" -> viewOrders();
+            case "7" -> removeFromCart();
+            case "8" -> login();
+            case "9" -> deleteAccount();
+            case "10" -> logout();
+            case "11" -> exit();
+            default -> gotoMainMenu();
         }
     }
 
@@ -200,6 +199,15 @@ public class ElectronicStoreApp {
     private static void createAccount() {
         String name = input("Enter your name:");
         String age = input("Enter your age:");
+
+        try {
+            if (Integer.parseInt(age) < 13) throw new IllegalArgumentException("Age must be at least 13");
+        }
+        catch (RuntimeException e) {
+            displayErrorMessage(e.getMessage());
+            gotoMainMenu();
+        }
+
         String email = input("Enter your email:");
         String password = input("Enter a password:");
         String phone = input("Enter your phone number:");
@@ -208,6 +216,7 @@ public class ElectronicStoreApp {
         initializeAddress();
 
         try {
+
             customer = admin.registerCustomer(name, Integer.parseInt(age), email, address, password, phone);
             print("Account created successfully", "Success");
             print("Your account id is " + customer.getId(), "Success");

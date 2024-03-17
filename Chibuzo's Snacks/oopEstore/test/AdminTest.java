@@ -63,7 +63,7 @@ public class AdminTest {
     public void testThatProductsCanBeFoundById() {
         admin.addInitialInventory();
         Product product = new Product(1, "Pixel", 350_000.0, "Android smartphone",
-                ProductCategory.ELECTRONICS);
+                ProductCategory.ELECTRONICS, 10);
 
         assertEquals(product, admin.findProductById(1));
         System.out.println(admin.getProducts());

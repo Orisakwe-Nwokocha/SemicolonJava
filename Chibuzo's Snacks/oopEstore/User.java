@@ -9,6 +9,8 @@ public class User {
     private String password;
     private  String phone;
 
+    public User() {}
+
     public User(int id, String name, int age, String emailAddress, Address homeAddress, String password, String phone) {
         this.id = id;
         this.name = name;
