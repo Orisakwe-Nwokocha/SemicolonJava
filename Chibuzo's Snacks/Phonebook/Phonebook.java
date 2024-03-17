@@ -17,20 +17,13 @@ public class Phonebook {
     }
 
     public void eraseContact(String contactName) {
-        for (int index = 0; index < contacts.size(); index++) {
-            if (contacts.get(index).getContactName().equals(contactName)) {
-                contacts.remove(index);
-                break;
-            }
-        }
+        contacts.removeIf(contact -> contact.getContactName().equals(contactName));
     }
 
     public String searchContact(String contactName) {
         StringBuilder contactInfo = new StringBuilder();
 
-        for (Contact contact : contacts) {
-            if (contact.getContactName().equalsIgnoreCase(contactName)) contactInfo.append(contact).append("\n");
-        }
+        for (Contact contact : contacts) if (contact.getContactName().equalsIgnoreCase(contactName)) contactInfo.append(contact).append("\n");
 
         if (contactInfo.isEmpty()) return "No contact found";
         return contactInfo.toString();
@@ -41,9 +34,7 @@ public class Phonebook {
 
         contacts.sort(Comparator.comparing(Contact::toString));
 
-        for (Contact contact : contacts) {
-            allContacts.append(contact).append("\n\n");
-        }
+        for (Contact contact : contacts) allContacts.append(contact).append("\n\n");
 
         if (allContacts.isEmpty()) return "Phonebook is empty";
         return allContacts.toString();

@@ -5,9 +5,22 @@ public class Contact {
     private String phoneNumber;
 
     public Contact(String contactName, String phoneNumber) {
-        if (!phoneNumber.matches("\\d+")) throw new InputMismatchException("Phone number must consist of only digits");
+        phoneNumber = validate(phoneNumber);
+
         this.contactName = contactName;
         this.phoneNumber = phoneNumber;
+    }
+
+    private static String validate(String phoneNumber) {
+        String number = "";
+        if (phoneNumber.startsWith("+")) {
+            number = String.valueOf(phoneNumber.charAt(0));
+            phoneNumber = phoneNumber.substring(1);
+        }
+
+        if (!phoneNumber.matches("\\d+")) throw new InputMismatchException("Phone number must consist of only digits");
+
+        return number + phoneNumber;
     }
 
     public void setContactName(String contactName) {
@@ -15,7 +28,8 @@ public class Contact {
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        if (!phoneNumber.matches("\\d+")) throw new InputMismatchException("Phone number must consist of only digits");
+        phoneNumber = validate(phoneNumber);
+
         this.phoneNumber = phoneNumber;
     }
 
@@ -29,6 +43,6 @@ public class Contact {
 
     @Override
     public String toString() {
-        return String.format("%s:\n%s", getContactName(), getPhoneNumber());
+        return String.format("%s:\n%s", this.contactName, this.phoneNumber);
     }
 }

@@ -2,15 +2,10 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class PhonebookApp {
-    private static Scanner input = new Scanner(System.in);
+    private static final Scanner input = new Scanner(System.in);
 
     public static void startApp(Phonebook nokiaPhonebook) {
        displayPhonebookMenu(nokiaPhonebook);
-/*        search(nokiaPhonebook);
-        viewContacts(nokiaPhonebook);
-        addContact(nokiaPhonebook);
-        edit(nokiaPhonebook);
-        erase(nokiaPhonebook);*/
 
     }
     private static void displayPhonebookMenu(Phonebook nokiaPhonebook) {
@@ -18,10 +13,11 @@ public class PhonebookApp {
                 Phonebook
                 
                 1. Search
-                2. View contacts
-                3. Add contact
+                2. Add contact
+                3. View contacts
                 4. Edit
                 5. Erase
+                6. Exit app
                 
                 Select an option:
                 """);
@@ -30,66 +26,63 @@ public class PhonebookApp {
 
         switch (userChoice) {
             case "1" -> search(nokiaPhonebook);
-            case "2" -> viewContacts(nokiaPhonebook);
-            case "3" -> addContact(nokiaPhonebook);
+            case "2" -> addContact(nokiaPhonebook);
+            case "3" -> viewContacts(nokiaPhonebook);
             case "4" -> edit(nokiaPhonebook);
             case "5" -> erase(nokiaPhonebook);
+            case "6" -> exit();
             default -> displayPhonebookMenu(nokiaPhonebook);
         }
 
     }
 
+    private static void exit() {
+        print("Thank you for using Phonebook App!");
+
+        System.exit(0);
+    }
+
+    private static void print(String prompt) {
+        System.out.println(prompt);
+    }
+
     private static void search(Phonebook nokiaPhonebook) {
-        System.out.println("\nSearch contact by name:");
+        print("\nSearch contact by name:");
         String contactName = input.nextLine();
 
         String contactInfo = nokiaPhonebook.searchContact(contactName);
-        System.out.println("\n" + contactInfo);
+        print("\n" + contactInfo);
 
-        System.out.println("Type 0 to go back to the main menu or Enter any key to end program");
-        String userChoice = input.nextLine();
-
-        if (userChoice.equals("0")){
-            System.out.println();
-            displayPhonebookMenu(nokiaPhonebook);
-        }
+        print("");
+        displayPhonebookMenu(nokiaPhonebook);
     }
 
     private static void viewContacts(Phonebook nokiaPhonebook) {
         System.out.println();
 
-        System.out.println(nokiaPhonebook.viewContacts());
+        print(nokiaPhonebook.viewContacts());
 
-        System.out.println("Type 0 to go back to the main menu or Enter any key to end program");
-        String userChoice = input.nextLine();
-
-        if (userChoice.equals("0")){
-            System.out.println();
-            displayPhonebookMenu(nokiaPhonebook);
-        }
+        print("");
+        displayPhonebookMenu(nokiaPhonebook);
     }
 
     private static void addContact(Phonebook nokiaPhonebook) {
-        System.out.println("\nEnter contact name:");
+        print("\nEnter contact name:");
 
         String contactName = input.nextLine();
 
-        System.out.println("Enter contact phone number:");
+        print("Enter contact phone number:");
         String phoneNumber = input.nextLine();
 
         try {
             nokiaPhonebook.addContact(contactName, phoneNumber);
-            System.out.println("Saving >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\nSaved successfully\n");
+            print("Saving >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\nSaved successfully\n");
 
         } catch (InputMismatchException e) {
-            System.out.println(e.getMessage());
+            print(e.getMessage());
         }
-
-        System.out.println("\nType 0 to go back to the main menu or Enter any key to end program");
-        String userChoice = input.nextLine();
-
-        if (userChoice.equals("0")){
-            System.out.println();
+        finally {
+            print("");
             displayPhonebookMenu(nokiaPhonebook);
         }
     }
@@ -97,26 +90,26 @@ public class PhonebookApp {
     private static void edit(Phonebook nokiaPhonebook) {
         String allContacts = nokiaPhonebook.viewContacts();
 
-        if (allContacts.equals("Phonebook is empty")) System.out.println("Phonebook is empty");
+        if (allContacts.equals("Phonebook is empty")) print("Phonebook is empty");
 
         else {
-            System.out.println("\n" + allContacts);
+            print("\n" + allContacts);
 
-            System.out.println("Enter contact you want to edit:");
+            print("Enter contact you want to edit:");
             String contactName = input.nextLine();
 
             String contactInfo = nokiaPhonebook.searchContact(contactName);
 
-            if (contactInfo.equals("No contact found")) System.out.println(contactInfo);
+            if (contactInfo.equals("No contact found")) print(contactInfo);
 
             else {
-                System.out.println(contactInfo);
+                print(contactInfo);
 
-                System.out.println("Type 1 to edit contact name or Type 2 to edit contact number or Type 3 to edit both");
+                print("Type 1 to edit contact name or Type 2 to edit contact number or Type 3 to edit both");
                 String userChoice = input.nextLine();
 
                 while (!userChoice.equals("1") && !userChoice.equals("2") && !userChoice.equals("3")) {
-                    System.out.println("Invalid input\n" +
+                    print("Invalid input\n" +
                             "Type 1 to edit contact name or Type 2 to edit contact number or Type 3 to edit both");
                     userChoice = input.nextLine();
                 }
@@ -125,13 +118,13 @@ public class PhonebookApp {
                     System.out.printf("Enter new name for %s:%n", contactName);
                     String newName = input.nextLine();
                     nokiaPhonebook.editContactName(contactName, newName);
-                    System.out.println("Saving >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\nSaved successfully\n");
+                    print("Saving >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\nSaved successfully\n");
 
                 } else if (userChoice.equals("2")) {
                     System.out.printf("Enter new phone number for %s:%n", contactName);
                     String newPhoneNumber = input.nextLine();
                     nokiaPhonebook.editContactPhoneNumber(contactName, newPhoneNumber);
-                    System.out.println("Saving >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\nSaved successfully\n");
+                    print("Saving >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\nSaved successfully\n");
 
                 } else {
                     System.out.printf("Enter new name for %s:%n", contactName);
@@ -140,55 +133,45 @@ public class PhonebookApp {
                     String newPhoneNumber = input.nextLine();
 
                     nokiaPhonebook.editContact(contactName, newName, newPhoneNumber);
-                    System.out.println("Saving >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\nSaved successfully\n");
+                    print("Saving >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\nSaved successfully\n");
                 }
 
                 allContacts = nokiaPhonebook.viewContacts();
-                System.out.println("\n" + allContacts);
+                print("\n" + allContacts);
             }
         }
 
-        System.out.println("Type 0 to go back to the main menu or Enter any key to end program");
-        String userChoice = input.nextLine();
-
-        if (userChoice.equals("0")){
-            System.out.println();
-            displayPhonebookMenu(nokiaPhonebook);
-        }
+        print("");
+        displayPhonebookMenu(nokiaPhonebook);
     }
 
     private static void erase(Phonebook nokiaPhonebook) {
         String allContacts = nokiaPhonebook.viewContacts();
 
-        if (allContacts.equals("Phonebook is empty")) System.out.println("Phonebook is empty");
+        if (allContacts.equals("Phonebook is empty")) print("Phonebook is empty");
 
         else {
-            System.out.println("\n" + allContacts);
+            print("\n" + allContacts);
 
-            System.out.println("Enter contact you want to delete:");
+            print("Enter contact you want to delete:");
             String contactName = input.nextLine();
 
             String contactInfo = nokiaPhonebook.searchContact(contactName);
 
-            if (contactInfo.equals("No contact found")) System.out.println(contactInfo);
+            if (contactInfo.equals("No contact found")) print(contactInfo);
 
             else {
-                System.out.println(contactInfo);
+                print(contactInfo);
 
                 nokiaPhonebook.eraseContact(contactName);
-                System.out.println("Deleting >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\nDeleted successfully\n");
+                print("Deleting >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\nDeleted successfully\n");
             }
 
             allContacts = nokiaPhonebook.viewContacts();
-            System.out.println("\n" + allContacts);
+            print("\n" + allContacts);
         }
 
-        System.out.println("\nType 0 to go back to the main menu or Enter any key to end program");
-        String userChoice = input.nextLine();
-
-        if (userChoice.equals("0")){
-            System.out.println();
-            displayPhonebookMenu(nokiaPhonebook);
-        }
+        print("");
+        displayPhonebookMenu(nokiaPhonebook);
     }
 }
