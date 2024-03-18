@@ -1,6 +1,7 @@
 package services;
 
 import dtos.requests.*;
+import exceptions.IncorrectPasswordException;
 import exceptions.UsernameExistsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -94,29 +95,65 @@ public class DiaryServicesImplTest {
     }
 
     @Test
-    public void userLogsIntoDiaryServiceWithIncorrectPassword_IllegalArgumentExceptionIsThrownTest() {
+    public void userLogsIntoDiaryServiceWithIncorrectPassword_IncorrectPasswordExceptionIsThrownTest() {
         diaryServices.register(registerRequest);
 
         loginRequest.setPassword("incorrectPassword");
-        assertThrows(IllegalArgumentException.class, () -> diaryServices.login(loginRequest));
+        assertThrows(IncorrectPasswordException.class, () -> diaryServices.login(loginRequest));
     }
     @Test
-    public void userDeletesDiaryWithIncorrectPassword_IllegalArgumentExceptionIsThrownTest() {
+    public void userDeletesDiaryWithIncorrectPassword_IncorrectPasswordExceptionIsThrownTest() {
         diaryServices.register(registerRequest);
 
         RemoveUserRequest removeUserRequest = new RemoveUserRequest();
         removeUserRequest.setUsername("username");
         removeUserRequest.setPassword("incorrectPassword");
 
-        assertThrows(IllegalArgumentException.class, () -> diaryServices.removeUser(removeUserRequest));
+        assertThrows(IncorrectPasswordException.class, () -> diaryServices.removeUser(removeUserRequest));
     }
 
     @Test
-    public void userAddsNewEntryToDiaryService_numberOfEntriesIs1Test() {
+    public void userAddsNewEntry_numberOfEntriesIs1Test() {
+        registerRequest.setUsername("username1");
         diaryServices.register(registerRequest);
-        assertEquals(1L, diaryServices.getNumberOfUsers());
 
+        createEntryRequest.setAuthor("username1");
         diaryServices.createEntryWith(createEntryRequest);
-        assertEquals(1, entryServices.getEntriesFor("username").size());
+        assertEquals(1, entryServices.getEntriesFor("username1").size());
+    }
+
+    @Test
+    public void userUpdatesSavedEntry_numberOfEntriesIs1Test() {
+        registerRequest.setUsername("username3");
+        diaryServices.register(registerRequest);
+
+        createEntryRequest.setAuthor("username3");
+        diaryServices.createEntryWith(createEntryRequest);
+        assertEquals("title", entryServices.getEntriesFor("username3").getFirst().getTitle());
+        assertEquals(1, entryServices.getEntriesFor("username3").size());
+
+        UpdateEntryRequest updateEntryRequest = new UpdateEntryRequest();
+        updateEntryRequest.setTitle("newTitle");
+        updateEntryRequest.setBody("newBody");
+        updateEntryRequest.setAuthor("username3");
+        updateEntryRequest.setId(3);
+
+        diaryServices.updateEntryWith(updateEntryRequest);
+        assertEquals("newTitle", entryServices.getEntriesFor("username3").getFirst().getTitle());
+        assertEquals(1, entryServices.getEntriesFor("username3").size());
+    }
+
+    @Test
+    public void given2SavedEntries_whenUserDeletes1SavedEntry_thenNumberOfEntriesIs1Test() {
+        registerRequest.setUsername("username2");
+        diaryServices.register(registerRequest);
+
+        createEntryRequest.setAuthor("username2");
+        diaryServices.createEntryWith(createEntryRequest);
+        diaryServices.createEntryWith(createEntryRequest);
+        assertEquals(2, entryServices.getEntriesFor("username2").size());
+
+        diaryServices.deleteEntryBy(1);
+        assertEquals(1, entryServices.getEntriesFor("username2").size());
     }
 }

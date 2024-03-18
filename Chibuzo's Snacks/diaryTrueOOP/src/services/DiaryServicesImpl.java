@@ -20,6 +20,7 @@ public class DiaryServicesImpl implements DiaryServices {
         Diary diary = new Diary();
         diary.setUsername(request.getUsername().toLowerCase());
         diary.setPassword(request.getPassword());
+
         repository.save(diary);
     }
 
@@ -31,20 +32,17 @@ public class DiaryServicesImpl implements DiaryServices {
 
     private void validateDuplicate(RegisterRequest request) {
         boolean isDuplicate = repository.findById(request.getUsername()) != null;
-
         if (isDuplicate) throw new UsernameExistsException("Username already exists.");
     }
 
 
     private static void validateBlank(RegisterRequest request) {
         boolean isBlank = request.getUsername().isBlank() || request.getPassword().isBlank();
-
         if (isBlank) throw new IllegalArgumentException("Username and password cannot be empty.");
     }
 
     private static void validateNull(RegisterRequest request) {
         boolean isNull = request.getUsername() == null || request.getPassword() == null;
-
         if (isNull) throw new NullPointerException("Username and password cannot be null.");
     }
 
@@ -52,6 +50,7 @@ public class DiaryServicesImpl implements DiaryServices {
     public Diary findDiaryBy(String username) {
         Diary foundDiary = repository.findById(username.toLowerCase());
         if (foundDiary == null) throw new UserNotFoundException("User not found.");
+
         return foundDiary;
     }
 
@@ -79,8 +78,8 @@ public class DiaryServicesImpl implements DiaryServices {
     @Override
     public void removeUser(RemoveUserRequest request) {
         Diary foundDiary = findDiaryBy(request.getUsername().toLowerCase());
-
         if (isPasswordIncorrect(foundDiary, request.getPassword())) throw new IncorrectPasswordException("Password is incorrect.");
+
         repository.delete(foundDiary);
     }
 
@@ -91,7 +90,23 @@ public class DiaryServicesImpl implements DiaryServices {
         entry.setBody(request.getBody());
         entry.setAuthor(request.getAuthor());
 
-        entryServices.add(entry);
+        entryServices.save(entry);
+    }
+
+    @Override
+    public void updateEntryWith(UpdateEntryRequest request) {
+        Entry entry = new Entry();
+        entry.setTitle(request.getTitle());
+        entry.setBody(request.getBody());
+        entry.setAuthor(request.getAuthor());
+        entry.setId(request.getId());
+
+        entryServices.save(entry);
+    }
+
+    @Override
+    public void deleteEntryBy(int id) {
+        entryServices.deleteEntryBy(id);
     }
 
     @Override

@@ -11,6 +11,6 @@ public interface DiaryServices {
     void logout(String username);
     void removeUser(RemoveUserRequest request);
     void createEntryWith(CreateEntryRequest request);
-
-
+    void updateEntryWith(UpdateEntryRequest request);
+    void deleteEntryBy(int id);
 }

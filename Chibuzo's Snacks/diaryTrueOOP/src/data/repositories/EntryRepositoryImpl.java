@@ -64,15 +64,13 @@ public class EntryRepositoryImpl implements EntryRepository {
 
     @Override
     public void delete(Entry entry) {
-        Entry foundEntry = findById(entry.getId());
-
-        entries.remove(foundEntry);
+        entries.remove(entry);
     }
 
     @Override
-    public List<Entry> findByName(String author) {
+    public List<Entry> findByName(String username) {
         List<Entry> foundEntries = new ArrayList<>();
-        for (Entry entry : entries) if (entry.getAuthor().equals(author)) foundEntries.add(entry);
+        for (Entry entry : entries) if (entry.getAuthor().equalsIgnoreCase(username)) foundEntries.add(entry);
 
         return foundEntries;
     }
