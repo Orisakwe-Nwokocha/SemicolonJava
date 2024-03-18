@@ -1,6 +1,6 @@
 package dtos.requests;
 
-public class RegisterRequest {
+public class LoginRequest {
     private String username;
     private String password;
 
@@ -19,5 +19,4 @@ public class RegisterRequest {
     public String getPassword() {
         return password;
     }
-
 }

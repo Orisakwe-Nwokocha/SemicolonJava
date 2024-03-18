@@ -19,7 +19,11 @@ public class EntryRepositoryImplTest {
     public void saveEntry_numberOfEntriesIs1Test() {
         assertEquals(0L, repository.count());
 
-        Entry entry = new Entry("title", "body", "author");
+        Entry entry = new Entry();
+        entry.setTitle("title");
+        entry.setAuthor("author");
+        entry.setBody("body");
+
         repository.save(entry);
 
         assertEquals(1L, repository.count());
@@ -27,7 +31,11 @@ public class EntryRepositoryImplTest {
 
     @Test
     public void updateSavedEntry_numberOfEntries1Test() {
-        Entry entry = new Entry("title", "body", "author");
+        Entry entry = new Entry();
+        entry.setTitle("title");
+        entry.setAuthor("author");
+        entry.setBody("body");
+
         repository.save(entry);
         assertEquals(1L, repository.count());
 
@@ -42,9 +50,16 @@ public class EntryRepositoryImplTest {
 
     @Test
     public void save2Entries_deleteSecondSavedEntryById_numberOfEntries1Test() {
-        Entry entry1 = new Entry("title", "body", "author");
+        Entry entry1 = new Entry();
+        entry1.setTitle("title");
+        entry1.setAuthor("author");
+        entry1.setBody("body");
         repository.save(entry1);
-        Entry entry2 = new Entry("title", "body", "author2");
+
+        Entry entry2 = new Entry();
+        entry2.setTitle("title");
+        entry2.setAuthor("author2");
+        entry2.setBody("body");
         repository.save(entry2);
         assertEquals(2L, repository.findAll().size());
 
@@ -55,10 +70,18 @@ public class EntryRepositoryImplTest {
 
     @Test
     public void save2Entries_deleteFirstSavedEntryByEntry_numberOfEntries1Test() {
-        Entry entry1 = new Entry("title", "body", "author");
+        Entry entry1 = new Entry();
+        entry1.setTitle("title");
+        entry1.setAuthor("author");
+        entry1.setBody("body");
         repository.save(entry1);
-        Entry entry2 = new Entry("title", "body", "author2");
+
+        Entry entry2 = new Entry();
+        entry2.setTitle("title");
+        entry2.setAuthor("author2");
+        entry2.setBody("body");
         repository.save(entry2);
+
         assertEquals(2L, repository.findAll().size());
 
 

@@ -1,19 +1,13 @@
 package data.models;
 
-import java.util.List;
-
 public class Diary {
     private String username;
     private String password;
     private int id;
-    private boolean isLocked;
+    private boolean isLocked = true;
 
     public Diary() {}
 
-    public Diary(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
 
     public int getId() {
         return id;
@@ -43,11 +37,7 @@ public class Diary {
         return isLocked;
     }
 
-    public void lockDiary() {
-        isLocked = true;
-    }
-
-    public void unlockDiary() {
-        isLocked = false;
+    public void setLock(boolean status) {
+        isLocked = status;
     }
 }

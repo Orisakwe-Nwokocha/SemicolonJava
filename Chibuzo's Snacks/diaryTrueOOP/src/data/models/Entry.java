@@ -13,11 +13,6 @@ public class Entry {
 
     }
 
-    public Entry(String title, String body, String author) {
-        this.title = title;
-        this.body = body;
-        this.author = author;
-    }
 
     public int getId() {
         return id;

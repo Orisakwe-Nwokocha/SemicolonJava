@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EntryRepositoryImpl implements EntryRepository {
-    private List<Entry> entries =  new ArrayList<>();
+    private final List<Entry> entries = new ArrayList<>();
     private int lastEntryId;
 
     @Override
@@ -64,15 +64,16 @@ public class EntryRepositoryImpl implements EntryRepository {
 
     @Override
     public void delete(Entry entry) {
-        Entry foundEntry = findByName(entry.getAuthor());
+        Entry foundEntry = findById(entry.getId());
 
         entries.remove(foundEntry);
     }
 
     @Override
-    public Entry findByName(String author) {
-        for (Entry entry : entries) if (entry.getAuthor().equals(author)) return entry;
+    public List<Entry> findByName(String author) {
+        List<Entry> foundEntries = new ArrayList<>();
+        for (Entry entry : entries) if (entry.getAuthor().equals(author)) foundEntries.add(entry);
 
-        return null;
+        return foundEntries;
     }
 }

@@ -18,7 +18,10 @@ public class DiaryRepositoryImplTest {
     public void saveDiary_numberOfDiariesIs1Test() {
         assertEquals(0L, repository.count());
 
-        Diary diary = new Diary("username", "password");
+        Diary diary = new Diary();
+        diary.setUsername("username");
+        diary.setPassword("password");
+
         repository.save(diary);
 
         assertEquals(1L, repository.count());
@@ -26,7 +29,10 @@ public class DiaryRepositoryImplTest {
 
     @Test
     public void updateSavedDiary_numberOfDiaries1Test() {
-        Diary diary = new Diary("username", "password");
+        Diary diary = new Diary();
+        diary.setUsername("username");
+        diary.setPassword("password");
+
         repository.save(diary);
         assertEquals(1L, repository.count());
 
@@ -40,10 +46,15 @@ public class DiaryRepositoryImplTest {
 
     @Test
     public void save2Diaries_deleteOneSavedDiaryByUsername_numberOfDiaries1Test() {
-        Diary diary1 = new Diary("username", "password");
+        Diary diary1 = new Diary();
+        diary1.setUsername("username");
+        diary1.setPassword("password");
         repository.save(diary1);
-        Diary diary2 = new Diary("username2", "password");
+        Diary diary2 = new Diary();
+        diary2.setUsername("username2");
+        diary2.setPassword("password");
         repository.save(diary2);
+
         assertEquals(2L, repository.findAll().size());
 
         repository.delete("username");
@@ -52,9 +63,13 @@ public class DiaryRepositoryImplTest {
 
     @Test
     public void save2Diaries_delete1SavedDiaryByDiary_numberOfDiaries1Test() {
-        Diary diary1 = new Diary("username", "password");
+        Diary diary1 = new Diary();
+        diary1.setUsername("username");
+        diary1.setPassword("password");
         repository.save(diary1);
-        Diary diary2 = new Diary("username2", "password2");
+        Diary diary2 = new Diary();
+        diary2.setUsername("username2");
+        diary2.setPassword("password");
         repository.save(diary2);
         assertEquals(2L, repository.count());
 
