@@ -1,7 +1,10 @@
 package services;
 
 import data.models.Diary;
+import data.models.Entry;
 import dtos.requests.*;
+
+import java.util.List;
 
 public interface DiaryServices {
     void register(RegisterRequest request);
@@ -12,5 +15,5 @@ public interface DiaryServices {
     void removeUser(RemoveUserRequest request);
     void createEntryWith(CreateEntryRequest request);
     void updateEntryWith(UpdateEntryRequest request);
-    void deleteEntryBy(int id);
+    void deleteEntryBy(int id, String username);
 }

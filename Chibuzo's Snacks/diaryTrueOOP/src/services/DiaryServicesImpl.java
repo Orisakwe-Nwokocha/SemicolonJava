@@ -5,9 +5,12 @@ import data.models.Entry;
 import data.repositories.DiaryRepository;
 import data.repositories.DiaryRepositoryImpl;
 import dtos.requests.*;
+import exceptions.IllegalDiaryStateException;
 import exceptions.IncorrectPasswordException;
 import exceptions.UserNotFoundException;
 import exceptions.UsernameExistsException;
+
+import java.util.List;
 
 public class DiaryServicesImpl implements DiaryServices {
     private final DiaryRepository repository = new DiaryRepositoryImpl();
@@ -78,34 +81,48 @@ public class DiaryServicesImpl implements DiaryServices {
     @Override
     public void removeUser(RemoveUserRequest request) {
         Diary foundDiary = findDiaryBy(request.getUsername().toLowerCase());
+        checkLockStatusOf(foundDiary);
         if (isPasswordIncorrect(foundDiary, request.getPassword())) throw new IncorrectPasswordException("Password is incorrect.");
 
         repository.delete(foundDiary);
     }
 
+    public static void checkLockStatusOf(Diary diary) {
+        if (diary.isLocked()) throw new IllegalDiaryStateException("You need to login to use this service.");
+    }
+
     @Override
     public void createEntryWith(CreateEntryRequest request) {
+        Diary foundDiary = findDiaryBy(request.getAuthor().toLowerCase());
+        checkLockStatusOf(foundDiary);
+
         Entry entry = new Entry();
         entry.setTitle(request.getTitle());
         entry.setBody(request.getBody());
-        entry.setAuthor(request.getAuthor());
+        entry.setAuthor(request.getAuthor().toLowerCase());
 
         entryServices.save(entry);
     }
 
     @Override
     public void updateEntryWith(UpdateEntryRequest request) {
+        Diary foundDiary = findDiaryBy(request.getAuthor().toLowerCase());
+        checkLockStatusOf(foundDiary);
+
         Entry entry = new Entry();
         entry.setTitle(request.getTitle());
         entry.setBody(request.getBody());
-        entry.setAuthor(request.getAuthor());
+        entry.setAuthor(request.getAuthor().toLowerCase());
         entry.setId(request.getId());
 
         entryServices.save(entry);
     }
 
     @Override
-    public void deleteEntryBy(int id) {
+    public void deleteEntryBy(int id, String username) {
+        Diary foundDiary = findDiaryBy(username.toLowerCase());
+        checkLockStatusOf(foundDiary);
+
         entryServices.deleteEntryBy(id);
     }
 

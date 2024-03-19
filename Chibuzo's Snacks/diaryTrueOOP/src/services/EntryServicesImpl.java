@@ -31,7 +31,7 @@ public class EntryServicesImpl implements EntryServices {
 
     @Override
     public List<Entry> getEntriesFor(String username) {
-        List<Entry> entries = repository.findByName(username);
+        List<Entry> entries = repository.findByName(username.toLowerCase());
         if (entries.isEmpty()) throw new EmptyEntryException("No entry found");
 
         return entries;

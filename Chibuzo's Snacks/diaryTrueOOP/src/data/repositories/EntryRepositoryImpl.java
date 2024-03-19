@@ -15,7 +15,7 @@ public class EntryRepositoryImpl implements EntryRepository {
         else update(entry);
 
         entries.add(entry);
-        
+
         return entry;
     }
 
