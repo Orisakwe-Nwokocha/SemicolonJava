@@ -55,9 +55,9 @@ public class Entry {
 
     @Override
     public String toString() {
-        String asterisk = "*".repeat(10);
-        String dateCreated = creationDate.format(DateTimeFormatter.ofPattern("dd/MMM/yyyy HH:mm:ss a"));
-        String format = "%s%nGist %d%nDate Created: %s%nGossip Title:%n%s%nLatest Gist:%n%s%n%s%n";
+        String asterisk = "*".repeat(50);
+        String dateCreated = creationDate.format(DateTimeFormatter.ofPattern("dd/MMMM/yyyy HH:mm:ss a"));
+        String format = "%s%nGist %d%nDate Created: %s%nGossip Title: %s%nLatest Gist: %s%n%s%n";
 
         return String.format(format, asterisk, id, dateCreated, title, body, asterisk);
     }

@@ -8,11 +8,13 @@ import services.DiaryServicesImpl;
 import services.EntryServices;
 import services.EntryServicesImpl;
 
-public class DiaryController {
-    private DiaryServices diaryServices = new DiaryServicesImpl();
-    private EntryServices entryServices = new EntryServicesImpl();
+import java.util.List;
 
-    public String registerUser(RegisterRequest request) {
+public class DiaryController {
+    private static final DiaryServices diaryServices = new DiaryServicesImpl();
+    private static final EntryServices entryServices = new EntryServicesImpl();
+
+    public static String registerUser(RegisterRequest request) {
         try {
             diaryServices.register(request);
             return "registration successful";
@@ -22,7 +24,7 @@ public class DiaryController {
         }
     }
 
-    public String login(LoginRequest request) {
+    public static String login(LoginRequest request) {
         try {
             diaryServices.login(request);
             return "login successful";
@@ -32,7 +34,7 @@ public class DiaryController {
         }
     }
 
-    public String logout(String username) {
+    public static String logout(String username) {
         try {
             diaryServices.logout(username);
             return "logout successful";
@@ -42,7 +44,7 @@ public class DiaryController {
         }
     }
 
-    public String removerUserWith(RemoveUserRequest request) {
+    public static String removerUserWith(RemoveUserRequest request) {
         try {
             diaryServices.removeUser(request);
             return "removed successfully";
@@ -52,7 +54,7 @@ public class DiaryController {
         }
     }
 
-    public String createEntry(CreateEntryRequest request) {
+    public static String createEntry(CreateEntryRequest request) {
         try {
             diaryServices.createEntryWith(request);
             return "created successfully";
@@ -62,7 +64,7 @@ public class DiaryController {
         }
     }
 
-    public String updateEntry(UpdateEntryRequest request) {
+    public static String updateEntry(UpdateEntryRequest request) {
         try {
             diaryServices.updateEntryWith(request);
             return "updated successfully";
@@ -72,7 +74,7 @@ public class DiaryController {
         }
     }
 
-    public String deleteEntryBy(int id, String username) {
+    public static String deleteEntryBy(int id, String username) {
         try {
             diaryServices.deleteEntryBy(id, username);
             return "deleted successfully";
@@ -82,7 +84,7 @@ public class DiaryController {
         }
     }
 
-    public String getEntryBy(int id, String username) {
+    public static String getEntryBy(int id, String username) {
         try {
             Diary foundDiary = diaryServices.findDiaryBy(username);
             DiaryServicesImpl.checkLockStatusOf(foundDiary);
@@ -94,15 +96,15 @@ public class DiaryController {
         }
     }
 
-    public String getEntriesFor(String username) {
+    public static List<?> getEntriesFor(String username) {
         try {
             Diary foundDiary = diaryServices.findDiaryBy(username);
             DiaryServicesImpl.checkLockStatusOf(foundDiary);
 
-            return String.valueOf(entryServices.getEntriesFor(username));
+            return entryServices.getEntriesFor(username);
         }
         catch (DiaryAppException e) {
-            return e.getMessage();
+            return List.of(e.getMessage());
         }
     }
 
