@@ -34,7 +34,7 @@ public class DiaryServicesImpl implements DiaryServices {
     }
 
     private void validateDuplicate(RegisterRequest request) {
-        boolean isDuplicate = repository.findById(request.getUsername()) != null;
+        boolean isDuplicate = repository.findById(request.getUsername().toLowerCase()) != null;
         if (isDuplicate) throw new UsernameExistsException("Username already exists.");
     }
 

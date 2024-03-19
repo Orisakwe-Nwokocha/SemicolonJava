@@ -1,6 +1,7 @@
 package data.models;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Entry {
     private int id;
@@ -9,10 +10,7 @@ public class Entry {
     private LocalDateTime creationDate = LocalDateTime.now();
     private String author;
 
-    public Entry() {
-
-    }
-
+    public Entry() {}
 
     public int getId() {
         return id;
@@ -52,5 +50,15 @@ public class Entry {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+
+    @Override
+    public String toString() {
+        String asterisk = "*".repeat(10);
+        String dateCreated = creationDate.format(DateTimeFormatter.ofPattern("dd/MMM/yyyy HH:mm:ss a"));
+        String format = "%s%nGist %d%nDate Created: %s%nGossip Title:%n%s%nLatest Gist:%n%s%n%s%n";
+
+        return String.format(format, asterisk, id, dateCreated, title, body, asterisk);
     }
 }

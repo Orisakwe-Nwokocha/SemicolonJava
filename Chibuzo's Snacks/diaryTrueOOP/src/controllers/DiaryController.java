@@ -42,7 +42,7 @@ public class DiaryController {
         }
     }
 
-    public String removerUser(RemoveUserRequest request) {
+    public String removerUserWith(RemoveUserRequest request) {
         try {
             diaryServices.removeUser(request);
             return "removed successfully";
@@ -72,7 +72,7 @@ public class DiaryController {
         }
     }
 
-    public String deleteEntry(int id, String username) {
+    public String deleteEntryBy(int id, String username) {
         try {
             diaryServices.deleteEntryBy(id, username);
             return "deleted successfully";
