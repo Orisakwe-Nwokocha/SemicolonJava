@@ -1,4 +1,5 @@
 import controllers.DiaryController;
+import controllers.EntryController;
 import dtos.requests.*;
 
 import javax.swing.*;
@@ -86,7 +87,7 @@ public class Main {
         String id = input("Enter the id of the gist:");
 
         try {
-            print(DiaryController.deleteEntryBy(Integer.parseInt(id), username));
+            print(EntryController.deleteEntryBy(Integer.parseInt(id), username));
         }
         catch (NumberFormatException e) {
             print("Please enter a valid gist id.");
@@ -98,7 +99,7 @@ public class Main {
 
     private static void viewAllGossips() {
         String username = input("Enter your username:");
-        for (var output : DiaryController.getEntriesFor(username)) print(output.toString());
+        for (var output : EntryController.getEntriesFor(username)) print(output.toString());
         gotoMainMenu();
     }
 
@@ -129,10 +130,10 @@ public class Main {
         String id = input("Enter the id of the gist:");
 
         try {
-            print(DiaryController.getEntryBy(Integer.parseInt(id), username));
+            print(EntryController.getEntryBy(Integer.parseInt(id), username));
         }
         catch (NumberFormatException e) {
-            print("Please enter a valid entry id.");
+            print("Please enter a valid gist id.");
         }
         finally {
             gotoMainMenu();

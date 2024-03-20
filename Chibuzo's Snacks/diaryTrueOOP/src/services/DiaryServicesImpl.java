@@ -5,10 +5,7 @@ import data.models.Entry;
 import data.repositories.DiaryRepository;
 import data.repositories.DiaryRepositoryImpl;
 import dtos.requests.*;
-import exceptions.IllegalDiaryStateException;
-import exceptions.IncorrectPasswordException;
-import exceptions.UserNotFoundException;
-import exceptions.UsernameExistsException;
+import exceptions.*;
 
 public class DiaryServicesImpl implements DiaryServices {
     private final DiaryRepository repository = new DiaryRepositoryImpl();
@@ -39,12 +36,12 @@ public class DiaryServicesImpl implements DiaryServices {
 
     private static void validateBlank(RegisterRequest request) {
         boolean isBlank = request.getUsername().isBlank() || request.getPassword().isBlank();
-        if (isBlank) throw new IllegalArgumentException("Username and password cannot be empty.");
+        if (isBlank) throw new InvalidArgumentException("Username and password cannot be blank.");
     }
 
     private static void validateNull(RegisterRequest request) {
         boolean isNull = request.getUsername() == null || request.getPassword() == null;
-        if (isNull) throw new NullPointerException("Username and password cannot be null.");
+        if (isNull) throw new InvalidArgumentException("Username and password cannot be null.");
     }
 
     @Override
@@ -114,18 +111,5 @@ public class DiaryServicesImpl implements DiaryServices {
         entry.setId(request.getId());
 
         entryServices.save(entry);
-    }
-
-    @Override
-    public void deleteEntryBy(int id, String username) {
-        Diary foundDiary = findDiaryBy(username.toLowerCase());
-        checkLockStatusOf(foundDiary);
-
-        entryServices.deleteEntryBy(id);
-    }
-
-    @Override
-    public long getNumberOfUsers() {
-        return repository.count();
     }
 }

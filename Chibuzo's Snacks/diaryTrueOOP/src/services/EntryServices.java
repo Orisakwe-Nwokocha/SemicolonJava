@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface EntryServices {
     void save(Entry entry);
-    void deleteEntryBy(int id);
-    Entry getEntryBy(int id);
+    void deleteEntry(int id);
+    Entry getEntry(int id);
     List<Entry> getEntriesFor(String username);
 }

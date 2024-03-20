@@ -1,11 +1,11 @@
 package services;
 
-import data.repositories.DiaryRepository;
 import data.repositories.DiaryRepositoryImpl;
 import data.repositories.EntryRepository;
 import data.repositories.EntryRepositoryImpl;
 import dtos.requests.*;
 import exceptions.IncorrectPasswordException;
+import exceptions.InvalidArgumentException;
 import exceptions.UsernameExistsException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +19,7 @@ public class DiaryServicesImplTest {
     private LoginRequest loginRequest;
     private CreateEntryRequest createEntryRequest;
     private final EntryServices entryServices = new EntryServicesImpl();
+    private final DiaryRepositoryImpl diaryRepository = new DiaryRepositoryImpl();
 
     @BeforeEach
     public void initialise() {
@@ -40,7 +41,6 @@ public class DiaryServicesImplTest {
 
     @AfterEach
     public void cleanup() {
-        DiaryRepository diaryRepository = new DiaryRepositoryImpl();
         EntryRepository entryRepository  = new EntryRepositoryImpl();
 
         diaryRepository.findAll().clear();
@@ -49,34 +49,38 @@ public class DiaryServicesImplTest {
 
     @Test
     public void testThatDiaryServiceCanRegisterUser_numberOfUsersIs1() {
+        assertEquals(0L, diaryRepository.count());
+
         diaryServices.register(registerRequest);
-        assertEquals(1L, diaryServices.getNumberOfUsers());
+        assertEquals(1L, diaryRepository.count());
     }
 
     @Test
     public void testRegisterSameUser_UsernameExistsExceptionIsThrown_numberOfUsersIs1() {
         diaryServices.register(registerRequest);
-        assertEquals(1L, diaryServices.getNumberOfUsers());
+        assertEquals(1L, diaryRepository.count());
 
         assertThrows(UsernameExistsException.class, () -> diaryServices.register(registerRequest));
-        assertEquals(1L, diaryServices.getNumberOfUsers());
+        assertEquals(1L, diaryRepository.count());
     }
 
     @Test
-    public void testRegisterUserWithNullValue_NullPointerExceptionIsThrown_numberOfUsersIs0() {
+    public void testRegisterUserWithNullValue_InvalidArgumentExceptionIsThrown_numberOfUsersIs0() {
+        assertEquals(0L, diaryRepository.count());
         registerRequest = new RegisterRequest();
 
-        assertThrows(NullPointerException.class, () -> diaryServices.register(registerRequest));
-        assertEquals(0L, diaryServices.getNumberOfUsers());
+        assertThrows(InvalidArgumentException.class, () -> diaryServices.register(registerRequest));
+        assertEquals(0L, diaryRepository.count());
     }
 
     @Test
-    public void testRegisterUserWithEmptyString_IllegalArgumentExceptionIsThrown_numberOfUsersIs0() {
+    public void testRegisterUserWithEmptyString_InvalidArgumentExceptionIsThrown_numberOfUsersIs0() {
+        assertEquals(0L, diaryRepository.count());
         registerRequest.setUsername(" ");
         registerRequest.setPassword(" ");
 
-        assertThrows(IllegalArgumentException.class, () -> diaryServices.register(registerRequest));
-        assertEquals(0L, diaryServices.getNumberOfUsers());
+        assertThrows(InvalidArgumentException.class, () -> diaryServices.register(registerRequest));
+        assertEquals(0L, diaryRepository.count());
     }
 
     @Test
@@ -99,14 +103,14 @@ public class DiaryServicesImplTest {
     @Test
     public void testThatUserCanDeleteAccount_numberOfUsersIs0() {
         diaryServices.register(registerRequest);
-        assertEquals(1L, diaryServices.getNumberOfUsers());
+        assertEquals(1L, diaryRepository.count());
 
         RemoveUserRequest request = new RemoveUserRequest();
         request.setUsername("username");
         request.setPassword("password");
         diaryServices.login(loginRequest);
         diaryServices.removeUser(request);
-        assertEquals(0L, diaryServices.getNumberOfUsers());
+        assertEquals(0L, diaryRepository.count());
     }
 
     @Test
@@ -166,7 +170,7 @@ public class DiaryServicesImplTest {
         diaryServices.createEntryWith(createEntryRequest);
         assertEquals(2, entryServices.getEntriesFor("username").size());
 
-        diaryServices.deleteEntryBy(1, "username");
+        entryServices.deleteEntry(1);
         assertEquals(1, entryServices.getEntriesFor("username").size());
     }
 }

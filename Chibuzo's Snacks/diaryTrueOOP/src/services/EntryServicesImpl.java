@@ -3,7 +3,7 @@ package services;
 import data.models.Entry;
 import data.repositories.EntryRepository;
 import data.repositories.EntryRepositoryImpl;
-import exceptions.EmptyEntryException;
+import exceptions.EmptyEntryListException;
 import exceptions.EntryNotFoundException;
 
 import java.util.List;
@@ -17,12 +17,15 @@ public class EntryServicesImpl implements EntryServices {
     }
 
     @Override
-    public void deleteEntryBy(int id) {
+    public void deleteEntry(int id) {
+        Entry entry = repository.findById(id);
+        if (entry == null) throw new EntryNotFoundException("Entry not found");
+
         repository.delete(id);
     }
 
     @Override
-    public Entry getEntryBy(int id) {
+    public Entry getEntry(int id) {
         Entry entry = repository.findById(id);
         if (entry == null) throw new EntryNotFoundException("Entry not found");
 
@@ -32,7 +35,7 @@ public class EntryServicesImpl implements EntryServices {
     @Override
     public List<Entry> getEntriesFor(String username) {
         List<Entry> entries = repository.findByName(username.toLowerCase());
-        if (entries.isEmpty()) throw new EmptyEntryException("No entry found");
+        if (entries.isEmpty()) throw new EmptyEntryListException("No entry found");
 
         return entries;
     }
