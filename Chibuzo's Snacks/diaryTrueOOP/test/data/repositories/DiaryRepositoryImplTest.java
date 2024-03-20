@@ -1,6 +1,7 @@
 package data.repositories;
 
 import data.models.Diary;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,9 +11,15 @@ public class DiaryRepositoryImplTest {
     private DiaryRepository repository;
 
     @BeforeEach
-    public void setUp() {
+    public void startWithThis() {
         repository = new DiaryRepositoryImpl();
     }
+
+    @AfterEach
+    public void endWithThis() {
+        repository.findAll().clear();
+    }
+
 
     @Test
     public void saveDiary_numberOfDiariesIs1Test() {

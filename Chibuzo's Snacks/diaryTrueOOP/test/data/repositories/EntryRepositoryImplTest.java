@@ -2,6 +2,7 @@ package data.repositories;
 
 import data.models.Diary;
 import data.models.Entry;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +14,11 @@ public class EntryRepositoryImplTest {
     @BeforeEach
     public void startWithThis() {
         repository = new EntryRepositoryImpl();
+    }
+
+    @AfterEach
+    public void endWithThis() {
+        repository.findAll().clear();
     }
 
     @Test

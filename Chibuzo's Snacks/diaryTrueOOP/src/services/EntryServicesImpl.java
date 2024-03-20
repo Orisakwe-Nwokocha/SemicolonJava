@@ -9,7 +9,7 @@ import exceptions.EntryNotFoundException;
 import java.util.List;
 
 public class EntryServicesImpl implements EntryServices {
-    private static final EntryRepository repository = new EntryRepositoryImpl();
+    private final EntryRepository repository = new EntryRepositoryImpl();
 
     @Override
     public void save(Entry entry) {

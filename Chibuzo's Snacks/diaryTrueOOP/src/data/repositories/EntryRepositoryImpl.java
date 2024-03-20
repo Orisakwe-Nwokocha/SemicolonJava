@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EntryRepositoryImpl implements EntryRepository {
-    private final List<Entry> entries = new ArrayList<>();
+    private static final List<Entry> entries = new ArrayList<>();
     private int lastEntryId;
 
     @Override

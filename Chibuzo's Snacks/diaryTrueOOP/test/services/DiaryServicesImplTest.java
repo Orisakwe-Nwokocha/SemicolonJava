@@ -1,8 +1,13 @@
 package services;
 
+import data.repositories.DiaryRepository;
+import data.repositories.DiaryRepositoryImpl;
+import data.repositories.EntryRepository;
+import data.repositories.EntryRepositoryImpl;
 import dtos.requests.*;
 import exceptions.IncorrectPasswordException;
 import exceptions.UsernameExistsException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +18,7 @@ public class DiaryServicesImplTest {
     private RegisterRequest registerRequest;
     private LoginRequest loginRequest;
     private CreateEntryRequest createEntryRequest;
-    private EntryServices entryServices = new EntryServicesImpl();
+    private final EntryServices entryServices = new EntryServicesImpl();
 
     @BeforeEach
     public void initialise() {
@@ -31,6 +36,15 @@ public class DiaryServicesImplTest {
         createEntryRequest.setTitle("title");
         createEntryRequest.setBody("body");
         createEntryRequest.setAuthor("username");
+    }
+
+    @AfterEach
+    public void cleanup() {
+        DiaryRepository diaryRepository = new DiaryRepositoryImpl();
+        EntryRepository entryRepository  = new EntryRepositoryImpl();
+
+        diaryRepository.findAll().clear();
+        entryRepository.findAll().clear();
     }
 
     @Test
@@ -116,52 +130,43 @@ public class DiaryServicesImplTest {
 
     @Test
     public void userAddsNewEntry_numberOfEntriesIs1Test() {
-        registerRequest.setUsername("username1");
         diaryServices.register(registerRequest);
 
-        createEntryRequest.setAuthor("username1");
-        loginRequest.setUsername("username1");
         diaryServices.login(loginRequest);
         diaryServices.createEntryWith(createEntryRequest);
-        assertEquals(1, entryServices.getEntriesFor("username1").size());
+        assertEquals(1, entryServices.getEntriesFor("username").size());
     }
 
     @Test
     public void userUpdatesSavedEntry_numberOfEntriesIs1Test() {
-        registerRequest.setUsername("username3");
         diaryServices.register(registerRequest);
 
-        createEntryRequest.setAuthor("username3");
-        loginRequest.setUsername("username3");
         diaryServices.login(loginRequest);
         diaryServices.createEntryWith(createEntryRequest);
-        assertEquals("title", entryServices.getEntriesFor("username3").getFirst().getTitle());
-        assertEquals(1, entryServices.getEntriesFor("username3").size());
+        assertEquals("title", entryServices.getEntriesFor("username").getFirst().getTitle());
+        assertEquals(1, entryServices.getEntriesFor("username").size());
 
         UpdateEntryRequest updateEntryRequest = new UpdateEntryRequest();
         updateEntryRequest.setTitle("newTitle");
         updateEntryRequest.setBody("newBody");
-        updateEntryRequest.setAuthor("username3");
-        updateEntryRequest.setId(3);
+        updateEntryRequest.setAuthor("username");
+        updateEntryRequest.setId(1);
 
         diaryServices.updateEntryWith(updateEntryRequest);
-        assertEquals("newTitle", entryServices.getEntriesFor("username3").getFirst().getTitle());
-        assertEquals(1, entryServices.getEntriesFor("username3").size());
+        assertEquals("newTitle", entryServices.getEntriesFor("username").getFirst().getTitle());
+        assertEquals(1, entryServices.getEntriesFor("username").size());
     }
 
     @Test
     public void given2SavedEntries_whenUserDeletes1SavedEntry_thenNumberOfEntriesIs1Test() {
-        registerRequest.setUsername("username2");
         diaryServices.register(registerRequest);
 
-        createEntryRequest.setAuthor("username2");
-        loginRequest.setUsername("username2");
         diaryServices.login(loginRequest);
         diaryServices.createEntryWith(createEntryRequest);
         diaryServices.createEntryWith(createEntryRequest);
-        assertEquals(2, entryServices.getEntriesFor("username2").size());
+        assertEquals(2, entryServices.getEntriesFor("username").size());
 
-        diaryServices.deleteEntryBy(1, "username2");
-        assertEquals(1, entryServices.getEntriesFor("username2").size());
+        diaryServices.deleteEntryBy(1, "username");
+        assertEquals(1, entryServices.getEntriesFor("username").size());
     }
 }

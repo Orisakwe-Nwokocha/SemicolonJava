@@ -10,11 +10,9 @@ import exceptions.IncorrectPasswordException;
 import exceptions.UserNotFoundException;
 import exceptions.UsernameExistsException;
 
-import java.util.List;
-
 public class DiaryServicesImpl implements DiaryServices {
     private final DiaryRepository repository = new DiaryRepositoryImpl();
-    private static final EntryServices entryServices = new EntryServicesImpl();
+    private final EntryServices entryServices = new EntryServicesImpl();
 
     @Override
     public void register(RegisterRequest request) {

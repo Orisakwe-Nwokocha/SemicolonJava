@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DiaryRepositoryImpl implements DiaryRepository {
-    private final List<Diary> diaries = new ArrayList<>();
+    private static final List<Diary> diaries = new ArrayList<>();
     private int lastDiaryId;
     @Override
     public Diary save(Diary diary) {
