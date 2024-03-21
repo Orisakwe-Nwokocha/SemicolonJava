@@ -7,6 +7,8 @@ import data.repositories.DiaryRepositoryImpl;
 import dtos.requests.*;
 import exceptions.*;
 
+import java.util.List;
+
 public class DiaryServicesImpl implements DiaryServices {
     private final DiaryRepository repository = new DiaryRepositoryImpl();
     private final EntryServices entryServices = new EntryServicesImpl();
@@ -15,11 +17,11 @@ public class DiaryServicesImpl implements DiaryServices {
     public void register(RegisterRequest request) {
         validate(request);
 
-        Diary diary = new Diary();
-        diary.setUsername(request.getUsername().toLowerCase());
-        diary.setPassword(request.getPassword());
+        Diary newDiary = new Diary();
+        newDiary.setUsername(request.getUsername().toLowerCase());
+        newDiary.setPassword(request.getPassword());
 
-        repository.save(diary);
+        repository.save(newDiary);
     }
 
     private void validate(RegisterRequest request) {
@@ -34,12 +36,12 @@ public class DiaryServicesImpl implements DiaryServices {
     }
 
 
-    private static void validateBlank(RegisterRequest request) {
+    private void validateBlank(RegisterRequest request) {
         boolean isBlank = request.getUsername().isBlank() || request.getPassword().isBlank();
         if (isBlank) throw new InvalidArgumentException("Username and password cannot be blank.");
     }
 
-    private static void validateNull(RegisterRequest request) {
+    private void validateNull(RegisterRequest request) {
         boolean isNull = request.getUsername() == null || request.getPassword() == null;
         if (isNull) throw new InvalidArgumentException("Username and password cannot be null.");
     }
@@ -69,12 +71,12 @@ public class DiaryServicesImpl implements DiaryServices {
         repository.save(foundDiary);
     }
 
-    private static boolean isPasswordIncorrect(Diary foundDiary, String password) {
+    private boolean isPasswordIncorrect(Diary foundDiary, String password) {
         return !foundDiary.getPassword().equals(password);
     }
 
     @Override
-    public void removeUser(RemoveUserRequest request) {
+    public void deregister(RemoveUserRequest request) {
         Diary foundDiary = findDiaryBy(request.getUsername().toLowerCase());
         checkLockStatusOf(foundDiary);
         if (isPasswordIncorrect(foundDiary, request.getPassword())) throw new IncorrectPasswordException("Password is incorrect.");
@@ -82,7 +84,7 @@ public class DiaryServicesImpl implements DiaryServices {
         repository.delete(foundDiary);
     }
 
-    public static void checkLockStatusOf(Diary diary) {
+    private void checkLockStatusOf(Diary diary) {
         if (diary.isLocked()) throw new IllegalDiaryStateException("You need to login to use this service.");
     }
 
@@ -111,5 +113,29 @@ public class DiaryServicesImpl implements DiaryServices {
         entry.setId(request.getId());
 
         entryServices.save(entry);
+    }
+
+    @Override
+    public void deleteEntry(int id, String username) {
+        Diary foundDiary = findDiaryBy(username.toLowerCase());
+        checkLockStatusOf(foundDiary);
+
+        entryServices.deleteEntry(id);
+    }
+
+    @Override
+    public Entry getEntry(int id, String username) {
+        Diary foundDiary = findDiaryBy(username.toLowerCase());
+        checkLockStatusOf(foundDiary);
+
+        return entryServices.getEntry(id);
+    }
+
+    @Override
+    public List<Entry> getEntriesFor(String username) {
+        Diary foundDiary = findDiaryBy(username.toLowerCase());
+        checkLockStatusOf(foundDiary);
+
+        return entryServices.getEntriesFor(username);
     }
 }

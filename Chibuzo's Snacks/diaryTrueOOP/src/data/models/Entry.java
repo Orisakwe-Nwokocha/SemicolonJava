@@ -10,8 +10,6 @@ public class Entry {
     private LocalDateTime creationDate = LocalDateTime.now();
     private String author;
 
-    public Entry() {}
-
     public int getId() {
         return id;
     }

@@ -109,7 +109,7 @@ public class DiaryServicesImplTest {
         request.setUsername("username");
         request.setPassword("password");
         diaryServices.login(loginRequest);
-        diaryServices.removeUser(request);
+        diaryServices.deregister(request);
         assertEquals(0L, diaryRepository.count());
     }
 
@@ -129,7 +129,7 @@ public class DiaryServicesImplTest {
         removeUserRequest.setPassword("incorrectPassword");
         diaryServices.login(loginRequest);
 
-        assertThrows(IncorrectPasswordException.class, () -> diaryServices.removeUser(removeUserRequest));
+        assertThrows(IncorrectPasswordException.class, () -> diaryServices.deregister(removeUserRequest));
     }
 
     @Test
@@ -147,8 +147,8 @@ public class DiaryServicesImplTest {
 
         diaryServices.login(loginRequest);
         diaryServices.createEntryWith(createEntryRequest);
-        assertEquals("title", entryServices.getEntriesFor("username").getFirst().getTitle());
-        assertEquals(1, entryServices.getEntriesFor("username").size());
+        assertEquals("title", diaryServices.getEntry(1, "username").getTitle());
+        assertEquals(1, entryServices.getEntriesFor( "username").size());
 
         UpdateEntryRequest updateEntryRequest = new UpdateEntryRequest();
         updateEntryRequest.setTitle("newTitle");
@@ -157,8 +157,8 @@ public class DiaryServicesImplTest {
         updateEntryRequest.setId(1);
 
         diaryServices.updateEntryWith(updateEntryRequest);
-        assertEquals("newTitle", entryServices.getEntriesFor("username").getFirst().getTitle());
-        assertEquals(1, entryServices.getEntriesFor("username").size());
+        assertEquals("newTitle", diaryServices.getEntriesFor("username").getFirst().getTitle());
+        assertEquals(1, diaryServices.getEntriesFor("username").size());
     }
 
     @Test
@@ -168,9 +168,9 @@ public class DiaryServicesImplTest {
         diaryServices.login(loginRequest);
         diaryServices.createEntryWith(createEntryRequest);
         diaryServices.createEntryWith(createEntryRequest);
-        assertEquals(2, entryServices.getEntriesFor("username").size());
+        assertEquals(2, diaryServices.getEntriesFor("username").size());
 
-        entryServices.deleteEntry(1);
-        assertEquals(1, entryServices.getEntriesFor("username").size());
+        diaryServices.deleteEntry(1, "username");
+        assertEquals(1, diaryServices.getEntriesFor("username").size());
     }
 }

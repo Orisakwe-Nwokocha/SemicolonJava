@@ -5,10 +5,12 @@ import exceptions.DiaryAppException;
 import services.DiaryServices;
 import services.DiaryServicesImpl;
 
-public class DiaryController {
-    private static final DiaryServices diaryServices = new DiaryServicesImpl();
+import java.util.List;
 
-    public static String registerUser(RegisterRequest request) {
+public class DiaryController {
+    private final DiaryServices diaryServices = new DiaryServicesImpl();
+
+    public String registerUser(RegisterRequest request) {
         try {
             diaryServices.register(request);
             return "registration successful";
@@ -18,7 +20,7 @@ public class DiaryController {
         }
     }
 
-    public static String login(LoginRequest request) {
+    public String login(LoginRequest request) {
         try {
             diaryServices.login(request);
             return "login successful";
@@ -28,7 +30,7 @@ public class DiaryController {
         }
     }
 
-    public static String logout(String username) {
+    public String logout(String username) {
         try {
             diaryServices.logout(username);
             return "logout successful";
@@ -38,9 +40,9 @@ public class DiaryController {
         }
     }
 
-    public static String removerUserWith(RemoveUserRequest request) {
+    public String deregisterUserWith(RemoveUserRequest request) {
         try {
-            diaryServices.removeUser(request);
+            diaryServices.deregister(request);
             return "removed successfully";
         }
         catch (DiaryAppException e) {
@@ -48,9 +50,9 @@ public class DiaryController {
         }
     }
 
-    public static String createEntry(CreateEntryRequest request) {
+    public String createEntry(CreateEntryRequest createEntryRequest) {
         try {
-            diaryServices.createEntryWith(request);
+            diaryServices.createEntryWith(createEntryRequest);
             return "created successfully";
         }
         catch (DiaryAppException e) {
@@ -58,13 +60,41 @@ public class DiaryController {
         }
     }
 
-    public static String updateEntry(UpdateEntryRequest request) {
+    public String updateEntry(UpdateEntryRequest request) {
         try {
             diaryServices.updateEntryWith(request);
             return "updated successfully";
         }
         catch (DiaryAppException e) {
             return e.getMessage();
+        }
+    }
+
+    public String deleteEntryBy(int id, String username) {
+        try {
+            diaryServices.deleteEntry(id, username);
+            return "deleted successfully";
+        }
+        catch (DiaryAppException e) {
+            return e.getMessage();
+        }
+    }
+
+    public String getEntryBy(int id, String username) {
+        try {
+            return String.valueOf(diaryServices.getEntry(id, username));
+        }
+        catch (DiaryAppException e) {
+            return e.getMessage();
+        }
+    }
+
+    public List<?> getEntriesFor(String username) {
+        try {
+            return diaryServices.getEntriesFor(username);
+        }
+        catch (DiaryAppException e) {
+            return List.of(e.getMessage());
         }
     }
 }

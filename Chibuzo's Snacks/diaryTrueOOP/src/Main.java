@@ -1,10 +1,10 @@
 import controllers.DiaryController;
-import controllers.EntryController;
 import dtos.requests.*;
 
 import javax.swing.*;
 
 public class Main {
+    private static final DiaryController diaryController = new DiaryController();
     private static final RegisterRequest registerRequest = new RegisterRequest();
     private static final LoginRequest loginRequest = new LoginRequest();
     private static final CreateEntryRequest createEntryRequest = new CreateEntryRequest();
@@ -72,13 +72,13 @@ public class Main {
         removeUserRequest.setUsername(username);
         removeUserRequest.setPassword(password);
 
-        print(DiaryController.removerUserWith(removeUserRequest));
+        print(diaryController.deregisterUserWith(removeUserRequest));
         gotoMainMenu();
     }
 
     private static void logout() {
         String username = input("Enter your username:");
-        print(DiaryController.logout(username));
+        print(diaryController.logout(username));
         gotoMainMenu();
     }
 
@@ -87,7 +87,7 @@ public class Main {
         String id = input("Enter the id of the gist:");
 
         try {
-            print(EntryController.deleteEntryBy(Integer.parseInt(id), username));
+            print(diaryController.deleteEntryBy(Integer.parseInt(id), username));
         }
         catch (NumberFormatException e) {
             print("Please enter a valid gist id.");
@@ -99,7 +99,7 @@ public class Main {
 
     private static void viewAllGossips() {
         String username = input("Enter your username:");
-        for (var output : EntryController.getEntriesFor(username)) print(output.toString());
+        for (var output : diaryController.getEntriesFor(username)) print(output.toString());
         gotoMainMenu();
     }
 
@@ -121,7 +121,7 @@ public class Main {
         updateEntryRequest.setBody(body);
         updateEntryRequest.setAuthor(username);
 
-        print(DiaryController.updateEntry(updateEntryRequest));
+        print(diaryController.updateEntry(updateEntryRequest));
         gotoMainMenu();
     }
 
@@ -130,7 +130,7 @@ public class Main {
         String id = input("Enter the id of the gist:");
 
         try {
-            print(EntryController.getEntryBy(Integer.parseInt(id), username));
+            print(diaryController.getEntryBy(Integer.parseInt(id), username));
         }
         catch (NumberFormatException e) {
             print("Please enter a valid gist id.");
@@ -148,7 +148,7 @@ public class Main {
         createEntryRequest.setTitle(title);
         createEntryRequest.setBody(body);
 
-        print(DiaryController.createEntry(createEntryRequest));
+        print(diaryController.createEntry(createEntryRequest));
         gotoMainMenu();
     }
 
@@ -158,7 +158,7 @@ public class Main {
         loginRequest.setUsername(username);
         loginRequest.setPassword(password);
 
-        print(DiaryController.login(loginRequest));
+        print(diaryController.login(loginRequest));
         gotoMainMenu();
     }
 
@@ -168,7 +168,7 @@ public class Main {
         registerRequest.setUsername(username);
         registerRequest.setPassword(password);
 
-        print(DiaryController.registerUser(registerRequest));
+        print(diaryController.registerUser(registerRequest));
         gotoMainMenu();
     }
 

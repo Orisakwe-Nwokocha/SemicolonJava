@@ -6,9 +6,6 @@ public class Diary {
     private int id;
     private boolean isLocked = true;
 
-    public Diary() {}
-
-
     public int getId() {
         return id;
     }
