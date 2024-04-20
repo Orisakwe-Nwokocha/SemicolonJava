@@ -5,11 +5,14 @@ public class ArrayFunctions {
         if (numbers.length < 2) return 0;
         int maxProduct = numbers[0];
 
-        for (int index1 = 0; index1 < numbers.length; index1++) {
-            for (int index2 = index1 + 1; index2 < numbers.length; index2++) {
-                int product = numbers[index1] * numbers[index2];
-                if (product > maxProduct) maxProduct = product;
-            }
+        for (int index = 0; index < numbers.length; index++) maxProduct = getMaxProduct(numbers, index, maxProduct);
+        return maxProduct;
+    }
+
+    private static int getMaxProduct(int[] numbers, int index, int maxProduct) {
+        for (int index1 = index + 1; index1 < numbers.length; index1++) {
+            int product = numbers[index] * numbers[index1];
+            if (product > maxProduct) maxProduct = product;
         }
         return maxProduct;
     }
