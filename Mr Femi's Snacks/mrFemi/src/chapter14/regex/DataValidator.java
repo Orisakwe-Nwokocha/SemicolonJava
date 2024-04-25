@@ -12,4 +12,10 @@ public class DataValidator {
         String regex = "([a-z]\\.)?[a-z]+@(enum|learnspace|semicolon|native.semicolon).africa";
         return email.matches(regex);
     }
+
+    public static boolean isTelephoneValid(String telephone) {
+        String regex = "^1?((\\(\\d{3}\\))|\\d{3})-?\\d{3}-?[0-9]{4}$";
+        telephone = telephone.replaceAll(" ", "");
+        return telephone.matches(regex);
+    }
 }
