@@ -20,9 +20,7 @@ public class Cipher {
 
             int codePoint = character;
             boolean isAfterM = (Character.isLowerCase(character) && character > 'm') || (Character.isUpperCase(character) && character > 'M');
-            if (isAfterM) codePoint -= SHIFT;
-            else codePoint += SHIFT;
-
+            codePoint = isAfterM ? codePoint - SHIFT : codePoint + SHIFT;
             cipher.appendCodePoint(codePoint);
         }
 
