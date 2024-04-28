@@ -1,33 +1,29 @@
 public class WorldPopulationGrowthDifference {
-    public static void main (String [] args) {
-      
-        long POPULATION_CONSTANT = 8072783338L;
-        long oldPopulation = 8072783338L;
-        double growthRate = 0.88 / 100;
+    public static void main(String[] args) {
+        final long INITIAL_POPULATION = 8072783338L;
+        long oldPopulation = INITIAL_POPULATION;
+        final double GROWTH_RATE = 0.88 / 100;
         int doubleYear = 0;
-        int counter = 1;
+        int yearCounter = 1;
 
-        System.out.println("Year\t  Anticipated Population\tNumerical Increase");
-        while (counter <= 75) {
-            long newPopulation = (long) (oldPopulation * growthRate) + oldPopulation;
+        System.out.println("Year\t   Anticipated Population\t    Numerical Increase");
+        
+        while (yearCounter <= 75) {
+            long newPopulation = (long) (oldPopulation * GROWTH_RATE) + oldPopulation;
             long growthDifference = newPopulation - oldPopulation;
             oldPopulation = newPopulation;
-            System.out.printf("%s%23d%24d%n", counter, newPopulation, growthDifference);
+            System.out.printf("%d\t%,23d\t    %,24d%n", yearCounter, newPopulation, growthDifference);
 
-            counter++;
+            boolean isDouble = newPopulation >= (INITIAL_POPULATION * 2);
+            if (isDouble && doubleYear == 0) doubleYear = yearCounter;
 
-            boolean isDouble = newPopulation >= (POPULATION_CONSTANT * 2);
-            if (isDouble && doubleYear == 0) doubleYear = counter;
+            yearCounter++;
         }
 
         if (doubleYear == 0) {
-            System.out.printf("%nThe population would not be doubled within %d years", counter - 1);
+            System.out.printf("%nPopulation would not be doubled within %d years%n", yearCounter - 1);
+        } else {
+            System.out.printf("%nThe population would be doubled in Year %d%n", doubleYear);
         }
-
-        else {
-            System.out.printf("%nThe Year in which the population would be doubled is Year %d%n", doubleYear);
-        }
-
     }
-
 }
