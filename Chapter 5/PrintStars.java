@@ -16,14 +16,10 @@ public class PrintStars {
     }
 
     private static void printSpaces(int number) {
-        for (int row = 1; row <= number; row++) {
-            System.out.print(" ");
-        }
+        for (int row = 1; row <= number; row++) System.out.print(" ");
     }
 
     private static void printStars(int number) {
-        for (int row = 1; row <= number; row++) {
-            System.out.print("*");
-        }
+        for (int row = 1; row <= number; row++) System.out.print("*");
     }
 }
