@@ -37,7 +37,6 @@ public class Example1 {
         */
 
 
-        System.out.println(new int[0].length);
 
     }
 }
