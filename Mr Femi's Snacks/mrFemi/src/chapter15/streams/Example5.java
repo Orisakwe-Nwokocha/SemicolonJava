@@ -12,7 +12,7 @@ public class Example5 {
             int numberOfCharactersRead = fileReader.read(fileChars);
             System.out.println(new String(fileChars, 0, numberOfCharactersRead));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.err.println("Error: " + e.getMessage());
         }
     }
 }
