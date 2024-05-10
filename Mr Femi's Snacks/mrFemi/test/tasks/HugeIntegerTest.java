@@ -104,6 +104,78 @@ public class HugeIntegerTest {
     }
 
     @Test
+    public void addTwoHugeIntegerObjects6() {
+        HugeInteger hugeInteger = new HugeInteger();
+        hugeInteger.parse("-105");
+        HugeInteger hugeInteger2 = new HugeInteger();
+        hugeInteger2.parse("-95");
+
+        String expected = "-200";
+        String actual = hugeInteger.add(hugeInteger2).toString();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void addTwoHugeIntegerObjects7() {
+        HugeInteger hugeInteger = new HugeInteger();
+        hugeInteger.parse("-1");
+        HugeInteger hugeInteger2 = new HugeInteger();
+        hugeInteger2.parse("-1");
+
+        String expected = "-2";
+        String actual = hugeInteger.add(hugeInteger2).toString();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void addTwoHugeIntegerObjects8() {
+        HugeInteger hugeInteger = new HugeInteger();
+        hugeInteger.parse("-1");
+        HugeInteger hugeInteger2 = new HugeInteger();
+        hugeInteger2.parse("1");
+
+        String expected = "0";
+        String actual = hugeInteger.add(hugeInteger2).toString();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void addTwoHugeIntegerObjects8b() {
+        HugeInteger hugeInteger = new HugeInteger();
+        hugeInteger.parse("1");
+        HugeInteger hugeInteger2 = new HugeInteger();
+        hugeInteger2.parse("-1");
+
+        String expected = "0";
+        String actual = hugeInteger.add(hugeInteger2).toString();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void addTwoHugeIntegerObjects9() {
+        HugeInteger hugeInteger = new HugeInteger();
+        hugeInteger.parse("-1");
+        HugeInteger hugeInteger2 = new HugeInteger();
+        hugeInteger2.parse("5");
+
+        String expected = "4";
+        String actual = hugeInteger.add(hugeInteger2).toString();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void addTwoHugeIntegerObjects10() {
+        HugeInteger hugeInteger = new HugeInteger();
+        hugeInteger.parse("1");
+        HugeInteger hugeInteger2 = new HugeInteger();
+        hugeInteger2.parse("-5");
+
+        String expected = "-4";
+        String actual = hugeInteger.add(hugeInteger2).toString();
+        assertEquals(expected, actual);
+    }
+
+    @Test
     public void subtractTwoHugeIntegerObjects() {
         HugeInteger hugeInteger = new HugeInteger();
         hugeInteger.parse("9674");
@@ -183,6 +255,30 @@ public class HugeIntegerTest {
         hugeInteger2.parse("871");
 
         String expected = "-806";
+        String actual = hugeInteger.subtract(hugeInteger2).toString();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void subtractTwoHugeIntegerObjects8() {
+        HugeInteger hugeInteger = new HugeInteger();
+        hugeInteger.parse("-65");
+        HugeInteger hugeInteger2 = new HugeInteger();
+        hugeInteger2.parse("-871");
+
+        String expected = "806";
+        String actual = hugeInteger.subtract(hugeInteger2).toString();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void subtractTwoHugeIntegerObjects9() {
+        HugeInteger hugeInteger = new HugeInteger();
+        hugeInteger.parse("-5");
+        HugeInteger hugeInteger2 = new HugeInteger();
+        hugeInteger2.parse("-5");
+
+        String expected = "0";
         String actual = hugeInteger.subtract(hugeInteger2).toString();
         assertEquals(expected, actual);
     }

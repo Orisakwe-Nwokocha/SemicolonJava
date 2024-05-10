@@ -26,14 +26,22 @@ public class HugeInteger {
     }
 
     public HugeInteger add(HugeInteger other) {
-        if (other.digits.getFirst() < 0) return parse(privateSubtract(other, true, false));
-        else if (digits.getFirst() < 0) return parse("-" + privateSubtract(other, false, true));
+        if (other.digits.getFirst() < 0 && digits.getFirst() < 0) return parse("-" + privateAdd(other, true, true));
+        else if (other.digits.getFirst() < 0) return parse(privateSubtract(other, true, false));
+        else if (digits.getFirst() < 0) return parse(other.privateSubtract(this, true, false));
+
         return getHugeIntegerAfterAdding(other);
     }
 
 
     public HugeInteger subtract(HugeInteger other) {
-        if (other.digits.getFirst() < 0) return parse(privateAdd(other, true, false));
+        if (other.digits.getFirst() < 0 && digits.getFirst() < 0){
+            String numbers = privateSubtract(other, true, true);
+            if (numbers.startsWith("-")) return parse(numbers.substring(1));
+            return parse(numbers);
+        }
+
+        else if (other.digits.getFirst() < 0) return parse(privateAdd(other, true, false));
         else if (digits.getFirst() < 0) return parse("-" + privateAdd(other, false, true));
 
         return getHugeIntegerAfterSubtracting(other);
@@ -84,7 +92,7 @@ public class HugeInteger {
 
     private String privateAdd(HugeInteger other, boolean otherFlag, boolean thisFlag) {
         if (otherFlag) other.parse(other.toString().substring(1));
-        else if (thisFlag) parse(toString().substring(1));
+        if (thisFlag) parse(toString().substring(1));
 
         return getHugeIntegerAfterAdding(other).toString();
     }
@@ -109,7 +117,7 @@ public class HugeInteger {
 
     private String privateSubtract(HugeInteger other, boolean otherFlag, boolean thisFlag) {
         if (otherFlag) other.parse(other.toString().substring(1));
-        else if (thisFlag) parse(toString().substring(1));
+        if (thisFlag) parse(toString().substring(1));
 
         return getHugeIntegerAfterSubtracting(other).toString();
     }
