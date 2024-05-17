@@ -2,6 +2,7 @@ package mrFemi.chapter15.json.serialization;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import mrFemi.chapter15.json.serialization.transactions.Transactions;
 
 public class JsonSerializer {
 
@@ -19,6 +20,15 @@ public class JsonSerializer {
         ObjectMapper mapper = new ObjectMapper();
         try {
             return mapper.readValue(json, Person.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public static Transactions deSerializeTransactions(String json) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.readValue(json, Transactions.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e.getMessage());
         }
