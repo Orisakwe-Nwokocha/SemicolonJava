@@ -11,7 +11,7 @@ public class GeoPoliticalZoneSwitch {
 
 	switch (userInput) {
 
-		case "kebbi": case "kaduna": case "atsina": case "kano": case "sokoto": case "zamfara":
+		case "kebbi": case "kaduna": case "katsina": case "kano": case "sokoto": case "zamfara":
 			System.out.printf("%nYou are from the North West%n");
 			break;
 
