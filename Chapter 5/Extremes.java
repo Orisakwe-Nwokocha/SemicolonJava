@@ -15,7 +15,7 @@ public class Extremes {
 	int maximum = num;
 	int minimum = num;
 
-	while (counter < prompt){
+	while (counter <= prompt){
 
 		if (num < minimum){
 			minimum  = num;			
